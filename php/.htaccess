@@ -1,0 +1,4 @@
+# Dozvoli samo direktan POST na contact.php
+<FilesMatch "^contact\.php$">
+    Require all granted
+</FilesMatch>

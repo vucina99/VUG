@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+Disallow: /php/
+Disallow: /lang/
+Disallow: /img/logoes/original/
+
+# Dozvoli resurse potrebne za rendering
+Allow: /css/
+Allow: /js/
+Allow: /img/
+
+Sitemap: https://vugagency.com/sitemap.xml
