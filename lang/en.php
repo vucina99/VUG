@@ -6,8 +6,8 @@ return [
     'lang_current_label' => 'EN',
 
     // Meta
-    'meta_title' => 'VUG - Digital Agency | Websites, Apps & Internet Marketing',
-    'meta_description' => 'VUG digital agency: websites, web and mobile apps, social media, internet marketing and logo design. For clients from Serbia and worldwide.',
+    'meta_title' => 'VUG | Web, App Development & Marketing',
+    'meta_description' => 'VUG is a digital agency for websites, web and mobile apps, social media management, SEO, branding and internet marketing.',
     'meta_keywords' => 'website development, websites, web applications, mobile applications, social media management, internet marketing, logo design, digital agency, VUG',
 
     // Nav
@@ -22,9 +22,9 @@ return [
 
     // Hero
     'hero_badge' => 'Digital agency · Websites · Apps · Marketing',
-    'hero_title_1' => 'We build brands',
-    'hero_title_2' => 'people remember.',
-    'hero_subtitle' => 'We build projects that not only look attractive - they bring you clients. Website, web and mobile app development, social media management and internet marketing under one roof.',
+    'hero_title_1' => 'Websites, apps &',
+    'hero_title_2' => 'digital marketing',
+    'hero_subtitle' => 'We build projects that not only look attractive - they bring you clients. Websites, web and mobile apps, social media management and internet marketing under one roof.',
     'hero_cta_primary' => 'Start a project',
     'hero_cta_secondary' => 'Explore services',
     'hero_stat_1_num' => '54+',
@@ -159,6 +159,12 @@ return [
     'faq_6_a' => 'Social media management can include creating a content plan, writing post copy, designing visuals, preparing story and reels content, scheduling and publishing posts, community engagement, results analysis and monthly reporting. When needed, we can also add shoot production, advertising and influencer campaigns.',
     'faq_7_q' => 'What does the collaboration process look like?',
     'faq_7_a' => 'Four steps: discovery call (free), strategy and quote, design and development (with weekly updates), launch and support. You always know where we are and what\'s next.',
+    'faq_8_q' => 'Do you do SEO optimization?',
+    'faq_8_a' => 'Yes. SEO is a built‑in part of how we develop websites. From the start we take care of technical optimization - loading speed, proper page structure, meta data and mobile‑friendliness. When needed, we also provide ongoing SEO, keyword research and content creation so your site ranks better over time.',
+    'faq_9_q' => 'What do I need to provide before we start?',
+    'faq_9_a' => 'To begin, it\'s enough to tell us what you do, what you want to achieve and how you imagine your website or app. Any existing materials help - logo, texts, photos and examples of sites you like. If you don\'t have some of these, no problem: we can help with the logo, copy and visual identity.',
+    'faq_10_q' => 'Do you work with clients outside Serbia?',
+    'faq_10_a' => 'Yes. We work with clients worldwide, regardless of location or time zone. We communicate online - via email, calls and video meetings - and deliver projects in Serbian or English. We also build multilingual websites for clients operating across several markets.',
 
     // CTA banner
     'cta_eyebrow' => 'Next step',
@@ -202,4 +208,8 @@ return [
     'footer_contact' => 'Contact',
     'footer_rights' => 'All rights reserved.',
     'footer_made' => 'Made with passion.',
+    'footer_legal' => 'Legal',
+    'footer_privacy' => 'Privacy Policy',
+    'footer_terms' => 'Terms of Use',
+    'footer_cookies' => 'Cookie Policy',
 ];

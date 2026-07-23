@@ -26,6 +26,14 @@ There is no build, lint, or test tooling. To view changes, open the site through
 
 **Contact flow:** `js/main.js` validates fields, fetches a **reCAPTCHA v3** token (`grecaptcha.execute`, action `contact`) and appends it as `recaptcha_token`, then POSTs `FormData` to `php/contact.php`, expecting `{ok, message, errors?}` JSON. `contact.php` re-validates server-side (never trust the client), checks a `website` honeypot field, verifies the reCAPTCHA token with Google (score ≥ `$RECAPTCHA_MIN_SCORE`, matching action), guards against header injection, builds a multipart HTML+plain email, and sends via `mail()`. Error messages are keyed and pulled from the same `lang/*.php` files (`form_err_*`, `form_success`, `form_error`) so JS and PHP share one source of copy — the JSON block `#formMessages` in `index.php` bridges them to the client. reCAPTCHA is keyed by `$RECAPTCHA_SITE_KEY` (public, in `index.php`) + `$RECAPTCHA_SECRET` (in `contact.php`); leaving either blank disables the check so local dev still works.
 
+## Performance & assets (post 2026-07-22 optimizacija)
+
+- **Fontovi su self-hosted** u `/fonts/` (variable woff2). `@font-face` je na vrhu `css/style.css` (putanje `../fonts/`), sa `font-display:swap` i metric-adjusted fallback-om (`Jakarta Fallback`/`Grotesk Fallback`). Nema Google Fonts `<link>`/preconnect. Dva kritična Jakarta faca se preload-uju u `<head>`. Ne vraćati eksterni Google Fonts.
+- **Ikonice su inline SVG**, ne Bootstrap Icons. `php/icons.php` daje `vug_icon($name)` (+ `vug_icon_sprite()` koji se emituje jednom posle `<body>`). CSS klasa `.vi`. Koristi `vug_icon('arrow-right')`.
+- **reCAPTCHA se učitava lenjo** (na prvu interakciju sa formom) iz `js/main.js` — ne na svakom učitavanju.
+- Partner logoi imaju `.webp` verzije servirane preko `<picture>` (PNG fallback).
+- `404.php` (ErrorDocument, pravi 404) i `legal.php` (privatnost/uslovi/kolačići; čisti URL-ovi u `.htaccess`; trenutno `noindex` NACRT do pravne provere).
+
 ## Conventions
 
 - Comments and internal notes are in Serbian; match that when editing existing files.

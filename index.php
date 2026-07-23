@@ -1,6 +1,7 @@
 <?php
 $lang = isset($_GET['lang']) && $_GET['lang'] === 'en' ? 'en' : 'sr';
 $t = require __DIR__ . '/lang/' . $lang . '.php';
+require __DIR__ . '/php/icons.php'; // inline SVG ikonice: vug_icon() + vug_icon_sprite()
 
 // Produkcijski domen — koristi se za canonical, hreflang, OG i JSON-LD.
 // (Canonical MORA da pokazuje na produkciju, ne na localhost.)
@@ -51,17 +52,6 @@ $social_links = [
     'https://www.facebook.com/profile.php?id=61592111037904',
     'https://www.linkedin.com/company/vug-digital-agency/',
 ];
-
-// Helper: split text na rec-po-rec za animaciju
-function split_words(string $text): string {
-    $words = preg_split('/\s+/', $text);
-    $out = '';
-    foreach ($words as $w) {
-        if ($w === '') continue;
-        $out .= '<span class="word"><span>' . htmlspecialchars_decode(htmlspecialchars($w, ENT_QUOTES, 'UTF-8')) . '</span></span> ';
-    }
-    return rtrim($out);
-}
 ?>
 <!DOCTYPE html>
 <html lang="<?= $t['lang_code'] ?>">
@@ -127,11 +117,12 @@ function split_words(string $text): string {
     <link rel="manifest" href="site.webmanifest">
     <meta name="application-name" content="VUG">
     <meta name="apple-mobile-web-app-title" content="VUG">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-    <!-- Preload LCP loga -->
-    <link rel="preload" as="image" href="img/logoes/logo-blue-white-c.png" fetchpriority="high">
+    <!-- Preload loga u navigaciji (vidljiv odmah) -->
+    <link rel="preload" as="image" href="img/logoes/logo-blue-white-c.png">
 
     <!-- Structured data (schema.org @graph): Organization + WebSite + WebPage/FAQPage -->
 <?php
@@ -151,7 +142,7 @@ foreach ([1, 3, 4, 5, 6] as $k) {
 }
 
 $faq_entities = [];
-for ($i = 1; $i <= 7; $i++) {
+for ($i = 1; $i <= 10; $i++) {
     $faq_entities[] = [
         '@type' => 'Question',
         'name' => $t["faq_{$i}_q"],
@@ -259,14 +250,14 @@ $schema = [
 <?= json_encode($schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) ?>
     </script>
 
-    <link href="css/bootstrap-icons/bootstrap-icons.min.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- Kritičan font (hero H1 + lead) — self-hosted, isti origin, bez render-blocking Google zahteva -->
+    <link rel="preload" as="font" type="font/woff2" href="fonts/plus-jakarta-sans-normal-latin.woff2" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="fonts/plus-jakarta-sans-normal-latin-ext.woff2" crossorigin>
 
     <link rel="stylesheet" href="css/style.css?v=<?= @filemtime(__DIR__ . '/css/style.css') ?>">
 </head>
 <body data-lang="<?= $t['lang_code'] ?>">
+<?= vug_icon_sprite() ?>
 
 <a class="skip-link" href="#main"><?= $lang === 'sr' ? 'Pređi na sadržaj' : 'Skip to content' ?></a>
 
@@ -327,9 +318,9 @@ $schema = [
             <?= $t['hero_badge'] ?>
         </div>
 
-        <h1 class="hero-title split is-in">
-            <?= split_words($t['hero_title_1']) ?>
-            <em><?= split_words($t['hero_title_2']) ?></em>
+        <h1 class="hero-title">
+            <?= $t['hero_title_1'] ?>
+            <em><?= $t['hero_title_2'] ?></em>
         </h1>
 
         <p class="hero-lead"><?= $t['hero_subtitle'] ?></p>
@@ -337,11 +328,11 @@ $schema = [
         <div class="hero-actions">
             <a href="#contact" class="btn btn--primary is-magnetic">
                 <?= $t['hero_cta_primary'] ?>
-                <i class="bi bi-arrow-right"></i>
+                <?= vug_icon('arrow-right') ?>
             </a>
             <a href="#services" class="btn btn--link">
                 <?= $t['hero_cta_secondary'] ?>
-                <i class="bi bi-arrow-right"></i>
+                <?= vug_icon('arrow-right') ?>
             </a>
         </div>
 
@@ -391,7 +382,7 @@ $schema = [
             <a href="#contact" class="svc js-svc">
                 <div class="svc-head">
                     <span class="svc-num">/ <?= $n ?></span>
-                    <span class="svc-icon"><i class="bi <?= $s['icon'] ?>"></i></span>
+                    <span class="svc-icon"><?= vug_icon($s['icon']) ?></span>
                 </div>
                 <h3 class="svc-title"><?= $s['title'] ?></h3>
                 <p class="svc-desc"><?= $s['desc'] ?></p>
@@ -432,22 +423,22 @@ $schema = [
             <div class="about-features stagger">
                 <div class="feat">
                     <div class="feat-num">/ 01</div>
-                    <h4 class="feat-title"><?= $t['about_feature_1_title'] ?></h4>
+                    <h3 class="feat-title"><?= $t['about_feature_1_title'] ?></h3>
                     <p class="feat-desc"><?= $t['about_feature_1_desc'] ?></p>
                 </div>
                 <div class="feat">
                     <div class="feat-num">/ 02</div>
-                    <h4 class="feat-title"><?= $t['about_feature_2_title'] ?></h4>
+                    <h3 class="feat-title"><?= $t['about_feature_2_title'] ?></h3>
                     <p class="feat-desc"><?= $t['about_feature_2_desc'] ?></p>
                 </div>
                 <div class="feat">
                     <div class="feat-num">/ 03</div>
-                    <h4 class="feat-title"><?= $t['about_feature_3_title'] ?></h4>
+                    <h3 class="feat-title"><?= $t['about_feature_3_title'] ?></h3>
                     <p class="feat-desc"><?= $t['about_feature_3_desc'] ?></p>
                 </div>
                 <div class="feat">
                     <div class="feat-num">/ 04</div>
-                    <h4 class="feat-title"><?= $t['about_feature_4_title'] ?></h4>
+                    <h3 class="feat-title"><?= $t['about_feature_4_title'] ?></h3>
                     <p class="feat-desc"><?= $t['about_feature_4_desc'] ?></p>
                 </div>
             </div>
@@ -501,18 +492,18 @@ $schema = [
             <p class="cta-pro-lead"><?= $t['cta_subtitle'] ?></p>
 
             <ul class="cta-pro-perks">
-                <li><i class="bi bi-check2-circle"></i> <?= $lang === 'sr' ? 'Besplatna konsultacija' : 'Free consultation' ?></li>
-                <li><i class="bi bi-check2-circle"></i> <?= $lang === 'sr' ? 'Ponuda u roku od 48h' : 'Quote within 48h' ?></li>
-                <li><i class="bi bi-check2-circle"></i> <?= $lang === 'sr' ? 'Bez obaveza' : 'No strings attached' ?></li>
+                <li><?= vug_icon('check2-circle') ?> <?= $lang === 'sr' ? 'Besplatna konsultacija' : 'Free consultation' ?></li>
+                <li><?= vug_icon('check2-circle') ?> <?= $lang === 'sr' ? 'Ponuda u roku od 48h' : 'Quote within 48h' ?></li>
+                <li><?= vug_icon('check2-circle') ?> <?= $lang === 'sr' ? 'Bez obaveza' : 'No strings attached' ?></li>
             </ul>
 
             <div class="cta-pro-actions">
                 <a href="#contact" class="btn btn--primary cta-pro-main">
                     <?= $t['cta_primary'] ?>
-                    <i class="bi bi-arrow-up-right"></i>
+                    <?= vug_icon('arrow-up-right') ?>
                 </a>
                 <a href="tel:<?= $phone_clean ?>" class="btn btn--ghost">
-                    <i class="bi bi-telephone-fill"></i>
+                    <?= vug_icon('telephone-fill') ?>
                     <?= $t['contact_info_phone'] ?>
                 </a>
             </div>
@@ -558,7 +549,7 @@ $schema = [
                     <div class="t-mark">"</div>
                     <p class="t-quote"><?= $tst['quote'] ?></p>
                     <div class="t-stars" aria-label="5/5">
-                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                        <?= vug_icon('star-fill') ?><?= vug_icon('star-fill') ?><?= vug_icon('star-fill') ?><?= vug_icon('star-fill') ?><?= vug_icon('star-fill') ?>
                     </div>
                     <div class="t-author">
                         <div class="t-avatar"><?= $initials ?></div>
@@ -593,6 +584,9 @@ $schema = [
                 ['icon' => 'bi-tools',        'q' => $t['faq_5_q'],  'a' => $t['faq_5_a']],
                 ['icon' => 'bi-chat-dots',    'q' => $t['faq_6_q'],  'a' => $t['faq_6_a']],
                 ['icon' => 'bi-diagram-3',    'q' => $t['faq_7_q'],  'a' => $t['faq_7_a']],
+                ['icon' => 'bi-graph-up',     'q' => $t['faq_8_q'],  'a' => $t['faq_8_a']],
+                ['icon' => 'bi-chat-left-text','q' => $t['faq_9_q'], 'a' => $t['faq_9_a']],
+                ['icon' => 'bi-geo-alt',      'q' => $t['faq_10_q'], 'a' => $t['faq_10_a']],
             ];
             foreach ($faqs as $idx => $f):
                 $n = str_pad((string)($idx + 1), 2, '0', STR_PAD_LEFT);
@@ -601,7 +595,7 @@ $schema = [
                 <summary class="faq-card-summary">
                     <div class="faq-card-head">
                         <span class="faq-card-num"><?= $n ?></span>
-                        <span class="faq-card-ic"><i class="bi <?= $f['icon'] ?>"></i></span>
+                        <span class="faq-card-ic"><?= vug_icon($f['icon']) ?></span>
                     </div>
                     <h3 class="faq-card-q"><?= $f['q'] ?></h3>
                     <span class="faq-card-toggle" aria-hidden="true"></span>
@@ -614,6 +608,41 @@ $schema = [
     </div>
 </section>
 
+<?php /*
+==========================================================================
+TODO (kredibilitet) — PRIPREMLJENA STRUKTURA, NE PRIKAZUJE SE U PRODUKCIJI.
+Odkomentarisati i popuniti ISKLJUČIVO stvarnim, proverljivim podacima.
+Ne izmišljati procente, prihode, broj korisnika ni rezultate.
+
+CASE STUDY (npr. Padel Pančevo — rezervacioni sistem, već pomenut u testimonijalima):
+<section class="section" id="case-study" aria-labelledby="cs-title">
+  <div class="container">
+    <div class="s-head reveal">
+      <div class="s-index"><strong>—</strong><span class="line"></span><span>Case study</span></div>
+      <h2 class="s-title" id="cs-title">[Naziv projekta / klijent]</h2>
+    </div>
+    <div class="reveal">
+      <h3>Problem</h3><p>[početni problem klijenta]</p>
+      <h3>Cilj</h3><p>[cilj projekta]</p>
+      <h3>Usluga i realizacija</h3><p>[šta je VUG uradio i kako]</p>
+      <h3>Isporučena rešenja</h3><p>[funkcionalnosti]</p>
+      <h3>Rezultat</h3><p>[SAMO ako je potvrđen u postojećem sadržaju]</p>
+      <a class="btn btn--primary" href="#contact">Pokrenite sličan projekat</a>
+    </div>
+  </div>
+</section>
+
+TEAM ("Ko stoji iza VUG-a") — samo ako postoje stvarni podaci (ime, uloga, foto):
+<section class="section" id="team" aria-labelledby="team-title">
+  <div class="container">
+    <div class="s-head reveal"><h2 class="s-title" id="team-title">Ko stoji iza VUG-a</h2></div>
+    <div class="stagger">
+      <div class="feat"><h3 class="feat-title">[Ime i prezime]</h3><p class="feat-desc">[uloga]</p></div>
+    </div>
+  </div>
+</section>
+==========================================================================
+*/ ?>
 <!-- 06 REFERENCES -->
 <section class="section" id="references" aria-labelledby="references-title">
     <div class="container">
@@ -625,26 +654,33 @@ $schema = [
 
         <div class="refs reveal">
             <?php
+            // w/h = originalne dimenzije (za aspect-ratio hint); WebP verzija se servira preko <picture>.
             $partners = [
-                ['file' => 'janko.PNG',        'name' => 'Janko Maksimović', 'href' => 'https://jankomaksimovic.rs/'],
-                ['file' => 'stetext.png',      'name' => 'Stetext' , 'href' => 'https://stetex.rs/'],
-                ['file' => 'qelectronics.png', 'name' => 'Q Electronics' , 'href' => 'https://qelectronics.rs/'],
-                ['file' => 'gotovac.png',      'name' => 'Gotovac' , 'href' => 'https://advokatigotovac.com/'],
-                ['file' => 'padel.PNG',        'name' => 'Padel Pančevo' , 'href' => 'https://padelpancevo.com/'],
-                ['file' => 'tara.png',         'name' => 'Tara' , 'href' => 'https://taraorg.com/'],
-                ['file' => 'vastrener.webp',   'name' => 'Vaš Trener' , 'href' => 'http://vastrener.com/'],
-                ['file' => 'rakija.png',       'name' => 'Rakia Connect' , 'href' => 'https://rakia-connect.com/'],
-                ['file' => 'kalupizza.PNG',    'name' => 'Kalu Pizza' , 'href' => 'https://kalupizza.rs/'],
-                ['file' => 'moravka.png',      'name' => 'Pro-Moravka' , 'href' => 'https://promoravka.rs/'],
-                ['file' => 'kosta.png',        'name' => 'Kosta' , 'href' => 'https://advokati-rs.com/beograd/yuristy/kosta-panovski/'],
-                ['file' => 'pro-tim.png',      'name' => 'PRO-TIM Auto Plac' , 'href' => 'https://www.polovniautomobili.com/pro-tim-auto-plac-kragujevac'],
+                ['file' => 'janko.PNG',        'name' => 'Janko Maksimović', 'href' => 'https://jankomaksimovic.rs/', 'w' => 360, 'h' => 200],
+                ['file' => 'stetext.png',      'name' => 'Stetext' , 'href' => 'https://stetex.rs/', 'w' => 200, 'h' => 83],
+                ['file' => 'qelectronics.png', 'name' => 'Q Electronics' , 'href' => 'https://qelectronics.rs/', 'w' => 600, 'h' => 100],
+                ['file' => 'gotovac.png',      'name' => 'Gotovac' , 'href' => 'https://advokatigotovac.com/', 'w' => 640, 'h' => 144],
+                ['file' => 'padel.PNG',        'name' => 'Padel Pančevo' , 'href' => 'https://padelpancevo.com/', 'w' => 500, 'h' => 500],
+                ['file' => 'tara.png',         'name' => 'Tara' , 'href' => 'https://taraorg.com/', 'w' => 550, 'h' => 416],
+                ['file' => 'vastrener.webp',   'name' => 'Vaš Trener' , 'href' => 'http://vastrener.com/', 'w' => 350, 'h' => 309],
+                ['file' => 'rakija.png',       'name' => 'Rakia Connect' , 'href' => 'https://rakia-connect.com/', 'w' => 600, 'h' => 326],
+                ['file' => 'kalupizza.PNG',    'name' => 'Kalu Pizza' , 'href' => 'https://kalupizza.rs/', 'w' => 500, 'h' => 374],
+                ['file' => 'moravka.png',      'name' => 'Pro-Moravka' , 'href' => 'https://promoravka.rs/', 'w' => 500, 'h' => 500],
+                ['file' => 'kosta.png',        'name' => 'Kosta' , 'href' => 'https://advokati-rs.com/beograd/yuristy/kosta-panovski/', 'w' => 428, 'h' => 573],
+                ['file' => 'pro-tim.png',      'name' => 'PRO-TIM Auto Plac' , 'href' => 'https://www.polovniautomobili.com/pro-tim-auto-plac-kragujevac', 'w' => 640, 'h' => 640],
             ];
-            foreach ($partners as $p): ?>
+            foreach ($partners as $p):
+                $webp = pathinfo($p['file'], PATHINFO_FILENAME) . '.webp';
+            ?>
             <a class="ref" href="<?= htmlspecialchars($p['href']) ?>" target="_blank" rel="noopener noreferrer"
                aria-label="<?= htmlspecialchars($p['name']) ?>">
-                <img src="img/partners/<?= rawurlencode($p['file']) ?>"
-                     alt="<?= htmlspecialchars($p['name']) ?> — logo"
-                     loading="lazy" decoding="async">
+                <picture>
+                    <source type="image/webp" srcset="img/partners/<?= rawurlencode($webp) ?>">
+                    <img src="img/partners/<?= rawurlencode($p['file']) ?>"
+                         alt="<?= htmlspecialchars($p['name']) ?> — logo"
+                         width="<?= $p['w'] ?>" height="<?= $p['h'] ?>"
+                         loading="lazy" decoding="async">
+                </picture>
             </a>
             <?php endforeach; ?>
         </div>
@@ -664,28 +700,28 @@ $schema = [
             <div class="contact-info-block reveal">
                 <ul class="info-cards">
                     <li>
-                        <div class="info-ic"><i class="bi bi-envelope-fill"></i></div>
+                        <div class="info-ic"><?= vug_icon('envelope-fill') ?></div>
                         <div>
                             <span class="info-label">Email</span>
                             <a href="mailto:<?= $t['contact_info_email'] ?>"><?= $t['contact_info_email'] ?></a>
                         </div>
                     </li>
                     <li>
-                        <div class="info-ic"><i class="bi bi-telephone-fill"></i></div>
+                        <div class="info-ic"><?= vug_icon('telephone-fill') ?></div>
                         <div>
                             <span class="info-label"><?= $lang === 'sr' ? 'Telefon' : 'Phone' ?></span>
                             <a href="tel:<?= $phone_intl ?>"><?= $t['contact_info_phone'] ?></a>
                         </div>
                     </li>
                     <li>
-                        <div class="info-ic"><i class="bi bi-geo-alt-fill"></i></div>
+                        <div class="info-ic"><?= vug_icon('geo-alt-fill') ?></div>
                         <div>
                             <span class="info-label"><?= $lang === 'sr' ? 'Sedište' : 'HQ' ?></span>
                             <span><?= $t['contact_info_location'] ?></span>
                         </div>
                     </li>
                     <li>
-                        <div class="info-ic"><i class="bi bi-clock-fill"></i></div>
+                        <div class="info-ic"><?= vug_icon('clock-fill') ?></div>
                         <div>
                             <span class="info-label"><?= $lang === 'sr' ? 'Radno vreme' : 'Hours' ?></span>
                             <span><?= $t['contact_info_hours'] ?></span>
@@ -694,9 +730,9 @@ $schema = [
                 </ul>
 
                 <div class="socials">
-                    <a href="https://www.instagram.com/vugagency" target="_blank" rel="noopener" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
-                    <a href="https://www.facebook.com/profile.php?id=61592111037904" target="_blank" rel="noopener" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
-                    <a href="https://www.linkedin.com/company/vug-digital-agency/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+                    <a href="https://www.instagram.com/vugagency" target="_blank" rel="noopener" aria-label="Instagram"><?= vug_icon('instagram') ?></a>
+                    <a href="https://www.facebook.com/profile.php?id=61592111037904" target="_blank" rel="noopener" aria-label="Facebook"><?= vug_icon('facebook') ?></a>
+                    <a href="https://www.linkedin.com/company/vug-digital-agency/" target="_blank" rel="noopener" aria-label="LinkedIn"><?= vug_icon('linkedin') ?></a>
                 </div>
             </div>
 
@@ -705,22 +741,22 @@ $schema = [
                 <input type="text" name="website" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
 
                 <div class="form-row">
-                    <label for="name"><i class="bi bi-person"></i> <?= $t['form_name'] ?></label>
+                    <label for="name"><?= vug_icon('person') ?> <?= $t['form_name'] ?></label>
                     <input type="text" id="name" name="name" class="form-control" placeholder="<?= $t['form_name_ph'] ?>" required minlength="2" maxlength="80">
                     <span class="form-error" data-for="name"></span>
                 </div>
                 <div class="form-row">
-                    <label for="email"><i class="bi bi-envelope"></i> <?= $t['form_email'] ?></label>
+                    <label for="email"><?= vug_icon('envelope') ?> <?= $t['form_email'] ?></label>
                     <input type="email" id="email" name="email" class="form-control" placeholder="<?= $t['form_email_ph'] ?>" required maxlength="120">
                     <span class="form-error" data-for="email"></span>
                 </div>
                 <div class="form-row">
-                    <label for="subject"><i class="bi bi-tag"></i> <?= $t['form_subject'] ?></label>
+                    <label for="subject"><?= vug_icon('tag') ?> <?= $t['form_subject'] ?></label>
                     <input type="text" id="subject" name="subject" class="form-control" placeholder="<?= $t['form_subject_ph'] ?>" required minlength="3" maxlength="120">
                     <span class="form-error" data-for="subject"></span>
                 </div>
                 <div class="form-row">
-                    <label for="message"><i class="bi bi-chat-left-text"></i> <?= $t['form_message'] ?></label>
+                    <label for="message"><?= vug_icon('chat-left-text') ?> <?= $t['form_message'] ?></label>
                     <textarea id="message" name="message" rows="5" class="form-control" placeholder="<?= $t['form_message_ph'] ?>" required minlength="3"></textarea>
                     <div class="form-row-foot">
                         <span class="form-error" data-for="message"></span>
@@ -729,7 +765,7 @@ $schema = [
                 </div>
 
                 <button type="submit" class="btn btn--primary submit-btn" id="submitBtn">
-                    <span class="btn-label"><i class="bi bi-send-fill"></i> <?= $t['form_submit'] ?></span>
+                    <span class="btn-label"><?= vug_icon('send-fill') ?> <?= $t['form_submit'] ?></span>
                 </button>
 
                 <div class="form-feedback" id="formFeedback" role="status" aria-live="polite"></div>
@@ -763,9 +799,9 @@ $schema = [
                 </a>
                 <p class="footer-tagline"><?= $t['footer_tagline'] ?></p>
                 <div class="socials footer-socials">
-                    <a href="https://www.instagram.com/vugagency" target="_blank" rel="noopener" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
-                    <a href="https://www.facebook.com/profile.php?id=61592111037904" target="_blank" rel="noopener" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
-                    <a href="https://www.linkedin.com/company/vug-digital-agency/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+                    <a href="https://www.instagram.com/vugagency" target="_blank" rel="noopener" aria-label="Instagram"><?= vug_icon('instagram') ?></a>
+                    <a href="https://www.facebook.com/profile.php?id=61592111037904" target="_blank" rel="noopener" aria-label="Facebook"><?= vug_icon('facebook') ?></a>
+                    <a href="https://www.linkedin.com/company/vug-digital-agency/" target="_blank" rel="noopener" aria-label="LinkedIn"><?= vug_icon('linkedin') ?></a>
                 </div>
             </div>
             <div>
@@ -790,24 +826,35 @@ $schema = [
             <div>
                 <div class="footer-h"><?= $t['footer_contact'] ?></div>
                 <ul class="footer-list">
-                    <li><i class="bi bi-envelope"></i><a href="mailto:<?= $t['contact_info_email'] ?>"><?= $t['contact_info_email'] ?></a></li>
-                    <li><i class="bi bi-telephone"></i><a href="tel:<?= $phone_clean ?>"><?= $t['contact_info_phone'] ?></a></li>
-                    <li><i class="bi bi-geo-alt"></i><?= $t['contact_info_location'] ?></li>
+                    <li><?= vug_icon('envelope') ?><a href="mailto:<?= $t['contact_info_email'] ?>"><?= $t['contact_info_email'] ?></a></li>
+                    <li><?= vug_icon('telephone') ?><a href="tel:<?= $phone_clean ?>"><?= $t['contact_info_phone'] ?></a></li>
+                    <li><?= vug_icon('geo-alt') ?><?= $t['contact_info_location'] ?></li>
                 </ul>
             </div>
         </div>
+        <?php
+        // Pravne stranice — cisti URL-ovi (base-path aware); EN dobija ?lang=en.
+        $legal_q = $lang === 'en' ? '?lang=en' : '';
+        $legal_privacy = $base_path . '/politika-privatnosti' . $legal_q;
+        $legal_terms   = $base_path . '/uslovi-koriscenja' . $legal_q;
+        $legal_cookies = $base_path . '/politika-kolacica' . $legal_q;
+        ?>
         <div class="footer-bottom">
             <span>&copy; <?= date('Y') ?> VUG. <?= $t['footer_rights'] ?></span>
+            <nav class="footer-legal" aria-label="<?= $t['footer_legal'] ?>">
+                <a href="<?= $legal_privacy ?>"><?= $t['footer_privacy'] ?></a>
+                <a href="<?= $legal_terms ?>"><?= $t['footer_terms'] ?></a>
+                <a href="<?= $legal_cookies ?>"><?= $t['footer_cookies'] ?></a>
+            </nav>
             <span><?= $t['footer_made'] ?></span>
         </div>
     </div>
 </footer>
 
-<a href="#home" class="to-top" aria-label="Top"><i class="bi bi-arrow-up"></i></a>
+<a href="#home" class="to-top" aria-label="Top"><?= vug_icon('arrow-up') ?></a>
 
-<?php if ($RECAPTCHA_SITE_KEY !== ''): ?>
-<script src="https://www.google.com/recaptcha/api.js?render=<?= urlencode($RECAPTCHA_SITE_KEY) ?>"></script>
-<?php endif; ?>
-<script src="js/main.js?v=<?= @filemtime(__DIR__ . '/js/main.js') ?>"></script>
+<!-- reCAPTCHA se učitava LENJO (na prvu interakciju sa formom) preko js/main.js,
+     da ne bi blokirala inicijalni render niti trošila ~250KB na svakom učitavanju. -->
+<script src="js/main.js?v=<?= @filemtime(__DIR__ . '/js/main.js') ?>" defer></script>
 </body>
 </html>

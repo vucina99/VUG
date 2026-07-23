@@ -6,8 +6,8 @@ return [
     'lang_current_label' => 'SR',
 
     // Meta
-    'meta_title' => 'VUG - Digitalna agencija | Sajtovi, aplikacije, internet marketing',
-    'meta_description' => 'VUG - digitalna agencija: izrada sajtova, web i mobilnih aplikacija, društvene mreže, internet marketing i izrada logoa. Za klijente iz Srbije i sveta.',
+    'meta_title' => 'VUG | Izrada sajtova, aplikacija i marketing',
+    'meta_description' => 'VUG je digitalna agencija za izradu sajtova, web i mobilnih aplikacija, vođenje društvenih mreža, SEO, brending i internet marketing.',
     'meta_keywords' => 'izrada sajtova, izrada web sajtova, web aplikacije, mobilne aplikacije, vođenje društvenih mreža, internet marketing, izrada logoa, digitalna agencija, VUG',
 
     // Nav
@@ -22,9 +22,9 @@ return [
 
     // Hero
     'hero_badge' => 'Digitalna agencija · Sajtovi · Aplikacije · Marketing',
-    'hero_title_1' => 'Gradimo brendove',
-    'hero_title_2' => 'koji se pamte.',
-    'hero_subtitle' => 'Radimo projekte koji ne samo da izgledaju atraktivno - već donose klijente. Izrada web sajtova, web i mobilnih aplikacija, vođenje društvenih mreža i internet marketing pod jednim krovom.',
+    'hero_title_1' => 'Izrada web sajtova, aplikacija',
+    'hero_title_2' => 'i digitalni marketing',
+    'hero_subtitle' => 'Radimo projekte koji ne samo da izgledaju atraktivno - već donose klijente. Web sajtovi, web i mobilne aplikacije, vođenje društvenih mreža i internet marketing pod jednim krovom.',
     'hero_cta_primary' => 'Pokrenite projekat',
     'hero_cta_secondary' => 'Pogledajte usluge',
     'hero_stat_1_num' => '54+',
@@ -159,6 +159,12 @@ return [
     'faq_6_a' => 'Vođenje društvenih mreža može uključivati izradu content plana, pisanje tekstova za objave, dizajn vizuala, pripremu story i reels sadržaja, zakazivanje i objavljivanje postova, komunikaciju sa publikom, analizu rezultata i mesečno izveštavanje. Po potrebi možemo uključiti i organizaciju snimanja, oglašavanje i influenser kampanje.',
     'faq_7_q' => 'Kako izgleda proces saradnje?',
     'faq_7_a' => 'Kroz 4 koraka: razgovor (besplatan), strategija i ponuda, dizajn i razvoj (sa nedeljnim izveštajima), lansiranje i podrška. U svakom trenutku znate gde smo i šta sledi.',
+    'faq_8_q' => 'Da li radite SEO optimizaciju sajta?',
+    'faq_8_a' => 'Da. SEO je sastavni deo našeg pristupa izradi sajtova. Već tokom izrade vodimo računa o tehničkoj optimizaciji - brzini učitavanja, ispravnoj strukturi stranica, meta podacima i prilagođenosti mobilnim uređajima. Po potrebi radimo i kontinuiranu SEO optimizaciju, analizu ključnih reči i izradu sadržaja kako bi sajt vremenom bio bolje pozicioniran na pretraživačima.',
+    'faq_9_q' => 'Šta je potrebno da dostavim pre početka projekta?',
+    'faq_9_a' => 'Za početak je dovoljno da nam opišete čime se bavite, šta želite da postignete i kako zamišljate sajt ili aplikaciju. Korisni su i postojeći materijali ako ih imate - logo, tekstovi, fotografije i primeri sajtova koji Vam se dopadaju. Ukoliko nešto od toga nemate, ne brinite: možemo pomoći oko izrade logoa, tekstova i vizuelnog identiteta.',
+    'faq_10_q' => 'Da li radite sa klijentima van Srbije?',
+    'faq_10_a' => 'Da. Sarađujemo sa klijentima iz celog sveta, bez obzira na lokaciju i vremensku zonu. Komunikaciju vodimo onlajn - putem email-a, poziva i video sastanaka - a projekte isporučujemo na srpskom ili engleskom jeziku. Radimo i višejezične sajtove za klijente koji nastupaju na više tržišta.',
 
     // CTA banner
     'cta_eyebrow' => 'Sledeći korak',
@@ -202,4 +208,8 @@ return [
     'footer_contact' => 'Kontakt',
     'footer_rights' => 'Sva prava zadržana.',
     'footer_made' => 'Napravljeno sa strašću.',
+    'footer_legal' => 'Pravno',
+    'footer_privacy' => 'Politika privatnosti',
+    'footer_terms' => 'Uslovi korišćenja',
+    'footer_cookies' => 'Politika kolačića',
 ];

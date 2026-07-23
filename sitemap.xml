@@ -4,7 +4,7 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
     <url>
         <loc>https://vugagency.com/</loc>
-        <lastmod>2026-07-21</lastmod>
+        <lastmod>2026-07-22</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
         <xhtml:link rel="alternate" hreflang="sr-RS" href="https://vugagency.com/"/>
@@ -17,7 +17,7 @@
     </url>
     <url>
         <loc>https://vugagency.com/en</loc>
-        <lastmod>2026-07-21</lastmod>
+        <lastmod>2026-07-22</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
         <xhtml:link rel="alternate" hreflang="sr-RS" href="https://vugagency.com/"/>

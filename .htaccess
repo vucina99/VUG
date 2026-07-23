@@ -1,4 +1,6 @@
-# VUG — Apache config
+# ==========================================================
+# VUG — Apache konfiguracija
+# ==========================================================
 
 # Default dokument
 DirectoryIndex index.php index.html
@@ -6,41 +8,110 @@ DirectoryIndex index.php index.html
 # Bez listanja direktorijuma
 Options -Indexes
 
-# Cist URL za jezik: /en -> index.php?lang=en (srpski ostaje na /)
-# Radi i u podfolderu (lokal) i u rootu (produkcija) jer je putanja relativna.
-<IfModule mod_rewrite.c>
-    RewriteEngine On
-    RewriteRule ^en/?$ index.php?lang=en [L,QSA]
-</IfModule>
-
 # UTF-8 default
 AddDefaultCharset UTF-8
 
+# Brendirana 404 stranica (pravi HTTP 404 status, ne soft-404)
+ErrorDocument 404 /404.php
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # ======================================================
+    # KANONIKALIZACIJA DOMENA (samo produkcija vugagency.com)
+    # Cilj: jedna kanonska verzija -> https://vugagency.com
+    # Uslovi su vezani za produkcijski host, pa lokal (localhost)
+    # i dev okruženja ostaju netaknuta (rade preko http-a).
+    # Svako pravilo je JEDAN hop (bez redirect lanaca / petlji).
+    # %{REQUEST_URI} čuva putanju; query string Apache dodaje sam.
+    # ======================================================
+
+    # 1) www.* (http ILI https) -> https://vugagency.com  (jedan skok)
+    RewriteCond %{HTTP_HOST} ^www\.vugagency\.com$ [NC]
+    RewriteRule ^ https://vugagency.com%{REQUEST_URI} [R=301,L]
+
+    # 2) http://vugagency.com -> https://vugagency.com
+    #    (uzima u obzir i reverse-proxy preko X-Forwarded-Proto)
+    RewriteCond %{HTTP_HOST} ^vugagency\.com$ [NC]
+    RewriteCond %{HTTPS} !=on
+    RewriteCond %{HTTP:X-Forwarded-Proto} !https
+    RewriteRule ^ https://vugagency.com%{REQUEST_URI} [R=301,L]
+
+    # ------------------------------------------------------
+    # Cist URL za jezik: /en -> index.php?lang=en (srpski ostaje na /)
+    # Radi i u podfolderu (lokal) i u rootu (produkcija).
+    # ------------------------------------------------------
+    RewriteRule ^en/?$ index.php?lang=en [L,QSA]
+
+    # Pravne stranice (cisti URL-ovi) -> legal.php
+    RewriteRule ^politika-privatnosti/?$ legal.php?doc=privacy [L,QSA]
+    RewriteRule ^uslovi-koriscenja/?$    legal.php?doc=terms   [L,QSA]
+    RewriteRule ^politika-kolacica/?$    legal.php?doc=cookies [L,QSA]
+</IfModule>
+
+# ==========================================================
+# MIME tipovi
+# ==========================================================
+<IfModule mod_mime.c>
+    AddType font/woff2 .woff2
+    AddType image/svg+xml .svg
+    AddType application/manifest+json .webmanifest
+</IfModule>
+
+# ==========================================================
 # Zastita osetljivih fajlova
+# ==========================================================
 <FilesMatch "^\.(htaccess|env|gitignore)$">
     Require all denied
 </FilesMatch>
 
+# ==========================================================
 # Security headers
+# ==========================================================
 <IfModule mod_headers.c>
     Header set X-Content-Type-Options "nosniff"
     Header set X-Frame-Options "SAMEORIGIN"
     Header set Referrer-Policy "strict-origin-when-cross-origin"
+    Header set Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=(), usb=(), interest-cohort=()"
+
+    # HSTS — SAMO na HTTPS odgovoru (env=HTTPS). Bez includeSubDomains/preload
+    # dok se ne potvrdi da SVI subdomeni (uklj. www) rade isključivo preko HTTPS-a.
+    Header always set Strict-Transport-Security "max-age=31536000" env=HTTPS
+
+    # HTML se NE kešira dugo — korisnik uvek dobije svežu verziju stranice.
+    <FilesMatch "\.(php|html)$">
+        Header set Cache-Control "public, max-age=0, must-revalidate"
+    </FilesMatch>
+
+    # Verzionisani statički asseti (CSS/JS imaju ?v=; fontovi/slike su nepromenljivi)
+    # -> dugoročni immutable cache.
+    <FilesMatch "\.(css|js|woff2|woff|ttf|otf|png|jpe?g|webp|avif|gif|svg|ico)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
 </IfModule>
 
-# Gzip kompresija
+# ==========================================================
+# Kompresija (Brotli ako postoji, u suprotnom Gzip)
+# ==========================================================
+<IfModule mod_brotli.c>
+    AddOutputFilterByType BROTLI_COMPRESS text/html text/css text/javascript application/javascript application/json application/ld+json image/svg+xml application/xml
+</IfModule>
 <IfModule mod_deflate.c>
-    AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript application/json image/svg+xml
+    AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript application/json application/ld+json image/svg+xml application/xml
 </IfModule>
 
-# Cache statika
+# ==========================================================
+# Fallback cache (mod_expires) — ako mod_headers nije dostupan
+# ==========================================================
 <IfModule mod_expires.c>
     ExpiresActive On
-    ExpiresByType text/css "access plus 1 month"
-    ExpiresByType application/javascript "access plus 1 month"
-    ExpiresByType image/svg+xml "access plus 6 months"
-    ExpiresByType image/png "access plus 6 months"
-    ExpiresByType image/jpeg "access plus 6 months"
-    ExpiresByType image/webp "access plus 6 months"
+    ExpiresByType text/css "access plus 1 year"
+    ExpiresByType application/javascript "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/x-icon "access plus 1 year"
     ExpiresByType font/woff2 "access plus 1 year"
+    ExpiresByType text/html "access plus 0 seconds"
 </IfModule>

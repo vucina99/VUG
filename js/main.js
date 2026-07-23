@@ -300,18 +300,39 @@
     const recaptchaKey = form.dataset.recaptchaKey || '';
     const recaptchaAction = form.dataset.recaptchaAction || 'contact';
 
-    // Vrati svež token ili '' ako captcha nije aktivna / grecaptcha nije stigla.
-    const getRecaptchaToken = () => new Promise((resolve) => {
-        if (!recaptchaKey || typeof grecaptcha === 'undefined' || !grecaptcha.execute) {
-            resolve('');
-            return;
-        }
-        grecaptcha.ready(() => {
-            grecaptcha.execute(recaptchaKey, { action: recaptchaAction })
-                .then(resolve)
-                .catch(() => resolve(''));
+    // Lenjo učitavanje reCAPTCHA skripte — tek kad korisnik krene da koristi formu,
+    // umesto na svakom učitavanju stranice (performanse: ~250KB van kritičnog puta).
+    let recaptchaPromise = null;
+    const loadRecaptcha = () => {
+        if (recaptchaPromise) return recaptchaPromise;
+        if (!recaptchaKey) { recaptchaPromise = Promise.resolve(false); return recaptchaPromise; }
+        recaptchaPromise = new Promise((resolve) => {
+            const s = document.createElement('script');
+            s.src = 'https://www.google.com/recaptcha/api.js?render=' + encodeURIComponent(recaptchaKey);
+            s.async = true;
+            s.onload = () => resolve(true);
+            s.onerror = () => resolve(false);
+            document.head.appendChild(s);
         });
-    });
+        return recaptchaPromise;
+    };
+    // Okidači: prvi fokus u formu ili prvi klik/tap na nju.
+    form.addEventListener('focusin', loadRecaptcha, { once: true });
+    form.addEventListener('pointerdown', loadRecaptcha, { once: true });
+
+    // Vrati svež token ili '' ako captcha nije aktivna / se ne učita na vreme.
+    const getRecaptchaToken = async () => {
+        if (!recaptchaKey) return '';
+        await loadRecaptcha(); // ako korisnik posalje bez prethodne interakcije
+        if (typeof grecaptcha === 'undefined' || !grecaptcha.execute) return '';
+        return new Promise((resolve) => {
+            grecaptcha.ready(() => {
+                grecaptcha.execute(recaptchaKey, { action: recaptchaAction })
+                    .then(resolve)
+                    .catch(() => resolve(''));
+            });
+        });
+    };
 
     const fields = {
         name: form.querySelector('[name="name"]'),
