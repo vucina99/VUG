@@ -22,8 +22,8 @@ return [
 
     // Hero
     'hero_badge' => 'Digital agency · Websites · Apps · Marketing',
-    'hero_title_1' => 'Websites, apps &',
-    'hero_title_2' => 'digital marketing',
+    'hero_title_1' => 'We build brands',
+    'hero_title_2' => 'that get remembered',
     'hero_subtitle' => 'We build projects that not only look attractive - they bring you clients. Websites, web and mobile apps, social media management and internet marketing under one roof.',
     'hero_cta_primary' => 'Start a project',
     'hero_cta_secondary' => 'Explore services',
@@ -46,7 +46,7 @@ return [
     'service_1_tag_3' => 'Websites',
     'service_1_tag_4' => 'Custom code',
 
-    'service_3_title' => 'Mobile apps',
+    'service_3_title' => 'Mobile app development',
     'service_3_desc' => 'Native and cross‑platform apps for iOS and Android - intuitive, fast and designed to keep your users on screen.',
     'service_3_tag_1' => 'iOS',
     'service_3_tag_2' => 'Android',

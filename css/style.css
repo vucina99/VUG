@@ -599,6 +599,8 @@ ul { list-style: none; }
     max-width: 100%;
 }
 .hero-title em {
+    display: block;
+    padding-bottom: 0.15em;
     font-style: italic;
     font-weight: 500;
     /* Gradient boja za "i digitalni marketing" (običan tekst, bez span-ova) */

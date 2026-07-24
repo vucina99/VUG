@@ -372,8 +372,8 @@ $schema = [
             $services = [
                 ['icon' => 'bi-code-slash', 'title' => $t['service_1_title'], 'desc' => $t['service_1_desc'], 'tags' => [$t['service_1_tag_1'], $t['service_1_tag_2'], $t['service_1_tag_3'], $t['service_1_tag_4']]],
                 ['icon' => 'bi-phone',      'title' => $t['service_3_title'], 'desc' => $t['service_3_desc'], 'tags' => [$t['service_3_tag_1'], $t['service_3_tag_2'], $t['service_3_tag_3']]],
-                ['icon' => 'bi-palette2',   'title' => $t['service_4_title'], 'desc' => $t['service_4_desc'], 'tags' => [$t['service_4_tag_1'], $t['service_4_tag_2'], $t['service_4_tag_3']]],
                 ['icon' => 'bi-instagram',  'title' => $t['service_5_title'], 'desc' => $t['service_5_desc'], 'tags' => [$t['service_5_tag_1'], $t['service_5_tag_2'], $t['service_5_tag_3']]],
+                ['icon' => 'bi-palette2',   'title' => $t['service_4_title'], 'desc' => $t['service_4_desc'], 'tags' => [$t['service_4_tag_1'], $t['service_4_tag_2'], $t['service_4_tag_3']]],
                 ['icon' => 'bi-graph-up',   'title' => $t['service_6_title'], 'desc' => $t['service_6_desc'], 'tags' => [$t['service_6_tag_1'], $t['service_6_tag_2'], $t['service_6_tag_3']]],
             ];
             foreach ($services as $i => $s):
@@ -809,8 +809,8 @@ TEAM ("Ko stoji iza VUG-a") — samo ako postoje stvarni podaci (ime, uloga, fot
                 <ul class="footer-list">
                     <li><a href="#services"><?= $t['service_1_title'] ?></a></li>
                     <li><a href="#services"><?= $t['service_3_title'] ?></a></li>
-                    <li><a href="#services"><?= $t['service_4_title'] ?></a></li>
                     <li><a href="#services"><?= $t['service_5_title'] ?></a></li>
+                    <li><a href="#services"><?= $t['service_4_title'] ?></a></li>
                     <li><a href="#services"><?= $t['service_6_title'] ?></a></li>
                 </ul>
             </div>

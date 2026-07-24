@@ -22,9 +22,9 @@ return [
 
     // Hero
     'hero_badge' => 'Digitalna agencija · Sajtovi · Aplikacije · Marketing',
-    'hero_title_1' => 'Izrada web sajtova, aplikacija',
-    'hero_title_2' => 'i digitalni marketing',
-    'hero_subtitle' => 'Radimo projekte koji ne samo da izgledaju atraktivno - već donose klijente. Web sajtovi, web i mobilne aplikacije, vođenje društvenih mreža i internet marketing pod jednim krovom.',
+    'hero_title_1' => 'Gradimo brendove',
+    'hero_title_2' => 'koji se pamte',
+    'hero_subtitle' => 'Radimo projekte koji ne samo da izgledaju atraktivno - već donose klijente. Izrada web sajtova, web i mobilnih aplikacija, vođenje društvenih mreža i internet marketing pod jednim krovom.',
     'hero_cta_primary' => 'Pokrenite projekat',
     'hero_cta_secondary' => 'Pogledajte usluge',
     'hero_stat_1_num' => '54+',
@@ -46,7 +46,7 @@ return [
     'service_1_tag_3' => 'Web prezentacije',
     'service_1_tag_4' => 'Custom kod',
 
-    'service_3_title' => 'Mobilne aplikacije',
+    'service_3_title' => 'Izrada mobilnih aplikacija',
     'service_3_desc' => 'Native i cross‑platform aplikacije za iOS i Android - intuitivne, brze i dizajnirane da Vaše korisnike zadrže na ekranu.',
     'service_3_tag_1' => 'iOS',
     'service_3_tag_2' => 'Android',
