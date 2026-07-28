@@ -1,0 +1,9 @@
+# ads.txt — IAB Tech Lab Authorized Digital Sellers (spec v1.1)
+# https://iabtechlab.com/ads-txt/
+#
+# VUG (vugagency.com) NE prodaje oglasni prostor na svom sajtu.
+# Fajl je namerno bez `DIRECT`/`RESELLER` zapisa: prazna lista zapisa znaci
+# "nijedan prodavac nije autorizovan", pa svaki bid pod ovim domenom je lazan.
+# Ako se u buducnosti uvede monetizacija, dodati zapise u formatu:
+#   <domen platforme>, <ID izdavaca>, DIRECT|RESELLER, <TAG-ID>
+contact=office@vugagency.com

@@ -21,18 +21,24 @@ There is no build, lint, or test tooling. To view changes, open the site through
 
 **Three layers, cleanly separated:**
 - `index.php` — structure + PHP loops + i18n lookup. Helper `split_words()` wraps each word in `<span class="word">` for the hero title reveal animation.
-- `css/style.css` — one ~2400-line stylesheet. All theming flows from CSS custom properties in `:root` (dark deep-purple palette `--bg`/`--violet`/`--mint` etc., fonts `--ff`/`--ff-mono`, `--container`, `--nav-h`). Change design tokens there, not scattered values.
+- `css/critical.css` + `css/style.css` — jedan stylesheet razdvojen u dva fajla (above-the-fold / ostalo; vidi "Performance & assets"). All theming flows from CSS custom properties in `:root`, koji su u **`critical.css`** (dark deep-purple palette `--bg`/`--violet`/`--mint` etc., fonts `--ff`/`--ff-mono`, `--container`, `--nav-h`). Change design tokens there, not scattered values.
 - `js/main.js` — one IIFE, no dependencies. Progressive enhancement: scroll-nav state, mobile menu, IntersectionObserver reveals, animated counters (`.counter` with `data-target`/`data-suffix`), smooth scroll, custom cursor + magnetic buttons + hero glow (desktop, non-reduced-motion only), testimonial marquee, and the contact-form AJAX submit. It reads `isCoarse`/`reduced` flags up top and gates motion features on them.
 
 **Contact flow:** `js/main.js` validates fields, fetches a **reCAPTCHA v3** token (`grecaptcha.execute`, action `contact`) and appends it as `recaptcha_token`, then POSTs `FormData` to `php/contact.php`, expecting `{ok, message, errors?}` JSON. `contact.php` re-validates server-side (never trust the client), checks a `website` honeypot field, verifies the reCAPTCHA token with Google (score ≥ `$RECAPTCHA_MIN_SCORE`, matching action), guards against header injection, builds a multipart HTML+plain email, and sends via `mail()`. Error messages are keyed and pulled from the same `lang/*.php` files (`form_err_*`, `form_success`, `form_error`) so JS and PHP share one source of copy — the JSON block `#formMessages` in `index.php` bridges them to the client. reCAPTCHA is keyed by `$RECAPTCHA_SITE_KEY` (public, in `index.php`) + `$RECAPTCHA_SECRET` (in `contact.php`); leaving either blank disables the check so local dev still works.
 
 ## Performance & assets (post 2026-07-22 optimizacija)
 
-- **Fontovi su self-hosted** u `/fonts/` (variable woff2). `@font-face` je na vrhu `css/style.css` (putanje `../fonts/`), sa `font-display:swap` i metric-adjusted fallback-om (`Jakarta Fallback`/`Grotesk Fallback`). Nema Google Fonts `<link>`/preconnect. Dva kritična Jakarta faca se preload-uju u `<head>`. Ne vraćati eksterni Google Fonts.
+- **CSS je razdvojen na dva fajla, bez duplikata** (post 2026-07-28, zbog "render blocking resources" + FCP/LCP):
+  - `css/critical.css` — above-the-fold: `@font-face`, `:root` tokeni, reset/base, mesh/grain, cursor, `.container`, `.btn*`, `.nav*`, `.hero*` i njihovi breakpoint-i. **Ne učitava se kao `<link>`** — `partials/head.php` ga čita (`file_get_contents`), lagano minifikuje i ubacuje INLINE u `<head>`, pa prvi ekran nema ni jedan blokirajući zahtev. Putanje `../fonts/` se pri inline-ovanju prepisuju u `$base . '/fonts/'` (u inline `<style>` relativne putanje idu od URL-a stranice, ne od `css/` foldera — i tako se poklapaju sa `<link rel="preload">`).
+  - `css/style.css` — sve od `#services` nadole. Učitava se **non-blocking**: `media="print"` + `onload="this.media='all'"`, uz `<noscript>` fallback. Stoji PRE `$extra_head` da stranični `<style>` blokovi i dalje pobeđuju u kaskadi.
+  - Pravilo živi u **tačno jednom** fajlu. Menjaš nav/hero/dugmad/tokene → `critical.css`. Menjaš sekcije → `style.css`. Ne duplirati `@font-face`/`:root`.
+- **Fontovi su self-hosted** u `/fonts/` (variable woff2). `@font-face` je na vrhu `css/critical.css` (putanje `../fonts/`), sa `font-display:swap` i metric-adjusted fallback-om (`Jakarta Fallback`/`Grotesk Fallback`). Nema Google Fonts `<link>`/preconnect. Dva kritična Jakarta faca se preload-uju u `<head>`. Ne vraćati eksterni Google Fonts.
+- **Google Analytics se učitava lenjo** — `partials/head.php` odmah postavi `dataLayer`/`gtag()` queue, a `gtag.js` ubaci posle `load` eventa (+1s) ili na prvu interakciju. Ne vraćati `<script async src="…gtag/js">` na vrh `<head>` (troši propusni opseg na putu do prvog iscrtavanja).
 - **Ikonice su inline SVG**, ne Bootstrap Icons. `php/icons.php` daje `vug_icon($name)` (+ `vug_icon_sprite()` koji se emituje jednom posle `<body>`). CSS klasa `.vi`. Koristi `vug_icon('arrow-right')`.
 - **reCAPTCHA se učitava lenjo** (na prvu interakciju sa formom) iz `js/main.js` — ne na svakom učitavanju.
 - Partner logoi imaju `.webp` verzije servirane preko `<picture>` (PNG fallback).
 - `404.php` (ErrorDocument, pravi 404) i `legal.php` (privatnost/uslovi/kolačići; čisti URL-ovi u `.htaccess`; trenutno `noindex` NACRT do pravne provere).
+- `ads.txt` u rootu — namerno bez `DIRECT`/`RESELLER` zapisa (VUG ne prodaje oglasni prostor); prazna lista zapisa po IAB spec znači "nijedan prodavac nije autorizovan". Postoji da SEO/ad provere ne prijavljuju fajl kao nedostajući.
 
 ## Conventions
 
@@ -40,4 +46,5 @@ There is no build, lint, or test tooling. To view changes, open the site through
 - Serbian copy uses proper diacritics (č, š, ž, đ) and capital **V** for the formal "Vaš" (see the user memory note).
 - Counter stats in the hero: numeric values animate via `.counter` (`data-target` + `data-suffix`); non-numeric values like `24/7` are rendered as static text, not counters.
 - `.htaccess` files block direct access to `/php/` and `/lang/`; `robots.txt` disallows them too. Keep secrets and logic in those dirs.
+- **Nijedna email adresa ne sme da stoji kao čist tekst u HTML izvoru** (spam harvesteri + SEO provere to prijavljuju). Koristi `vug_email_obf()` iz `php/icons.php` (HTML entity obfuskacija) za prikaz i za `mailto:`. `legal.php` piše `%EMAIL%` token u tekstovima, a `$legal_text()` ga zameni posle `htmlspecialchars()`. Ni placeholder-i u formama ne smeju biti u obliku `nesto@nesto.tld` — zato je `form_email_ph` opisni tekst.
 - Editing config: `$TO_EMAIL`/`$FROM_EMAIL` are constants at the top of `php/contact.php`. SEO/meta (title, description, JSON-LD, hreflang) is built in the `<head>` of `index.php` from `$t` values and `$current_url`.

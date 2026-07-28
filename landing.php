@@ -319,8 +319,12 @@ $json_ld = [
 
 /* ── Konfiguracija za header/footer partiale ── */
 $nav_prefix       = $home;      // sidra vode na sekcije početne (u tekućem jeziku)
-$contact_href     = '#kontakt'; // "Kontakt" (meni) -> lokalna sekcija
-$cta_href         = '#kontakt';
+// Landing stranice NEMAJU kontakt formu — "Kontakt" u meniju i CTA dugme moraju
+// da vode na #contact sekciju POČETNE, isto kao ostale stavke menija. (Ranije je
+// ovde bilo '#kontakt', a to je id sekcije sa tekstom, pa je klik samo skrolovao
+// na tekst umesto da odvede na formu.)
+$contact_href     = $nav_prefix . '#contact';
+$cta_href         = $nav_prefix . '#contact';
 $show_lang_toggle = true;
 
 /* ── Stil specifičan za stranicu ── */
@@ -411,7 +415,7 @@ require __DIR__ . '/partials/header.php';
                 <p class="lp-lead"><?= htmlspecialchars($c['intro']) ?></p>
                 <div class="lp-actions">
                     <a href="<?= $nav_prefix ?>#contact" class="btn btn--violet is-magnetic"><?= vug_icon('chat-left-text') ?> <?= htmlspecialchars($P['cta_contact']) ?></a>
-                    <a href="#kontakt" class="btn btn--blue is-magnetic"><?= vug_icon('arrow-down') ?> <?= htmlspecialchars($P['cta_read']) ?></a>
+                    <a href="#tekst" class="btn btn--blue is-magnetic"><?= vug_icon('arrow-down') ?> <?= htmlspecialchars($P['cta_read']) ?></a>
                 </div>
             </div>
             <div class="lp-figure reveal">
@@ -422,7 +426,8 @@ require __DIR__ . '/partials/header.php';
 </header>
 
 <!-- TEKST (svetla pozadina za kontrast sa hero-om) -->
-<section class="section section--cream" id="kontakt" aria-labelledby="tekst-title">
+<!-- id="tekst" (ne "kontakt") — cilj je dugmeta "Pročitajte više", ne kontakt. -->
+<section class="section section--cream" id="tekst" aria-labelledby="tekst-title">
     <div class="container">
         <div class="s-head reveal">
             <div class="s-index"><strong>01</strong><span class="line"></span><span><?= htmlspecialchars($P['sec_eyebrow']) ?></span></div>

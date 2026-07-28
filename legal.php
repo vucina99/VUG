@@ -29,8 +29,17 @@ $routes = [
 ];
 
 $company = 'VUG';
-$email   = $t['contact_info_email'];
 $addr    = $t['contact_info_location'];
+
+// Email u pravnim tekstovima ide kao %EMAIL% token, a ne kao čista adresa:
+// legal_text() prvo escapuje tekst, pa token zameni HTML-entity obfuskacijom
+// (vug_email_obf) — pregledač prikaže adresu normalno, a spam harvesteri
+// (i SEO skeneri koji broje "email u izvornom kodu") ne vide ništa.
+$email_plain = $t['contact_info_email'];
+$email       = '%EMAIL%';
+$legal_text  = static function (string $s) use ($email_plain): string {
+    return str_replace('%EMAIL%', vug_email_obf($email_plain), htmlspecialchars($s));
+};
 
 /* ---------- Sadržaj (bilingvalno) ---------- */
 $C = [];
@@ -136,7 +145,9 @@ $doc_slugs   = ['privacy' => 'politika-privatnosti', 'terms' => 'uslovi-koriscen
 $slug        = $doc_slugs[$doc];
 
 $meta_title       = $page['title'] . ' — VUG';
-$meta_description = $page['intro'];
+// Meta description ne sme da sadrži %EMAIL% token (ni samu adresu) — izbacujemo
+// celu rečenicu u kojoj se nalazi; opis i tako treba da bude kratak.
+$meta_description = trim(preg_replace('/\s*[^.]*%EMAIL%[^.]*\.\s*/u', ' ', $page['intro']));
 $canonical        = $SITE_URL . '/' . $slug . ($lang === 'en' ? '?lang=en' : '');
 $robots           = 'noindex, follow';
 $href_other       = $base . '/' . $slug . ($lang === 'sr' ? '?lang=en' : '');
@@ -185,12 +196,12 @@ require __DIR__ . '/partials/header.php';
 
     <div class="legal-review"><?= vug_icon('briefcase') ?> <span><?= htmlspecialchars($labels['review']) ?></span></div>
 
-    <p class="legal-intro"><?= htmlspecialchars($page['intro']) ?></p>
+    <p class="legal-intro"><?= $legal_text($page['intro']) ?></p>
 
     <?php foreach ($page['sections'] as $s): ?>
     <section class="legal-section">
         <h2><?= htmlspecialchars($s[0]) ?></h2>
-        <p><?= htmlspecialchars($s[1]) ?></p>
+        <p><?= $legal_text($s[1]) ?></p>
     </section>
     <?php endforeach; ?>
 </div>

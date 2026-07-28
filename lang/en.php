@@ -185,7 +185,9 @@ return [
     'form_name' => 'Full name',
     'form_name_ph' => 'e.g. John Smith',
     'form_email' => 'Email address',
-    'form_email_ph' => 'your@email.com',
+    // NAPOMENA: placeholder namerno NIJE u obliku email adrese — skeneri (i spam
+    // harvesteri) čitaju svaki "nesto@nesto.tld" iz izvornog koda kao pravi email.
+    'form_email_ph' => 'Your email address',
     'form_subject' => 'Message subject',
     'form_subject_ph' => 'What would you like to discuss?',
     'form_message' => 'Your message',

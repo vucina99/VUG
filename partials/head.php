@@ -35,19 +35,24 @@ $extra_head    = $extra_head    ?? '';
 $is_sr         = (($lang ?? 'sr') === 'sr');
 $og_image_alt  = $og_image_alt  ?? ('VUG — ' . ($is_sr ? 'Digitalna agencija' : 'Digital Agency'));
 $css_v         = @filemtime(dirname(__DIR__) . '/css/style.css');
+$GA_ID         = 'G-W07YT5991W';
+
+/* Critical CSS (nav + hero) se ubacuje INLINE, pa prvi ekran nema ni jedan
+   blokirajući zahtev; ostatak (css/style.css) se učitava non-blocking.
+   Lagana minifikacija u letu — nema build stepa, a ~22 KB izvora se svede
+   na ~17 KB u HTML-u (uz gzip razlika je mala, ali je parsiranje brže). */
+$critical_css = (string) @file_get_contents(dirname(__DIR__) . '/css/critical.css');
+$critical_css = preg_replace('#/\*.*?\*/#s', '', $critical_css);
+$critical_css = trim(preg_replace('/\s+/', ' ', (string) $critical_css));
+/* VAŽNO: u inline <style> relativne putanje se razrešavaju prema URL-u
+   STRANICE, ne prema css/ folderu — zato '../fonts/' mora u apsolutnu putanju.
+   Ovako je identična <link rel="preload"> URL-u ispod, pa preload zaista
+   pokrije font i nema dvostrukog preuzimanja. */
+$critical_css = str_replace('../fonts/', $base . '/fonts/', $critical_css);
 ?>
 <!DOCTYPE html>
 <html lang="<?= htmlspecialchars($t['lang_code']) ?>">
 <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-W07YT5991W"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-W07YT5991W');
-    </script>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#0d0820">
@@ -121,7 +126,48 @@ $css_v         = @filemtime(dirname(__DIR__) . '/css/style.css');
     <link rel="preload" as="font" type="font/woff2" href="<?= $base ?>/fonts/plus-jakarta-sans-normal-latin.woff2" crossorigin>
     <link rel="preload" as="font" type="font/woff2" href="<?= $base ?>/fonts/plus-jakarta-sans-normal-latin-ext.woff2" crossorigin>
 
-    <link rel="stylesheet" href="<?= $base ?>/css/style.css?v=<?= $css_v ?>">
+    <!-- Critical CSS (above-the-fold: nav + hero) — inline, bez blokirajućeg
+         zahteva. Izvor je css/critical.css; ne pisati stilove direktno ovde. -->
+    <style><?= $critical_css ?></style>
+
+    <!-- Google Analytics — gtag.js se učitava LENJO (posle load-a ili na prvu
+         interakciju), pa ne troši propusni opseg na putu do prvog iscrtavanja.
+         dataLayer je queue: gtag() pozivi ispod se izvrše kad biblioteka stigne. -->
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '<?= $GA_ID ?>');
+        (function () {
+            var done = false;
+            function load() {
+                if (done) return;
+                done = true;
+                var s = document.createElement('script');
+                s.async = true;
+                s.src = 'https://www.googletagmanager.com/gtag/js?id=<?= $GA_ID ?>';
+                document.head.appendChild(s);
+            }
+            function afterLoad() { setTimeout(load, 1000); }
+            if (document.readyState === 'complete') afterLoad();
+            else window.addEventListener('load', afterLoad, { once: true });
+            // Ako korisnik pre toga bilo šta uradi, učitaj odmah.
+            ['pointerdown', 'keydown', 'touchstart', 'scroll'].forEach(function (ev) {
+                window.addEventListener(ev, load, { once: true, passive: true });
+            });
+        })();
+    </script>
+
+    <!-- Ostatak stilova — NON-BLOCKING: media="print" ne blokira iscrtavanje,
+         a onload ga prebaci na "all". <noscript> je fallback bez JS-a.
+         Stoji PRE $extra_head, pa stranični <style> blokovi ostaju POSLE njega
+         u kaskadi i dalje pobeđuju — isti redosled kao pre razdvajanja CSS-a. -->
+    <!-- preload vraća prioritet na High: media="print" resurs Chrome inače
+         preuzima sa najnižim prioritetom, pa bi na sporoj vezi sadržaj ispod
+         prvog ekrana mogao nakratko da bude bez stilova. -->
+    <link rel="preload" as="style" href="<?= $base ?>/css/style.css?v=<?= $css_v ?>">
+    <link rel="stylesheet" href="<?= $base ?>/css/style.css?v=<?= $css_v ?>" media="print" onload="this.media='all';this.onload=null">
+    <noscript><link rel="stylesheet" href="<?= $base ?>/css/style.css?v=<?= $css_v ?>"></noscript>
 <?= $extra_head ?>
 </head>
 <body data-lang="<?= htmlspecialchars($t['lang_code']) ?>">
