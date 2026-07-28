@@ -128,20 +128,26 @@ $C['en'] = [
 $page = $C[$lang][$doc];
 $labels = $C[$lang];
 $updated = date('d.m.Y.', @filemtime(__FILE__) ?: time());
-?>
-<!DOCTYPE html>
-<html lang="<?= $t['lang_code'] ?>">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#0d0820">
-    <meta name="robots" content="noindex, follow">
-    <title><?= htmlspecialchars($page['title']) ?> — VUG</title>
-    <link rel="icon" href="<?= $base ?>/favicon.ico" sizes="any">
-    <link rel="preload" as="font" type="font/woff2" href="<?= $base ?>/fonts/plus-jakarta-sans-normal-latin.woff2" crossorigin>
-    <link rel="stylesheet" href="<?= $base ?>/css/style.css?v=<?= @filemtime(__DIR__ . '/css/style.css') ?>">
+
+/* ── Zajednički layout (partials/head + header + footer) ── */
+$SITE_URL    = 'https://vugagency.com';
+$phone_clean = preg_replace('/\s+/', '', $t['contact_info_phone']);
+$doc_slugs   = ['privacy' => 'politika-privatnosti', 'terms' => 'uslovi-koriscenja', 'cookies' => 'politika-kolacica'];
+$slug        = $doc_slugs[$doc];
+
+$meta_title       = $page['title'] . ' — VUG';
+$meta_description = $page['intro'];
+$canonical        = $SITE_URL . '/' . $slug . ($lang === 'en' ? '?lang=en' : '');
+$robots           = 'noindex, follow';
+$href_other       = $base . '/' . $slug . ($lang === 'sr' ? '?lang=en' : '');
+
+$nav_prefix       = $home;
+$contact_href     = $home . '#contact';
+$cta_href         = $home . '#contact';
+$show_lang_toggle = true;
+
+$extra_head = <<<'HTML'
     <style>
-        body { cursor: auto; } /* nema custom kursora ni main.js na ovoj stranici */
         .legal-wrap{max-width:820px;margin:0 auto;padding:calc(var(--nav-h) + 60px) 20px 80px;position:relative;z-index:1;}
         .legal-back{display:inline-flex;align-items:center;gap:8px;color:var(--txt-soft);font-weight:600;font-size:14px;margin-bottom:28px;}
         .legal-back:hover{color:var(--mint);}
@@ -159,13 +165,13 @@ $updated = date('d.m.Y.', @filemtime(__FILE__) ?: time());
         .legal-nav a:hover{color:var(--mint);}
         .legal-nav a[aria-current]:hover{color:var(--deep);}
     </style>
-</head>
-<body data-lang="<?= $t['lang_code'] ?>">
-<?= vug_icon_sprite() ?>
-<div class="mesh" aria-hidden="true"></div>
-<div class="grain" aria-hidden="true"></div>
+HTML;
 
-<main class="legal-wrap">
+require __DIR__ . '/partials/head.php';
+require __DIR__ . '/partials/header.php';
+?>
+
+<div class="legal-wrap">
     <a class="legal-back" href="<?= $home ?>"><?= vug_icon('arrow-right') ?> <?= htmlspecialchars($labels['back']) ?></a>
 
     <div class="legal-nav">
@@ -187,6 +193,6 @@ $updated = date('d.m.Y.', @filemtime(__FILE__) ?: time());
         <p><?= htmlspecialchars($s[1]) ?></p>
     </section>
     <?php endforeach; ?>
-</main>
-</body>
-</html>
+</div>
+
+<?php require __DIR__ . '/partials/footer.php'; ?>

@@ -6,8 +6,8 @@ return [
     'lang_current_label' => 'SR',
 
     // Meta
-    'meta_title' => 'VUG | Izrada sajtova, aplikacija i marketing',
-    'meta_description' => 'VUG je digitalna agencija za izradu sajtova, web i mobilnih aplikacija, vođenje društvenih mreža, SEO, brending i internet marketing.',
+    'meta_title' => 'VUG — Izrada web sajtova, aplikacija i digitalni marketing',
+    'meta_description' => 'VUG je digitalna agencija iz Pančeva za izradu web sajtova i mobilnih aplikacija, vođenje društvenih mreža, SEO i brending. Zatražite besplatnu ponudu.',
     'meta_keywords' => 'izrada sajtova, izrada web sajtova, web aplikacije, mobilne aplikacije, vođenje društvenih mreža, internet marketing, izrada logoa, digitalna agencija, VUG',
 
     // Nav
@@ -203,7 +203,8 @@ return [
 
     // Footer
     'footer_tagline' => 'Digitalna agencija posvećena strategiji, kvalitetu i merljivim rezultatima.',
-    'footer_services' => 'Usluge',
+    'footer_nav' => 'Navigacija',
+    'footer_services' => 'Korisni linkovi',
     'footer_company' => 'Agencija',
     'footer_contact' => 'Kontakt',
     'footer_rights' => 'Sva prava zadržana.',

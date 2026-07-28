@@ -1,0 +1,2 @@
+# Partiali se uključuju iz PHP-a (require) — direktan HTTP pristup nije dozvoljen.
+Require all denied

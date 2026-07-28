@@ -6,8 +6,8 @@ return [
     'lang_current_label' => 'EN',
 
     // Meta
-    'meta_title' => 'VUG | Web, App Development & Marketing',
-    'meta_description' => 'VUG is a digital agency for websites, web and mobile apps, social media management, SEO, branding and internet marketing.',
+    'meta_title' => 'VUG — Web & Mobile App Development, SEO & Marketing',
+    'meta_description' => 'VUG is a digital agency from Pančevo for website and mobile app development, social media management, SEO and branding. Request your free quote today.',
     'meta_keywords' => 'website development, websites, web applications, mobile applications, social media management, internet marketing, logo design, digital agency, VUG',
 
     // Nav
@@ -203,7 +203,8 @@ return [
 
     // Footer
     'footer_tagline' => 'A digital agency dedicated to strategy, quality and measurable results.',
-    'footer_services' => 'Services',
+    'footer_nav' => 'Navigation',
+    'footer_services' => 'Useful links',
     'footer_company' => 'Agency',
     'footer_contact' => 'Contact',
     'footer_rights' => 'All rights reserved.',

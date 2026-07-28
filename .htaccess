@@ -43,6 +43,19 @@ ErrorDocument 404 /404.php
     # ------------------------------------------------------
     RewriteRule ^en/?$ index.php?lang=en [L,QSA]
 
+    # Lokalne landing stranice (izrada web sajta po gradovima) -> landing.php
+    # EN varijante prvo (specifičnije rute), pa SR.
+    RewriteRule ^en/izrada-web-sajta-pancevo/?$ landing.php?loc=pancevo&lang=en [L,QSA]
+    RewriteRule ^en/izrada-web-sajta-beograd/?$ landing.php?loc=beograd&lang=en [L,QSA]
+    RewriteRule ^izrada-web-sajta-pancevo/?$    landing.php?loc=pancevo [L,QSA]
+    RewriteRule ^izrada-web-sajta-beograd/?$    landing.php?loc=beograd [L,QSA]
+
+    # Vođenje društvenih mreža po gradovima -> landing.php (svc=social)
+    RewriteRule ^en/vodjenje-drustvenih-mreza-pancevo/?$ landing.php?svc=social&loc=pancevo&lang=en [L,QSA]
+    RewriteRule ^en/vodjenje-drustvenih-mreza-beograd/?$ landing.php?svc=social&loc=beograd&lang=en [L,QSA]
+    RewriteRule ^vodjenje-drustvenih-mreza-pancevo/?$     landing.php?svc=social&loc=pancevo [L,QSA]
+    RewriteRule ^vodjenje-drustvenih-mreza-beograd/?$     landing.php?svc=social&loc=beograd [L,QSA]
+
     # Pravne stranice (cisti URL-ovi) -> legal.php
     RewriteRule ^politika-privatnosti/?$ legal.php?doc=privacy [L,QSA]
     RewriteRule ^uslovi-koriscenja/?$    legal.php?doc=terms   [L,QSA]

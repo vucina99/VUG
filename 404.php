@@ -1,21 +1,21 @@
 <?php
 /**
- * VUG — brendirana 404 stranica.
- * Vraća pravi HTTP 404 status (ne soft-404), radi bez JavaScripta, responsive.
- * Postavljena preko: ErrorDocument 404 /404.php  (u .htaccess).
+ * VUG — brendirana 404 stranica (pravi HTTP 404 status).
+ * Koristi zajednički layout: partials/head + header + footer.
+ * Postavljena preko: ErrorDocument 404 /404.php (u .htaccess).
  */
 http_response_code(404);
 
-// Jezik: /en putanja ili ?lang=en => engleski, u suprotnom srpski.
 $req = $_SERVER['REQUEST_URI'] ?? '';
 $lang = (preg_match('#/en(/|$|\?)#', $req) || (($_GET['lang'] ?? '') === 'en')) ? 'en' : 'sr';
 $t = require __DIR__ . '/lang/' . $lang . '.php';
 require __DIR__ . '/php/icons.php';
 
-// Base-path (radi i u podfolderu na lokalu i u rootu na produkciji)
+$SITE_URL    = 'https://vugagency.com';
 $base = rtrim(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? '')), '/');
 $home = $base === '' ? '/' : $base . '/';
 if ($lang === 'en') $home = $base . '/en';
+$phone_clean = preg_replace('/\s+/', '', $t['contact_info_phone']);
 
 $copy = $lang === 'sr' ? [
     'title'    => 'Stranica nije pronađena — VUG',
@@ -49,31 +49,27 @@ $links = [
     ['#faq',        'chat-dots',  $copy['faq']],
     ['#contact',    'envelope',   $copy['contact2']],
 ];
-?>
-<!DOCTYPE html>
-<html lang="<?= $t['lang_code'] ?>">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#0d0820">
-    <meta name="robots" content="noindex, follow">
-    <title><?= htmlspecialchars($copy['title']) ?></title>
-    <link rel="icon" href="<?= $base ?>/favicon.ico" sizes="any">
-    <link rel="icon" type="image/svg+xml" href="<?= $base ?>/img/favicon.svg">
-    <link rel="preload" as="font" type="font/woff2" href="<?= $base ?>/fonts/plus-jakarta-sans-normal-latin.woff2" crossorigin>
-    <link rel="stylesheet" href="<?= $base ?>/css/style.css?v=<?= @filemtime(__DIR__ . '/css/style.css') ?>">
+
+/* ── Zajednički layout ── */
+$meta_title       = $copy['title'];
+$meta_description = $copy['lead'];
+$canonical        = $SITE_URL . '/';
+$robots           = 'noindex, follow';
+$href_other       = $lang === 'sr' ? $base . '/en' : ($base === '' ? '/' : $base . '/');
+
+$nav_prefix       = $home;
+$contact_href     = $home . '#contact';
+$cta_href         = $home . '#contact';
+$show_lang_toggle = true;
+
+$extra_head = <<<'HTML'
     <style>
-        /* Ova stranica nema custom kursor (ni main.js) — vrati normalan miš. */
-        body { cursor: auto; }
         .e404 {
             position: relative; z-index: 1;
-            min-height: 100vh; min-height: 100svh;
+            min-height: calc(100vh - var(--nav-h)); min-height: calc(100svh - var(--nav-h));
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            text-align: center; padding: 120px 20px 70px; overflow: hidden;
+            text-align: center; padding: 80px 20px 70px; overflow: hidden;
         }
-        .e404-brand { position: absolute; top: 30px; left: 50%; transform: translateX(-50%); }
-        .e404-brand img { height: 38px; width: auto; }
-
         .e404-eyebrow {
             display: inline-flex; align-items: center; justify-content: center;
             flex-wrap: wrap; gap: 6px 12px; max-width: 100%;
@@ -90,8 +86,6 @@ $links = [
             0%, 100% { box-shadow: 0 0 0 0 rgba(207, 251, 246, 0.6); }
             70% { box-shadow: 0 0 0 12px rgba(207, 251, 246, 0); }
         }
-
-        /* Ogroman 404 sa gradijentom, mekim sjajem i laganim lebdenjem */
         .e404-num-wrap { position: relative; display: inline-block; margin: 4px 0 6px; }
         .e404-num-wrap::before {
             content: ""; position: absolute; left: 50%; top: 52%;
@@ -111,7 +105,6 @@ $links = [
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-16px); }
         }
-
         .e404-h1 {
             font-size: clamp(26px, 4vw, 44px); font-weight: 800;
             letter-spacing: -0.03em; line-height: 1.08; color: var(--txt);
@@ -122,7 +115,6 @@ $links = [
             color: var(--txt-soft); max-width: 54ch; margin: 20px auto 36px;
         }
         .e404-actions { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
-
         .e404-explore { margin-top: 44px; }
         .e404-explore-label {
             font-family: var(--ff-mono); font-size: 12px; font-weight: 600;
@@ -142,24 +134,19 @@ $links = [
             background: rgba(207, 251, 246, 0.06); transform: translateY(-2px);
         }
         .e404-links .vi { font-size: 15px; }
-
         @media (prefers-reduced-motion: reduce) {
             .e404-num { animation: none; }
             .e404-eyebrow .dot { animation: none; }
             .e404-links a:hover { transform: none; }
         }
     </style>
-</head>
-<body data-lang="<?= $t['lang_code'] ?>">
-<?= vug_icon_sprite() ?>
-<div class="mesh" aria-hidden="true"></div>
-<div class="grain" aria-hidden="true"></div>
+HTML;
 
-<a class="e404-brand" href="<?= $home ?>" aria-label="VUG — <?= $lang === 'sr' ? 'Početna' : 'Home' ?>">
-    <img src="<?= $base ?>/img/logoes/logo-blue-white-c.png" alt="VUG Digital Agency" width="572" height="120">
-</a>
+require __DIR__ . '/partials/head.php';
+require __DIR__ . '/partials/header.php';
+?>
 
-<main class="e404">
+<div class="e404">
     <span class="e404-eyebrow">
         <span class="dot"></span>
         <?= htmlspecialchars($copy['eyebrow']) ?>
@@ -185,6 +172,6 @@ $links = [
             <?php endforeach; ?>
         </div>
     </nav>
-</main>
-</body>
-</html>
+</div>
+
+<?php require __DIR__ . '/partials/footer.php'; ?>

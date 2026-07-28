@@ -45,6 +45,15 @@ $phone_clean = preg_replace('/\s+/', '', $t['contact_info_phone']);
 // Telefon u međunarodnom formatu (E.164) za tel: i schema.org
 $phone_intl  = '+381' . ltrim($phone_clean, '0');
 
+// ── Konfiguracija za deljene partiale (partials/header.php + footer.php) ──
+// Na početnoj su sidra ista stranica (bez prefiksa), CTA vodi na #contact,
+// a prekidač jezika je uključen.
+$base             = $base_path;
+$home             = $href_home;
+$nav_prefix       = '';
+$contact_href     = '#contact';
+$show_lang_toggle = true;
+
 // Profili na društvenim mrežama za JSON-LD "sameAs".
 // Popuni pravim URL-ovima kad budu poznati (prazan niz = izostavlja se iz scheme).
 $social_links = [
@@ -52,80 +61,8 @@ $social_links = [
     'https://www.facebook.com/profile.php?id=61592111037904',
     'https://www.linkedin.com/company/vug-digital-agency/',
 ];
-?>
-<!DOCTYPE html>
-<html lang="<?= $t['lang_code'] ?>">
-<head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-W07YT5991W"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
 
-        gtag('config', 'G-W07YT5991W');
-    </script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#0d0820">
-
-    <title><?= htmlspecialchars($t['meta_title']) ?></title>
-    <meta name="description" content="<?= htmlspecialchars($t['meta_description']) ?>">
-    <meta name="keywords" content="<?= htmlspecialchars($t['meta_keywords']) ?>">
-    <meta name="author" content="VUG">
-    <meta name="publisher" content="VUG">
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-    <meta name="googlebot" content="index, follow">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="geo.region" content="RS-14">
-    <meta name="geo.placename" content="Pančevo">
-
-    <!-- Canonical + hreflang (produkcijski domen) -->
-    <link rel="canonical" href="<?= $canonical ?>">
-    <link rel="alternate" hreflang="sr-RS" href="<?= $url_sr ?>">
-    <link rel="alternate" hreflang="en" href="<?= $url_en ?>">
-    <link rel="alternate" hreflang="x-default" href="<?= $url_en ?>">
-
-    <!-- Open Graph (Facebook, LinkedIn, Viber, WhatsApp…) -->
-    <meta property="og:type" content="website">
-    <meta property="og:locale" content="<?= $lang === 'sr' ? 'sr_RS' : 'en_US' ?>">
-    <meta property="og:locale:alternate" content="<?= $lang === 'sr' ? 'en_US' : 'sr_RS' ?>">
-    <meta property="og:site_name" content="VUG">
-    <meta property="og:title" content="<?= htmlspecialchars($t['meta_title']) ?>">
-    <meta property="og:description" content="<?= htmlspecialchars($t['meta_description']) ?>">
-    <meta property="og:url" content="<?= $canonical ?>">
-    <meta property="og:image" content="<?= $og_image ?>">
-    <meta property="og:image:secure_url" content="<?= $og_image ?>">
-    <meta property="og:image:type" content="image/png">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="VUG — <?= $lang === 'sr' ? 'Digitalna agencija' : 'Digital Agency' ?>">
-
-    <!-- Twitter / X -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="<?= htmlspecialchars($t['meta_title']) ?>">
-    <meta name="twitter:description" content="<?= htmlspecialchars($t['meta_description']) ?>">
-    <meta name="twitter:image" content="<?= $og_image ?>">
-    <meta name="twitter:image:alt" content="VUG — <?= $lang === 'sr' ? 'Digitalna agencija' : 'Digital Agency' ?>">
-
-    <!-- Favicon / PWA ikonice -->
-    <link rel="icon" href="favicon.ico" sizes="any">
-    <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
-    <link rel="icon" type="image/png" sizes="32x32" href="img/icon-32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="img/icon-16.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
-    <link rel="manifest" href="site.webmanifest">
-    <meta name="application-name" content="VUG">
-    <meta name="apple-mobile-web-app-title" content="VUG">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-
-    <!-- Preload loga u navigaciji (vidljiv odmah) -->
-    <link rel="preload" as="image" href="img/logoes/logo-blue-white-c.png">
-
-    <!-- Structured data (schema.org @graph): Organization + WebSite + WebPage/FAQPage -->
-<?php
+// Structured data (schema.org @graph) — priprema se ispod i prosleđuje u partials/head.php.
 $org_id  = $SITE_URL . '/#organization';
 $site_id = $SITE_URL . '/#website';
 
@@ -172,13 +109,11 @@ $org = [
     'logo' => ['@type' => 'ImageObject', 'url' => $SITE_URL . '/img/icon-512.png', 'width' => 512, 'height' => 512],
     'image' => $og_image,
     'description' => $t['meta_description'],
-    'email' => $t['contact_info_email'],
     'telephone' => $phone_intl,
     'contactPoint' => [
         '@type' => 'ContactPoint',
         'contactType' => $lang === 'sr' ? 'Prodaja i podrška' : 'Sales & support',
         'telephone' => $phone_intl,
-        'email' => $t['contact_info_email'],
         'availableLanguage' => ['Serbian', 'English'],
         'areaServed' => 'Worldwide',
     ],
@@ -245,68 +180,23 @@ $schema = [
         ],
     ],
 ];
+
+/* ── SEO varijable za deljeni head (partials/head.php) ── */
+$meta_title       = $t['meta_title'];
+$meta_description = $t['meta_description'];
+$meta_keywords    = $t['meta_keywords'];
+$alt_links = [
+    ['hreflang' => 'sr-RS',     'href' => $url_sr],
+    ['hreflang' => 'en',        'href' => $url_en],
+    ['hreflang' => 'x-default', 'href' => $url_en],
+];
+$geo_region    = 'RS-14';
+$geo_placename = 'Pančevo';
+$json_ld       = $schema;
+
+require __DIR__ . '/partials/head.php';
 ?>
-    <script type="application/ld+json">
-<?= json_encode($schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) ?>
-    </script>
-
-    <!-- Kritičan font (hero H1 + lead) — self-hosted, isti origin, bez render-blocking Google zahteva -->
-    <link rel="preload" as="font" type="font/woff2" href="fonts/plus-jakarta-sans-normal-latin.woff2" crossorigin>
-    <link rel="preload" as="font" type="font/woff2" href="fonts/plus-jakarta-sans-normal-latin-ext.woff2" crossorigin>
-
-    <link rel="stylesheet" href="css/style.css?v=<?= @filemtime(__DIR__ . '/css/style.css') ?>">
-</head>
-<body data-lang="<?= $t['lang_code'] ?>">
-<?= vug_icon_sprite() ?>
-
-<a class="skip-link" href="#main"><?= $lang === 'sr' ? 'Pređi na sadržaj' : 'Skip to content' ?></a>
-
-<!-- Gradient mesh BG -->
-<div class="mesh" aria-hidden="true"></div>
-<div class="grain" aria-hidden="true"></div>
-
-<!-- Custom cursor -->
-<div class="cursor" id="cursor" aria-hidden="true"></div>
-<div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
-
-<!-- NAV -->
-<nav class="nav" id="nav" aria-label="<?= $lang === 'sr' ? 'Glavna navigacija' : 'Main navigation' ?>">
-    <div class="container nav-inner">
-        <a href="<?= $href_home ?>" class="brand" aria-label="VUG — <?= $lang === 'sr' ? 'Početna' : 'Home' ?>">
-            <img src="img/logoes/logo-blue-white-c.png" alt="VUG Digital Agency" class="brand-logo" width="572" height="120">
-        </a>
-
-        <div class="nav-links">
-            <a href="#services" class="nav-link"><?= $t['nav_services'] ?></a>
-            <a href="#about" class="nav-link"><?= $t['nav_about'] ?></a>
-            <a href="#process" class="nav-link"><?= $t['nav_process'] ?></a>
-            <a href="#faq" class="nav-link"><?= $t['nav_faq'] ?></a>
-            <a href="#references" class="nav-link"><?= $t['nav_references'] ?></a>
-            <a href="#contact" class="nav-link"><?= $t['nav_contact'] ?></a>
-        </div>
-
-        <div class="nav-actions">
-            <a href="<?= $href_other ?>" class="lang-toggle">
-                <span class="now"><?= $t['lang_current_label'] ?></span>/<span class="other"><?= $t['lang_other_label'] ?></span>
-            </a>
-            <a href="#contact" class="btn btn--primary is-magnetic"><?= $t['nav_cta'] ?></a>
-            <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
-                <span></span><span></span><span></span>
-            </button>
-        </div>
-    </div>
-</nav>
-
-<div class="nav-mobile " id="navMobile" role="navigation" aria-label="<?= $lang === 'sr' ? 'Mobilna navigacija' : 'Mobile navigation' ?>" aria-hidden="true">
-    <a href="#services"><?= $t['nav_services'] ?></a>
-    <a href="#about"><?= $t['nav_about'] ?></a>
-    <a href="#process"><?= $t['nav_process'] ?></a>
-    <a href="#faq"><?= $t['nav_faq'] ?></a>
-    <a href="#references"><?= $t['nav_references'] ?></a>
-    <a href="#contact"><?= $t['nav_contact'] ?></a>
-</div>
-
-<main id="main">
+<?php require __DIR__ . '/partials/header.php'; ?>
 
 <!-- HERO -->
 <header class="hero" id="home">
@@ -703,7 +593,7 @@ TEAM ("Ko stoji iza VUG-a") — samo ako postoje stvarni podaci (ime, uloga, fot
                         <div class="info-ic"><?= vug_icon('envelope-fill') ?></div>
                         <div>
                             <span class="info-label">Email</span>
-                            <a href="mailto:<?= $t['contact_info_email'] ?>"><?= $t['contact_info_email'] ?></a>
+                            <a href="<?= vug_email_obf('mailto:' . $t['contact_info_email']) ?>"><?= vug_email_obf($t['contact_info_email']) ?></a>
                         </div>
                     </li>
                     <li>
@@ -787,74 +677,4 @@ TEAM ("Ko stoji iza VUG-a") — samo ako postoje stvarni podaci (ime, uloga, fot
     </div>
 </section>
 
-</main>
-
-<!-- FOOTER -->
-<footer class="footer">
-    <div class="container">
-        <div class="footer-top">
-            <div>
-                <a href="<?= $href_home ?>" class="brand brand--footer">
-                    <img src="img/logoes/logo-blue-white-c.png" alt="VUG Digital Agency" class="brand-logo" width="572" height="120" loading="lazy">
-                </a>
-                <p class="footer-tagline"><?= $t['footer_tagline'] ?></p>
-                <div class="socials footer-socials">
-                    <a href="https://www.instagram.com/vugagency" target="_blank" rel="noopener" aria-label="Instagram"><?= vug_icon('instagram') ?></a>
-                    <a href="https://www.facebook.com/profile.php?id=61592111037904" target="_blank" rel="noopener" aria-label="Facebook"><?= vug_icon('facebook') ?></a>
-                    <a href="https://www.linkedin.com/company/vug-digital-agency/" target="_blank" rel="noopener" aria-label="LinkedIn"><?= vug_icon('linkedin') ?></a>
-                </div>
-            </div>
-            <div>
-                <div class="footer-h"><?= $t['footer_services'] ?></div>
-                <ul class="footer-list">
-                    <li><a href="#services"><?= $t['service_1_title'] ?></a></li>
-                    <li><a href="#services"><?= $t['service_3_title'] ?></a></li>
-                    <li><a href="#services"><?= $t['service_5_title'] ?></a></li>
-                    <li><a href="#services"><?= $t['service_4_title'] ?></a></li>
-                    <li><a href="#services"><?= $t['service_6_title'] ?></a></li>
-                </ul>
-            </div>
-            <div>
-                <div class="footer-h"><?= $t['footer_company'] ?></div>
-                <ul class="footer-list">
-                    <li><a href="#about"><?= $t['nav_about'] ?></a></li>
-                    <li><a href="#process"><?= $t['nav_process'] ?></a></li>
-                    <li><a href="#faq"><?= $t['nav_faq'] ?></a></li>
-                    <li><a href="#contact"><?= $t['nav_contact'] ?></a></li>
-                </ul>
-            </div>
-            <div>
-                <div class="footer-h"><?= $t['footer_contact'] ?></div>
-                <ul class="footer-list">
-                    <li><?= vug_icon('envelope') ?><a href="mailto:<?= $t['contact_info_email'] ?>"><?= $t['contact_info_email'] ?></a></li>
-                    <li><?= vug_icon('telephone') ?><a href="tel:<?= $phone_clean ?>"><?= $t['contact_info_phone'] ?></a></li>
-                    <li><?= vug_icon('geo-alt') ?><?= $t['contact_info_location'] ?></li>
-                </ul>
-            </div>
-        </div>
-        <?php
-        // Pravne stranice — cisti URL-ovi (base-path aware); EN dobija ?lang=en.
-        $legal_q = $lang === 'en' ? '?lang=en' : '';
-        $legal_privacy = $base_path . '/politika-privatnosti' . $legal_q;
-        $legal_terms   = $base_path . '/uslovi-koriscenja' . $legal_q;
-        $legal_cookies = $base_path . '/politika-kolacica' . $legal_q;
-        ?>
-        <div class="footer-bottom">
-            <span>&copy; <?= date('Y') ?> VUG. <?= $t['footer_rights'] ?></span>
-            <nav class="footer-legal" aria-label="<?= $t['footer_legal'] ?>">
-                <a href="<?= $legal_privacy ?>"><?= $t['footer_privacy'] ?></a>
-                <a href="<?= $legal_terms ?>"><?= $t['footer_terms'] ?></a>
-                <a href="<?= $legal_cookies ?>"><?= $t['footer_cookies'] ?></a>
-            </nav>
-            <span><?= $t['footer_made'] ?></span>
-        </div>
-    </div>
-</footer>
-
-<a href="#home" class="to-top" aria-label="Top"><?= vug_icon('arrow-up') ?></a>
-
-<!-- reCAPTCHA se učitava LENJO (na prvu interakciju sa formom) preko js/main.js,
-     da ne bi blokirala inicijalni render niti trošila ~250KB na svakom učitavanju. -->
-<script src="js/main.js?v=<?= @filemtime(__DIR__ . '/js/main.js') ?>" defer></script>
-</body>
-</html>
+<?php require __DIR__ . '/partials/footer.php'; ?>

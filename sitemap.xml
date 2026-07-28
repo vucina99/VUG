@@ -4,7 +4,7 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
     <url>
         <loc>https://vugagency.com/</loc>
-        <lastmod>2026-07-22</lastmod>
+        <lastmod>2026-07-27</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
         <xhtml:link rel="alternate" hreflang="sr-RS" href="https://vugagency.com/"/>
@@ -17,7 +17,7 @@
     </url>
     <url>
         <loc>https://vugagency.com/en</loc>
-        <lastmod>2026-07-22</lastmod>
+        <lastmod>2026-07-27</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
         <xhtml:link rel="alternate" hreflang="sr-RS" href="https://vugagency.com/"/>
@@ -27,5 +27,93 @@
             <image:loc>https://vugagency.com/img/og-image.png</image:loc>
             <image:title>VUG — Digital Agency</image:title>
         </image:image>
+    </url>
+    <url>
+        <loc>https://vugagency.com/izrada-web-sajta-pancevo</loc>
+        <lastmod>2026-07-27</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+        <xhtml:link rel="alternate" hreflang="sr-RS" href="https://vugagency.com/izrada-web-sajta-pancevo"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://vugagency.com/en/izrada-web-sajta-pancevo"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://vugagency.com/izrada-web-sajta-pancevo"/>
+        <image:image>
+            <image:loc>https://vugagency.com/img/web-mockup.svg</image:loc>
+            <image:title>Izrada web sajta Pančevo — VUG</image:title>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://vugagency.com/en/izrada-web-sajta-pancevo</loc>
+        <lastmod>2026-07-27</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="sr-RS" href="https://vugagency.com/izrada-web-sajta-pancevo"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://vugagency.com/en/izrada-web-sajta-pancevo"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://vugagency.com/izrada-web-sajta-pancevo"/>
+    </url>
+    <url>
+        <loc>https://vugagency.com/izrada-web-sajta-beograd</loc>
+        <lastmod>2026-07-27</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+        <xhtml:link rel="alternate" hreflang="sr-RS" href="https://vugagency.com/izrada-web-sajta-beograd"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://vugagency.com/en/izrada-web-sajta-beograd"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://vugagency.com/izrada-web-sajta-beograd"/>
+        <image:image>
+            <image:loc>https://vugagency.com/img/web-mockup.svg</image:loc>
+            <image:title>Izrada web sajta Beograd — VUG</image:title>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://vugagency.com/en/izrada-web-sajta-beograd</loc>
+        <lastmod>2026-07-27</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="sr-RS" href="https://vugagency.com/izrada-web-sajta-beograd"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://vugagency.com/en/izrada-web-sajta-beograd"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://vugagency.com/izrada-web-sajta-beograd"/>
+    </url>
+    <url>
+        <loc>https://vugagency.com/vodjenje-drustvenih-mreza-beograd</loc>
+        <lastmod>2026-07-27</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+        <xhtml:link rel="alternate" hreflang="sr-RS" href="https://vugagency.com/vodjenje-drustvenih-mreza-beograd"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://vugagency.com/en/vodjenje-drustvenih-mreza-beograd"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://vugagency.com/vodjenje-drustvenih-mreza-beograd"/>
+        <image:image>
+            <image:loc>https://vugagency.com/img/social-mockup.svg</image:loc>
+            <image:title>Vođenje društvenih mreža Beograd — VUG</image:title>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://vugagency.com/en/vodjenje-drustvenih-mreza-beograd</loc>
+        <lastmod>2026-07-27</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="sr-RS" href="https://vugagency.com/vodjenje-drustvenih-mreza-beograd"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://vugagency.com/en/vodjenje-drustvenih-mreza-beograd"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://vugagency.com/vodjenje-drustvenih-mreza-beograd"/>
+    </url>
+    <url>
+        <loc>https://vugagency.com/vodjenje-drustvenih-mreza-pancevo</loc>
+        <lastmod>2026-07-27</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+        <xhtml:link rel="alternate" hreflang="sr-RS" href="https://vugagency.com/vodjenje-drustvenih-mreza-pancevo"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://vugagency.com/en/vodjenje-drustvenih-mreza-pancevo"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://vugagency.com/vodjenje-drustvenih-mreza-pancevo"/>
+        <image:image>
+            <image:loc>https://vugagency.com/img/social-mockup.svg</image:loc>
+            <image:title>Vođenje društvenih mreža Pančevo — VUG</image:title>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://vugagency.com/en/vodjenje-drustvenih-mreza-pancevo</loc>
+        <lastmod>2026-07-27</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="sr-RS" href="https://vugagency.com/vodjenje-drustvenih-mreza-pancevo"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://vugagency.com/en/vodjenje-drustvenih-mreza-pancevo"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://vugagency.com/vodjenje-drustvenih-mreza-pancevo"/>
     </url>
 </urlset>
