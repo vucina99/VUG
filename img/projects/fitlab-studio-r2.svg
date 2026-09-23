@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 1280" width="720" height="1280" role="img" aria-label="Treneri" fill="none">
+  <title>Treneri</title>
+  <defs>
+    <linearGradient id="v4fcc02acc" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#cffbf6"/><stop offset="1" stop-color="#abbbe5"/>
+    </linearGradient>
+    <linearGradient id="v4fcc02panel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#241a44"/><stop offset="1" stop-color="#160f30"/>
+    </linearGradient>
+    <linearGradient id="v4fcc02deep" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4f4698"/><stop offset="1" stop-color="#241a44"/>
+    </linearGradient>
+    <linearGradient id="v4fcc02fade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0d0820" stop-opacity="0"/><stop offset="1" stop-color="#0d0820" stop-opacity=".85"/>
+    </linearGradient>
+    <filter id="v4fcc02blur" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="70"/>
+    </filter>
+  </defs>
+  <rect width="720" height="1280" fill="#120c28"/>
+  <g filter="url(#v4fcc02blur)" opacity=".95">
+    <circle cx="357" cy="666" r="300" fill="#cffbf6" opacity=".5"/>
+    <circle cx="360" cy="1060" r="260" fill="#abbbe5" opacity=".22"/>
+    <circle cx="200" cy="300" r="220" fill="#4f4698" opacity=".6"/>
+  </g>
+
+  <rect x="40" y="52" width="150" height="6" rx="3" fill="#ffffff" fill-opacity=".28"/>
+  <rect x="205" y="52" width="150" height="6" rx="3" fill="#ffffff" fill-opacity=".95"/>
+  <rect x="370" y="52" width="150" height="6" rx="3" fill="#ffffff" fill-opacity=".28"/>
+  <rect x="535" y="52" width="150" height="6" rx="3" fill="#ffffff" fill-opacity=".28"/>
+  <circle cx="72" cy="112" r="26" fill="url(#v4fcc02acc)"/>
+  <rect x="112" y="100" width="150" height="14" rx="7" fill="#ffffff" fill-opacity=".28"/>
+  <rect x="112" y="122" width="90" height="10" rx="5" fill="#ffffff" fill-opacity=".14"/>
+
+  <!-- anketa / sticker -->
+  <rect x="72" y="470" width="576" height="240" rx="30" fill="#160f30" fill-opacity=".72" stroke="#ffffff" stroke-opacity=".16"/>
+  <rect x="112" y="512" width="300" height="20" rx="10" fill="#ffffff" fill-opacity=".3"/>
+  <rect x="112" y="566" width="496" height="54" rx="18" fill="url(#v4fcc02acc)"/>
+  <rect x="112" y="634" width="496" height="54" rx="18" fill="#ffffff" fill-opacity=".1"/>
+
+  <!-- swipe up -->
+  <rect x="220" y="1108" width="280" height="62" rx="31" fill="#abbbe5"/>
+  <path d="M348 1152l12-16 12 16" stroke="#160f30" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="252" y="1126" width="80" height="14" rx="7" fill="#160f30" fill-opacity=".55"/>
+</svg>

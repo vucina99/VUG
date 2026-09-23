@@ -1,6 +1,6 @@
 <?php
 /**
- * VUG — Contact form handler
+ * VUG - Contact form handler
  * Server-side validacija + HTML email + JSON response za AJAX.
  */
 
@@ -169,15 +169,15 @@ if (!empty($errors)) {
 }
 
 // ====== HTML EMAIL TEMPLATE ======
-$ip       = $_SERVER['REMOTE_ADDR'] ?? '—';
-$ua       = $_SERVER['HTTP_USER_AGENT'] ?? '—';
+$ip       = $_SERVER['REMOTE_ADDR'] ?? '-';
+$ua       = $_SERVER['HTTP_USER_AGENT'] ?? '-';
 $dateStr  = date('d.m.Y. H:i');
 $siteHost = $_SERVER['HTTP_HOST'] ?? 'vugagency.com';
 
 // Napomena: mejl klijenti (Gmail/Outlook/Apple Mail) brišu <svg> i često ne
 // podržavaju CSS gradijente, pa je brend odrađen tekstualno + solid fallback
-// bojama (bgcolor), a layout kroz <table> — "bulletproof" responsive email.
-$preheader = 'Nova poruka od ' . $name . ' — ' . $subject;
+// bojama (bgcolor), a layout kroz <table> - "bulletproof" responsive email.
+$preheader = 'Nova poruka od ' . $name . ' - ' . $subject;
 
 $html = '<!DOCTYPE html>
 <html lang="sr" xmlns="http://www.w3.org/1999/xhtml">
@@ -185,7 +185,7 @@ $html = '<!DOCTYPE html>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>Nova poruka — VUG</title>
+<title>Nova poruka - VUG</title>
 <style>
   body { margin:0 !important; padding:0 !important; width:100% !important; }
   table { border-collapse:collapse; }
@@ -201,7 +201,7 @@ $html = '<!DOCTYPE html>
     .vug-stack  { display:block !important; width:100% !important; text-align:left !important; padding:0 !important; }
     .vug-stack-r{ text-align:left !important; padding-top:12px !important; }
   }
-  /* Tamni režim — samo suptilno, kartica ostaje čitljiva */
+  /* Tamni režim - samo suptilno, kartica ostaje čitljiva */
   @media (prefers-color-scheme: dark) {
     .vug-body { background:#07040f !important; }
   }
@@ -287,7 +287,7 @@ $html = '<!DOCTYPE html>
 
       <!-- Footer -->
       <tr><td bgcolor="#0d0820" style="padding:24px 36px;background:#0d0820;text-align:center;">
-        <div style="color:#ffffff;font-size:13px;font-weight:700;letter-spacing:0.02em;">VUG — Digitalna agencija</div>
+        <div style="color:#ffffff;font-size:13px;font-weight:700;letter-spacing:0.02em;">VUG - Digitalna agencija</div>
         <div style="color:#7d7a99;font-size:11px;margin-top:5px;">Pančevo · Srbija &nbsp;·&nbsp; <a href="https://' . safe($siteHost) . '" style="color:#7d7a99;">' . safe($siteHost) . '</a></div>
       </td></tr>
 
@@ -299,7 +299,7 @@ $html = '<!DOCTYPE html>
 </html>';
 
 // ====== PLAIN TEXT FALLBACK ======
-$plain  = "Nova poruka — VUG\n";
+$plain  = "Nova poruka - VUG\n";
 $plain .= str_repeat('=', 40) . "\n\n";
 $plain .= "Ime:     $name\n";
 $plain .= "Email:   $email\n";

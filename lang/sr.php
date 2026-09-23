@@ -6,8 +6,8 @@ return [
     'lang_current_label' => 'SR',
 
     // Meta
-    'meta_title' => 'VUG — Izrada web sajtova, aplikacija i digitalni marketing',
-    'meta_description' => 'VUG je digitalna agencija iz Pančeva za izradu web sajtova i mobilnih aplikacija, vođenje društvenih mreža, SEO i brending. Zatražite besplatnu ponudu.',
+    'meta_title' => 'VUG - Izrada web sajtova, aplikacija i digitalni marketing',
+    'meta_description' => 'Digitalna agencija iz Pančeva - izrada web sajtova, mobilne aplikacije, društvene mreže, SEO i brending. Besplatna ponuda.',
     'meta_keywords' => 'izrada sajtova, izrada web sajtova, web aplikacije, mobilne aplikacije, vođenje društvenih mreža, internet marketing, izrada logoa, digitalna agencija, VUG',
 
     // Nav
@@ -112,6 +112,110 @@ return [
     'references_title' => 'Brendovi koji nam veruju',
     'references_subtitle' => 'Mali izbor kompanija sa kojima smo imali zadovoljstvo da sarađujemo.',
 
+    // ── Portfolio (sekcija na početnoj + /projekti + /projekti/<slug>) ──
+    // Tekstovi samih projekata su u php/projects.php (bilingvalno, kao legal.php).
+    'nav_projects' => 'Projekti',
+
+    'projects_eyebrow' => 'Naši projekti',
+    'projects_title' => 'Realizovani projekti',
+    'projects_subtitle' => 'U nastavku izdvajamo neke od projekata koje smo realizovali u oblastima izrade sajtova i web aplikacija, mobilnih aplikacija, brendinga i vođenja društvenih mreža.',
+    'projects_view' => 'Otvorite projekat',
+    'projects_cta_all' => 'Pogledajte sve projekte',
+    'projects_more_text' => 'Kompletan portfolio, sa detaljima i rezultatima svakog projekta, nalazi se na <em>jednom mestu</em>.',
+
+    'pf_meta_title' => 'Portfolio - projekti agencije VUG | Sajtovi, web aplikacije i društvene mreže',
+    'pf_meta_description' => 'Portfolio agencije VUG: izrada sajtova i web aplikacija, mobilne aplikacije, brending i vođenje društvenih mreža. Pogledajte kako vodimo projekat - od prvog razgovora do merljivog rezultata.',
+    'pf_meta_keywords' => 'portfolio, projekti, izrada sajtova, izrada web aplikacija, mobilne aplikacije, brending, vođenje društvenih mreža, VUG',
+    'pf_badge' => 'Portfolio agencije VUG',
+    'pf_title_1' => 'Ideje koje smo pretvorili',
+    'pf_title_2' => 'u digitalna rešenja',
+    'pf_lead' => 'Neki od brendova sa kojima smo sarađivali prepoznali su vrednost jasne strategije, kvalitetnog dizajna i promišljenih digitalnih rešenja. Ponosni smo na projekte koje smo zajedno realizovali i rezultate koje smo ostvarili. Hoće li se i Vaš brend naći na ovoj listi?',
+    'pf_stat_1_label' => 'Realizovanih projekata',
+    'pf_stat_2_label' => 'Kategorije projekata',
+    'pf_stat_3_label' => 'Tehnologija u primeni',
+    'pf_cta_scroll' => 'Pregledajte projekte',
+    'pf_ticker' => ['Web sajtovi', 'Web aplikacije', 'Mobilne aplikacije', 'E‑commerce', 'Brending', 'Logo', 'Društvene mreže', 'Oglašavanje', 'SEO'],
+
+    // Oblasti rada (sekcija #scope na /projekti). Nazivi i redosled prate usluge
+    // sa početne strane (services_*), da sajt govori istim jezikom.
+    'pf_scope_eyebrow' => 'Naše usluge',
+    'pf_scope_title_1' => 'U čemu smo',
+    'pf_scope_title_2' => 'najbolji',
+    'pf_scope_lead' => 'Sve navedene usluge izvodimo pod jednim krovom i preuzimamo ih pojedinačno ili kao celinu - od prvog razgovora do podrške nakon lansiranja.',
+    // Poziv na kontakt na dnu sekcije (sadrži <em>, ide neescape-ovano)
+    'pf_contact_text' => 'Pošaljite nam kratak opis projekta i dobijate <em>ponudu sa predlogom rešenja</em> - bez obaveze i bez skrivenih troškova.',
+    // Četiri oblasti; treći element je spisak usluga (nazivi kao na početnoj).
+    'pf_areas' => [
+        [
+            'Sajtovi i web aplikacije',
+            'Poslovne prezentacije, web prodavnice i sistemi po meri - brzi, bezbedni i napravljeni tako da rastu zajedno sa Vašim poslom.',
+            ['Web prezentacije', 'Web prodavnice', 'Web aplikacije', 'Custom kod'],
+        ],
+        [
+            'Mobilne aplikacije',
+            'Native i cross‑platform aplikacije za iOS i Android - jasne za korišćenje i povezane sa istim podacima kao Vaš sajt.',
+            ['iOS', 'Android', 'Cross‑platform', 'Integracija sa sajtom'],
+        ],
+        [
+            'Brending i grafički dizajn',
+            'Vizuelni identitet koji se prenosi sa ekrana na papir - od logotipa i tipografije do vizit karti, flajera i trifold brošura.',
+            ['Logo & brend', 'UI/UX dizajn', 'Vizit karte', 'Flajeri & trifold'],
+        ],
+        [
+            'Društvene mreže i oglašavanje',
+            'Instagram, Facebook, TikTok i LinkedIn, uz pažljivo vođene Google i Meta kampanje. Kreiramo sadržaj, planiramo objave i upravljamo budžetom sa jasnim fokusom na rezultate.',
+            ['Content & reels', 'Community', 'Google Ads', 'Meta Ads'],
+        ],
+    ],
+
+    'pd_back' => 'Svi projekti',
+    'pd_client' => 'Klijent',
+    'pd_year' => 'Godina',
+    'pd_duration' => 'Trajanje',
+    'pd_sector' => 'Industrija',
+    'pd_services_label' => 'Usluge na projektu',
+    'pd_visit' => 'Otvorite sajt',
+    'pd_summary_label' => 'Rezime',
+    'pd_story_eyebrow' => 'O projektu',
+    'pd_challenge' => 'Zadatak',
+    'pd_approach' => 'Naš pristup',
+    'pd_result' => 'Rezultat',
+    'pd_highlights_eyebrow' => 'Realizacija',
+    'pd_highlights_title' => 'Ključne funkcionalnosti',
+    'pd_gallery_eyebrow' => 'Galerija',
+    'pd_gallery_title' => 'Prikazi iz projekta',
+    'pd_stack_title' => 'Tehnologije i alati',
+    'pd_prev' => 'Prethodni projekat',
+    'pd_next' => 'Sledeći projekat',
+    'pd_nav_eyebrow' => 'Drugi projekti',
+    'pd_lb_close' => 'Zatvori pregled',
+    'pd_lb_prev' => 'Prethodna slika',
+    'pd_lb_next' => 'Sledeća slika',
+    'pd_story_title' => 'Od zadatka do rezultata',
+    // Poziv na kontakt na dnu stranice projekta (svetla sekcija, iznad futera)
+    'pd_cta_title_1' => 'Planirate',
+    'pd_cta_title_2' => 'sličan projekat?',
+    'pd_cta_note' => 'Odgovaramo u roku od nekoliko minuta.',
+
+    // ── Šablon „web“ (sajtovi i web aplikacije) ──
+    'pdw_live' => 'Uživo',
+    'pdw_preview' => 'Prikaz projekta',
+
+    // ── Šablon „social“ (vođenje društvenih mreža) ──
+    'pds_visit' => 'Otvorite profil',
+    'pds_channels_label' => 'Kanali',
+    'pds_grid_label' => 'Mreža objava',
+    'pds_pillars_eyebrow' => 'Sadržaj',
+    'pds_pillars_title' => 'Rubrike koje vodimo',
+    'pds_pillars_lead' => 'Sadržaj ne nastaje slučajno - svaka objava pripada jednoj rubrici, pa profil ima ritam koji publika prepoznaje.',
+    'pds_formats_label' => 'Formati',
+    'pds_rhythm_eyebrow' => 'Ritam',
+    'pds_rhythm_title' => 'Kalendar objavljivanja',
+    'pds_rhythm_lead' => 'Unapred znamo šta izlazi i kada, pa snimanje ide u jednoj sesiji, a objave nikad ne staju.',
+    'pds_work_title' => 'Šta radimo na profilu',
+    'pds_reports_label' => 'Profil, identitet i izveštaji',
+    'pds_tools_label' => 'Alati u radu',
+
     // Testimonials
     'testimonials_eyebrow' => 'Šta kažu klijenti',
     'testimonials_title' => 'Reči koje nas inspirišu da damo više',
@@ -185,7 +289,7 @@ return [
     'form_name' => 'Ime i prezime',
     'form_name_ph' => 'npr. Marko Marković',
     'form_email' => 'Email adresa',
-    // NAPOMENA: placeholder namerno NIJE u obliku email adrese — skeneri (i spam
+    // NAPOMENA: placeholder namerno NIJE u obliku email adrese - skeneri (i spam
     // harvesteri) čitaju svaki "nesto@nesto.tld" iz izvornog koda kao pravi email.
     'form_email_ph' => 'Vaša email adresa',
     'form_subject' => 'Naslov poruke',

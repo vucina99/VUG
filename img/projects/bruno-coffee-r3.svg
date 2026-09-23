@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 1280" width="720" height="1280" role="img" aria-label="Ljudi iza šanka" fill="none">
+  <title>Ljudi iza šanka</title>
+  <defs>
+    <linearGradient id="v0c0a19acc" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5dd3f5"/><stop offset="1" stop-color="#cffbf6"/>
+    </linearGradient>
+    <linearGradient id="v0c0a19panel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#241a44"/><stop offset="1" stop-color="#160f30"/>
+    </linearGradient>
+    <linearGradient id="v0c0a19deep" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4f4698"/><stop offset="1" stop-color="#241a44"/>
+    </linearGradient>
+    <linearGradient id="v0c0a19fade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0d0820" stop-opacity="0"/><stop offset="1" stop-color="#0d0820" stop-opacity=".85"/>
+    </linearGradient>
+    <filter id="v0c0a19blur" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="70"/>
+    </filter>
+  </defs>
+  <rect width="720" height="1280" fill="#120c28"/>
+  <g filter="url(#v0c0a19blur)" opacity=".95">
+    <circle cx="539" cy="433" r="300" fill="#5dd3f5" opacity=".5"/>
+    <circle cx="360" cy="1060" r="260" fill="#cffbf6" opacity=".22"/>
+    <circle cx="200" cy="300" r="220" fill="#4f4698" opacity=".6"/>
+  </g>
+  <rect x="60" y="120" width="600" height="540" rx="34" fill="url(#v0c0a19acc)" opacity=".92"/>
+  <circle cx="360" cy="356" r="118" fill="#160f30" fill-opacity=".2"/>
+  <rect x="112" y="176" width="180" height="18" rx="9" fill="#160f30" fill-opacity=".3"/>
+  <rect x="688" y="180" width="26" height="420" rx="13" fill="#ffffff" fill-opacity=".1"/>
+  <rect x="112" y="556" width="300" height="24" rx="12" fill="#160f30" fill-opacity=".32"/>
+
+  <rect x="88" y="720" width="544" height="72" rx="20" fill="#ffffff" fill-opacity=".06"/>
+  <circle cx="128" cy="756" r="16" fill="#5dd3f5" opacity=".85"/>
+  <rect x="160" y="749" width="276" height="14" rx="7" fill="#ffffff" fill-opacity=".2"/>
+  <rect x="88" y="816" width="544" height="72" rx="20" fill="#ffffff" fill-opacity=".06"/>
+  <circle cx="128" cy="852" r="16" fill="#cffbf6" opacity=".85"/>
+  <rect x="160" y="845" width="260" height="14" rx="7" fill="#ffffff" fill-opacity=".2"/>
+  <rect x="88" y="912" width="544" height="72" rx="20" fill="#ffffff" fill-opacity=".06"/>
+  <circle cx="128" cy="948" r="16" fill="#5dd3f5" opacity=".85"/>
+  <rect x="160" y="941" width="341" height="14" rx="7" fill="#ffffff" fill-opacity=".2"/>
+
+  <!-- tačkice karusela -->
+  <circle cx="312" cy="1152" r="9" fill="#cffbf6"/>
+  <circle cx="344" cy="1152" r="9" fill="#ffffff" fill-opacity=".28"/>
+  <circle cx="376" cy="1152" r="9" fill="#ffffff" fill-opacity=".28"/>
+  <circle cx="408" cy="1152" r="9" fill="#ffffff" fill-opacity=".28"/>
+</svg>

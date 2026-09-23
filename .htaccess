@@ -5,8 +5,11 @@
 # Default dokument
 DirectoryIndex index.php index.html
 
-# Bez listanja direktorijuma
-Options -Indexes
+# Bez listanja direktorijuma.
+# -MultiViews je OBAVEZAN: sa uključenim MultiViews Apache sam mapira
+# /projekti/<slug> na projekti.php (+ PATH_INFO) PRE mod_rewrite pravila,
+# pa stranica pojedinačnog projekta nikad ne bi bila pozvana.
+Options -Indexes -MultiViews
 
 # UTF-8 default
 AddDefaultCharset UTF-8
@@ -42,6 +45,26 @@ ErrorDocument 404 /404.php
     # Radi i u podfolderu (lokal) i u rootu (produkcija).
     # ------------------------------------------------------
     RewriteRule ^en/?$ index.php?lang=en [L,QSA]
+
+    # ------------------------------------------------------
+    # Portfolio — PRIVREMENO ISKLJUČEN (2026-09-23, pred izlazak na produkciju).
+    # Sadržaj je demo, pa stranice ne smeju da postoje ni za posetioca ni za
+    # Google: sve rute vraćaju pravi 404, kao i direktan pristup .php fajlovima.
+    # NAMERNO bez Disallow u robots.txt — zabrana puzanja bi sprečila Google da
+    # uopšte vidi 404, pa bi URL-ovi duže ostali u indeksu.
+    # Fajlovi (projekti.php, projekat.php, php/projects.php, img/projects/) NISU
+    # obrisani. Vraćanje portfolija = obrisati tri 404 pravila ispod, odkomentarisati
+    # rute, vratiti stavku u partials/header.php i footer.php i dodati URL-ove u
+    # sitemap.xml (uz $GLOBALS['VUG_PROJECTS_DEMO'] = false u php/projects.php).
+    #
+    #   RewriteRule ^en/projects/?$ projekti.php?lang=en [L,QSA]
+    #   RewriteRule ^projekti/?$    projekti.php [L,QSA]
+    #   RewriteRule ^en/projects/([a-z0-9-]+)/?$ projekat.php?slug=$1&lang=en [L,QSA]
+    #   RewriteRule ^projekti/([a-z0-9-]+)/?$    projekat.php?slug=$1 [L,QSA]
+    # ------------------------------------------------------
+    RewriteRule ^en/projects(/|$)          - [R=404,L]
+    RewriteRule ^projekti(/|$)             - [R=404,L]
+    RewriteRule ^(projekti|projekat)\.php$ - [R=404,L]
 
     # Lokalne landing stranice (izrada web sajta po gradovima) -> landing.php
     # EN varijante prvo (specifičnije rute), pa SR.

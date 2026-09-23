@@ -6,8 +6,8 @@ return [
     'lang_current_label' => 'EN',
 
     // Meta
-    'meta_title' => 'VUG — Web & Mobile App Development, SEO & Marketing',
-    'meta_description' => 'VUG is a digital agency from Pančevo for website and mobile app development, social media management, SEO and branding. Request your free quote today.',
+    'meta_title' => 'VUG - Web & Mobile App Development, SEO & Marketing',
+    'meta_description' => 'Digital agency from Pančevo - websites, mobile apps, social media management, SEO and branding. Request your free quote.',
     'meta_keywords' => 'website development, websites, web applications, mobile applications, social media management, internet marketing, logo design, digital agency, VUG',
 
     // Nav
@@ -112,6 +112,110 @@ return [
     'references_title' => 'Brands that trust us',
     'references_subtitle' => 'A selection of companies we\'ve had the pleasure of working with.',
 
+    // ── Portfolio (home section + /en/projects + /en/projects/<slug>) ──
+    // The project copy itself lives in php/projects.php (bilingual, like legal.php).
+    'nav_projects' => 'Projects',
+
+    'projects_eyebrow' => 'Our projects',
+    'projects_title' => 'Delivered projects',
+    'projects_subtitle' => 'Below we highlight some of the projects we have delivered in website and web app development, mobile apps, branding and social media management.',
+    'projects_view' => 'Open project',
+    'projects_cta_all' => 'View all projects',
+    'projects_more_text' => 'The complete portfolio, with the details and results of every project, is in <em>one place</em>.',
+
+    'pf_meta_title' => 'Portfolio - VUG agency projects | Websites, web apps and social media',
+    'pf_meta_description' => 'The VUG agency portfolio: websites and web apps, mobile apps, branding and social media management. See how we run a project - from the first conversation to a measurable result.',
+    'pf_meta_keywords' => 'portfolio, projects, website development, web app development, mobile apps, branding, social media management, VUG',
+    'pf_badge' => 'The VUG agency portfolio',
+    'pf_title_1' => 'Ideas we turned into',
+    'pf_title_2' => 'digital solutions',
+    'pf_lead' => 'Some of the brands we have worked with recognized the value of a clear strategy, quality design and carefully considered digital solutions. We are proud of the projects we delivered together and of the results we achieved. Will your brand be on this list too?',
+    'pf_stat_1_label' => 'Projects delivered',
+    'pf_stat_2_label' => 'Project categories',
+    'pf_stat_3_label' => 'Technologies in use',
+    'pf_cta_scroll' => 'Browse the projects',
+    'pf_ticker' => ['Websites', 'Web apps', 'Mobile apps', 'E‑commerce', 'Branding', 'Logo', 'Social media', 'Advertising', 'SEO'],
+
+    // Oblasti rada (sekcija #scope na /projekti). Nazivi i redosled prate usluge
+    // sa početne strane (services_*), da sajt govori istim jezikom.
+    'pf_scope_eyebrow' => 'Our services',
+    'pf_scope_title_1' => 'What we',
+    'pf_scope_title_2' => 'do best',
+    'pf_scope_lead' => 'Every service listed here is delivered under one roof, and we take it on either individually or as a whole - from the first conversation to support after launch.',
+    // Poziv na kontakt na dnu sekcije (sadrži <em>, ide neescape-ovano)
+    'pf_contact_text' => 'Send us a short brief and you will get <em>a quote with a proposed solution</em> - with no obligation and no hidden costs.',
+    // Četiri oblasti; treći element je spisak usluga (nazivi kao na početnoj).
+    'pf_areas' => [
+        [
+            'Websites & web apps',
+            'Business websites, online stores and systems built to measure - fast, secure and made to grow together with your business.',
+            ['Websites', 'Online stores', 'Web apps', 'Custom code'],
+        ],
+        [
+            'Mobile apps',
+            'Native and cross‑platform apps for iOS and Android - clear to use and connected to the same data as your website.',
+            ['iOS', 'Android', 'Cross‑platform', 'Website integration'],
+        ],
+        [
+            'Branding & graphic design',
+            'A visual identity that carries from screen to paper - from the logotype and typography to business cards, flyers and trifold brochures.',
+            ['Logo & brand', 'UI/UX design', 'Business cards', 'Flyers & trifold'],
+        ],
+        [
+            'Social media & advertising',
+            'Instagram, Facebook, TikTok and LinkedIn, together with carefully managed Google and Meta campaigns. We create the content, plan the posts and manage the budget with a clear focus on results.',
+            ['Content & reels', 'Community', 'Google Ads', 'Meta Ads'],
+        ],
+    ],
+
+    'pd_back' => 'All projects',
+    'pd_client' => 'Client',
+    'pd_year' => 'Year',
+    'pd_duration' => 'Duration',
+    'pd_sector' => 'Industry',
+    'pd_services_label' => 'Services on this project',
+    'pd_visit' => 'Open the site',
+    'pd_summary_label' => 'Summary',
+    'pd_story_eyebrow' => 'About the project',
+    'pd_challenge' => 'The brief',
+    'pd_approach' => 'Our approach',
+    'pd_result' => 'The result',
+    'pd_highlights_eyebrow' => 'Delivery',
+    'pd_highlights_title' => 'Key functionality',
+    'pd_gallery_eyebrow' => 'Gallery',
+    'pd_gallery_title' => 'Views from the project',
+    'pd_stack_title' => 'Technology and tools',
+    'pd_prev' => 'Previous project',
+    'pd_next' => 'Next project',
+    'pd_nav_eyebrow' => 'Other projects',
+    'pd_lb_close' => 'Close preview',
+    'pd_lb_prev' => 'Previous image',
+    'pd_lb_next' => 'Next image',
+    'pd_story_title' => 'From brief to result',
+    // Poziv na kontakt na dnu stranice projekta (svetla sekcija, iznad futera)
+    'pd_cta_title_1' => 'Planning',
+    'pd_cta_title_2' => 'a similar project?',
+    'pd_cta_note' => 'We reply within a few minutes.',
+
+    // ── Šablon „web“ (sajtovi i web aplikacije) ──
+    'pdw_live' => 'Live',
+    'pdw_preview' => 'Project preview',
+
+    // ── Šablon „social“ (vođenje društvenih mreža) ──
+    'pds_visit' => 'Open the profile',
+    'pds_channels_label' => 'Channels',
+    'pds_grid_label' => 'Post grid',
+    'pds_pillars_eyebrow' => 'Content',
+    'pds_pillars_title' => 'The formats we run',
+    'pds_pillars_lead' => 'Content does not happen by accident - every post belongs to one format, so the profile keeps a rhythm the audience recognises.',
+    'pds_formats_label' => 'Formats',
+    'pds_rhythm_eyebrow' => 'Rhythm',
+    'pds_rhythm_title' => 'The posting calendar',
+    'pds_rhythm_lead' => 'We know what goes out and when, so filming happens in a single session and the posts never stop.',
+    'pds_work_title' => 'What we do on the account',
+    'pds_reports_label' => 'Profile, identity and reports',
+    'pds_tools_label' => 'Tools we work with',
+
     // Testimonials
     'testimonials_eyebrow' => 'What clients say',
     'testimonials_title' => 'Words that push us to deliver more',
@@ -185,7 +289,7 @@ return [
     'form_name' => 'Full name',
     'form_name_ph' => 'e.g. John Smith',
     'form_email' => 'Email address',
-    // NAPOMENA: placeholder namerno NIJE u obliku email adrese — skeneri (i spam
+    // NAPOMENA: placeholder namerno NIJE u obliku email adrese - skeneri (i spam
     // harvesteri) čitaju svaki "nesto@nesto.tld" iz izvornog koda kao pravi email.
     'form_email_ph' => 'Your email address',
     'form_subject' => 'Message subject',

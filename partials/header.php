@@ -1,8 +1,9 @@
 <?php
 /**
  * Deljeni header — uključuje se ODMAH posle <body> na svakoj stranici.
- * Emituje: SVG sprite, skip-link, pozadine (mesh/grain), custom cursor,
- * glavnu + mobilnu navigaciju i otvara <main id="main">.
+ * Emituje: traku napretka skrolovanja, SVG sprite, skip-link, pozadine
+ * (mesh/grain), custom cursor, glavnu + mobilnu navigaciju i otvara
+ * <main id="main">.
  *
  * Zahteva (definisati PRE require-a):
  *   $t     — jezički niz (lang/*.php)
@@ -15,6 +16,8 @@
  *   $cta_href          — link CTA dugmeta u navigaciji            [default $contact_href]
  *   $show_lang_toggle  — prikaži prekidač jezika                  [default true]
  *   $href_other        — URL druge jezičke verzije (za prekidač)
+ * (Stavka "Projekti" je privremeno uklonjena iz navigacije — portfolio je
+ *  isključen dok ne uđu pravi projekti; vidi blok u .htaccess.)
  */
 $nav_prefix       = $nav_prefix       ?? '';
 $contact_href     = $contact_href     ?? ($nav_prefix . '#contact');
@@ -23,6 +26,9 @@ $show_lang_toggle = $show_lang_toggle ?? true;
 $is_sr            = (($t['lang_code'] ?? 'sr') === 'sr');
 ?>
 <?= vug_icon_sprite() ?>
+
+<!-- Traka napretka skrolovanja (iznad navigacije; puni se levo -> desno) -->
+<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
 
 <a class="skip-link" href="#main"><?= $is_sr ? 'Pređi na sadržaj' : 'Skip to content' ?></a>
 

@@ -313,6 +313,24 @@ ul { list-style: none; }
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
+/* ===== Traka napretka skrolovanja =====
+   Stoji na SVAKOJ stranici (markup je u partials/header.php, logika u main.js).
+   Ovde je, a ne u style.css, jer je above-the-fold: style.css se učitava
+   non-blocking, pa bi traka "uskočila" posle prvog iscrtavanja.
+   Boje: --pa1/--pa2 postavlja stranica projekta (akcent tog projekta), a
+   fallback je cijan -> mint, kao ostatak sajta. */
+.scroll-progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    width: 100%;
+    transform: scaleX(0);
+    transform-origin: left;
+    background: linear-gradient(90deg, var(--pa1, var(--cyan)), var(--pa2, var(--mint)));
+    z-index: 200;
+    pointer-events: none;
+}
+
 /* ===== NAV ===== */
 .nav {
     position: fixed;

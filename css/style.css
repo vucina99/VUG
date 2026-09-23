@@ -1884,6 +1884,1729 @@ textarea.form-control { resize: vertical; min-height: 110px; padding-top: 14px; 
 
 /* Cursor color adjustment on light bg (mix-blend-mode prirodno radi) */
 
+/* ==========================================================
+   PORTFOLIO — kartice projekata (#projects na početnoj),
+   stranica /projekti i stranica pojedinačnog projekta.
+
+   Svaka kartica nosi svoj akcentni par kroz inline --a1/--a2
+   (iz php/projects.php), pa se boje razlikuju od projekta do
+   projekta — nema monotone ljubičaste mreže.
+
+   Hero-i portfolio stranica koriste postojeće .hero* klase iz
+   critical.css (+ mali .hero--sub override inline u toj strani),
+   pa ovde nema above-the-fold pravila.
+   ========================================================== */
+
+/* ---------- Mreža projekata — sve kartice iste veličine ----------
+   Dve kolone od 768px pa nagore, jedna ispod (xl-6 / md-6 / sm-12).
+   grid-auto-rows:1fr izjednačava SVE redove, pa je svaka kartica
+   identična bez obzira na dužinu teksta. */
+.pf-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 1fr;
+    gap: 24px;
+}
+
+/* ---------- Kartica projekta ---------- */
+.pf-card {
+    --a1: var(--cyan);
+    --a2: var(--mint);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border-radius: 24px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid var(--line);
+    isolation: isolate;
+    transition: transform .55s var(--ease), border-color .35s, box-shadow .45s, background .35s;
+}
+.pf-card::after {
+    /* tanka svetleća linija na vrhu kartice — "prelazi" preko nje na hover */
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--a2), transparent);
+    opacity: 0;
+    transform: translateX(-100%);
+    transition: opacity .3s;
+    z-index: 3;
+}
+.pf-card:hover {
+    transform: translateY(-8px);
+    border-color: color-mix(in srgb, var(--a1) 45%, transparent);
+    background: rgba(255, 255, 255, 0.055);
+    box-shadow: 0 34px 90px -30px color-mix(in srgb, var(--a1) 55%, transparent);
+}
+.pf-card:hover::after {
+    opacity: 1;
+    animation: pf-sheen 1.1s var(--ease) forwards;
+}
+@keyframes pf-sheen {
+    from { transform: translateX(-100%); }
+    to   { transform: translateX(100%); }
+}
+.pf-card:focus-visible {
+    outline: 2px solid var(--a2);
+    outline-offset: 3px;
+}
+
+/* Fiksan odnos stranica => sve slike u mreži su identične visine. */
+.pf-media {
+    position: relative;
+    flex: none;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: var(--bg-2);
+}
+.pf-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1s var(--ease), filter .5s;
+}
+.pf-card:hover .pf-media img { transform: scale(1.06); }
+.pf-media::after {
+    /* akcentni "wash" preko slike — dovodi boju kartice u sliku */
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(155deg,
+        color-mix(in srgb, var(--a1) 26%, transparent) 0%,
+        transparent 45%,
+        rgba(13, 8, 32, 0.75) 100%);
+    opacity: .85;
+    transition: opacity .45s;
+    pointer-events: none;
+}
+.pf-card:hover .pf-media::after { opacity: .6; }
+
+.pf-badges {
+    position: absolute;
+    top: 16px; left: 16px; right: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    z-index: 2;
+}
+.pf-cat {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 14px;
+    border-radius: 100px;
+    font-family: var(--ff-mono);
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--deep);
+    background: var(--a2);
+    box-shadow: 0 6px 20px -6px color-mix(in srgb, var(--a1) 80%, transparent);
+}
+.pf-year {
+    font-family: var(--ff-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.7);
+    padding: 6px 12px;
+    border-radius: 100px;
+    background: rgba(13, 8, 32, 0.5);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+}
+.pf-open {
+    position: absolute;
+    bottom: 18px; right: 18px;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 12px 20px;
+    border-radius: 100px;
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--deep);
+    background: var(--a2);
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity .4s var(--ease), transform .4s var(--ease);
+    z-index: 2;
+}
+.pf-open .vi { font-size: 15px; transition: transform .35s var(--ease); }
+.pf-card:hover .pf-open { opacity: 1; transform: translateY(0); }
+.pf-card:hover .pf-open .vi { transform: translate(3px, -3px); }
+
+.pf-body {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 26px 28px 28px;
+    flex: 1;
+}
+.pf-client {
+    font-family: var(--ff-mono);
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--txt-muted);
+}
+.pf-title {
+    font-size: clamp(22px, 2.1vw, 30px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    color: var(--txt);
+    transition: color .3s;
+}
+.pf-card:hover .pf-title { color: var(--a2); }
+.pf-tagline {
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--txt-soft);
+    max-width: 46ch;
+}
+/* margin-top:auto => tagovi su poravnati na dnu svih kartica */
+.pf-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: auto;
+    padding-top: 10px;
+}
+.pf-tag {
+    padding: 5px 11px;
+    border-radius: 100px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--line);
+    font-family: var(--ff-mono);
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--txt-soft);
+}
+
+/* Kartice na svetlim sekcijama */
+.section--light .pf-card,
+.section--cream .pf-card {
+    background: #ffffff;
+    border-color: var(--line);
+}
+.section--light .pf-card:hover,
+.section--cream .pf-card:hover {
+    background: #ffffff;
+    box-shadow: 0 34px 80px -34px rgba(42, 28, 74, 0.45);
+}
+.section--light .pf-title,
+.section--cream .pf-title { color: var(--deep); }
+.section--light .pf-card:hover .pf-title,
+.section--cream .pf-card:hover .pf-title { color: var(--violet); }
+.section--light .pf-tag,
+.section--cream .pf-tag { background: rgba(26, 18, 48, 0.04); }
+
+/* ---------- Traka ispod mreže na početnoj ---------- */
+.pf-more {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin-top: clamp(40px, 5vw, 64px);
+    padding-top: 34px;
+}
+/* dva dugmeta u redu (upit + telefon) */
+.pf-more-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+}
+.pf-more-text {
+    font-size: clamp(17px, 1.6vw, 21px);
+    font-weight: 600;
+    line-height: 1.45;
+    letter-spacing: -0.02em;
+    color: var(--txt);
+    max-width: 40ch;
+}
+.pf-more-text em {
+    font-style: italic;
+    font-weight: 500;
+    background: linear-gradient(120deg, var(--mint), var(--cyan));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+/* Na svetlim sekcijama mint/cijan gradijent nema kontrast — obrni na violet/plavo */
+.section--light .pf-more-text em,
+.section--cream .pf-more-text em {
+    background: linear-gradient(120deg, var(--violet), var(--blue));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Filter kategorija i brojač „Prikazano X od Y" su uklonjeni 2026-08-05
+   (.pf-filters/.pf-filter/.pf-count/.is-filtered) — ne vraćati ih. */
+
+/* ---------- Aurora pozadina sekcije (plavo/cijan/mint, ne samo ljubičasto) ---------- */
+.pf-section { isolation: isolate; }
+.pf-aurora {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+        radial-gradient(ellipse 55% 45% at 12% 8%,  rgba(93, 211, 245, 0.16) 0%, transparent 62%),
+        radial-gradient(ellipse 50% 50% at 88% 34%, rgba(59, 130, 196, 0.20) 0%, transparent 65%),
+        radial-gradient(ellipse 60% 40% at 50% 100%, rgba(207, 251, 246, 0.10) 0%, transparent 60%);
+}
+
+/* ---------- Ticker (traka reči koja se kreće) ---------- */
+.pf-ticker {
+    overflow: hidden;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    margin-top: clamp(60px, 8vw, 110px);
+    padding: 22px 0;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.pf-ticker-track {
+    display: flex;
+    align-items: center;
+    gap: 26px;
+    width: max-content;
+    animation: pf-ticker 34s linear infinite;
+}
+.pf-ticker-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 26px;
+    font-size: clamp(20px, 2.4vw, 32px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--txt-muted);
+    white-space: nowrap;
+}
+.pf-ticker-item .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--cyan);
+    flex: none;
+}
+/* Gradijent naizmenično; klasu dodeljuje projekti.php po indeksu reči
+   (ne :nth-child), da oba prolaza trake budu obojena isto. */
+.pf-ticker-item.is-grad {
+    background: linear-gradient(120deg, var(--mint), var(--cyan));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+@keyframes pf-ticker {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+}
+
+/* ---------- Oblasti rada (sekcija #scope na /projekti) ----------
+   Sekcija je BELA (svetle varijante su niže, u bloku za svetle sekcije).
+   Naslov levo + tekst desno, pa KOMPAKTNA mreža pločica: 10 oblasti u dva
+   reda po pet na širokom ekranu. Spisak jedan pod drugim (jedna kolona) je
+   pravio previsoku sekciju — ne vraćati ga. */
+/* Oblasti rada — mreža 2×2 BEZ kartica: polja su razdvojena samo tankim
+   linijama u krst (border-top na svim, border-left na desnoj koloni, pa je
+   linija centrirana u oluku jer kolone imaju simetričan padding).
+   Izabrano posle pet varijanti (2026-08-04) — ne vraćati kartice, kockice,
+   pločice ni tabove. */
+.pf-areas {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.pf-area {
+    position: relative;
+    padding: clamp(30px, 3.4vw, 54px) 0;
+    border-top: 1px solid var(--line);
+}
+.pf-area:nth-child(odd) { padding-right: clamp(26px, 3.6vw, 64px); }
+.pf-area:nth-child(even) {
+    padding-left: clamp(26px, 3.6vw, 64px);
+    border-left: 1px solid var(--line);
+}
+/* zadnji red zatvara i donja linija */
+.pf-area:nth-last-child(-n+2) { border-bottom: 1px solid var(--line); }
+.pf-area::before {
+    /* akcentna linija koja "pređe" preko gornje ivice polja na hover */
+    content: '';
+    position: absolute;
+    top: -1px; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, var(--mint), var(--cyan), transparent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .6s var(--ease);
+}
+.pf-area:hover::before { transform: scaleX(1); }
+.pf-area-n {
+    display: block;
+    font-family: var(--ff-mono);
+    font-size: clamp(30px, 3vw, 44px);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: rgba(255, 255, 255, 0.13);
+    transition: color .35s;
+}
+.pf-area:hover .pf-area-n { color: var(--cyan); }
+.pf-area-title {
+    margin-top: clamp(14px, 1.6vw, 22px);
+    font-size: clamp(23px, 2.3vw, 31px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: var(--txt);
+}
+.pf-area-desc {
+    margin-top: 12px;
+    font-size: clamp(14.5px, 1.3vw, 16.5px);
+    line-height: 1.6;
+    color: var(--txt-soft);
+    max-width: 46ch;
+}
+/* Usluge nisu goli tekst: chip forma sa akcentnom tačkicom (isti jezik kao
+   .pf-tag na karticama projekata), pa se vide kao stavke a ne kao pasus. */
+.pf-area-list {
+    list-style: none;
+    margin: clamp(18px, 2vw, 26px) 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.pf-area-list li {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 8px 15px;
+    border-radius: 100px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--line-strong);
+    font-family: var(--ff-mono);
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    line-height: 1.2;
+    color: var(--txt-soft);
+    transition: color .3s, background .3s, border-color .3s;
+}
+.pf-area-list li::before {
+    content: '';
+    flex: none;
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--cyan);
+    transition: transform .3s var(--ease);
+}
+.pf-area-list li:hover { color: var(--txt); border-color: var(--mint); }
+.pf-area-list li:hover::before { transform: scale(1.4); }
+
+/* ==========================================================
+   PROJEKAT — detaljna stranica
+   ========================================================== */
+
+/* Traka napretka skrolovanja je premeštena u css/critical.css (`.scroll-progress`)
+   jer je od 2026-08-05 na svakoj stranici i above-the-fold je. */
+
+/* Breadcrumb / nazad — mora da bude blok (flex), da badge ispod ne "uskoči" u isti red */
+.pd-crumbs {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--ff-mono);
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--txt-muted);
+    margin-bottom: 26px;
+}
+.pd-crumbs a { color: var(--txt-soft); }
+.pd-crumbs a:hover { color: var(--pa2, var(--mint)); }
+.pd-crumbs .sep { opacity: .5; }
+.pd-crumbs .vi { font-size: 11px; }
+
+.pd-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px;
+    border-radius: 100px;
+    font-family: var(--ff-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--deep);
+    background: var(--pa2, var(--mint));
+    margin-bottom: 26px;
+}
+
+.pd-tagline {
+    font-size: clamp(18px, 1.8vw, 25px);
+    line-height: 1.45;
+    color: var(--txt-soft);
+    max-width: 46ch;
+    margin: 28px 0 40px;
+}
+.pd-tagline em {
+    font-style: normal;
+    color: var(--pa2, var(--mint));
+}
+
+/* Meta red (klijent / godina / trajanje / oblast) */
+.pd-meta {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-top: clamp(44px, 5vw, 68px);
+    padding-top: 30px;
+    border-top: 1px solid var(--line);
+}
+.pd-meta-label {
+    font-family: var(--ff-mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--txt-muted);
+    margin-bottom: 9px;
+}
+.pd-meta-value {
+    font-size: 16.5px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--txt);
+}
+
+/* Glavni vizual + plutajuća kartica metrika */
+.pd-stage {
+    position: relative;
+    padding: 0 0 clamp(60px, 8vw, 120px);
+}
+.pd-stage-glow {
+    position: absolute;
+    inset: 8% 12% 30% 12%;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: .5;
+    background: radial-gradient(circle, var(--pa1, var(--cyan)) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: -1;
+}
+.pd-shot {
+    position: relative;
+    border-radius: 28px;
+    overflow: hidden;
+    border: 1px solid var(--line-strong);
+    box-shadow: 0 60px 140px -50px rgba(0, 0, 0, 0.8);
+    will-change: transform;
+    transition: transform .4s var(--ease);
+}
+.pd-shot img { width: 100%; height: auto; display: block; }
+
+.pd-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin: -70px auto 0;
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+    border-radius: 24px;
+    overflow: hidden;
+    background: var(--line-strong);
+    border: 1px solid var(--line-strong);
+    box-shadow: 0 40px 90px -40px rgba(13, 8, 32, 0.9);
+}
+.pd-metric {
+    padding: 30px 26px;
+    text-align: center;
+    background: rgba(26, 18, 48, 0.92);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+}
+.pd-metric .v {
+    font-family: var(--ff-mono);
+    font-size: clamp(32px, 3.4vw, 46px);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    /* pa2 je uvek svetao ton (vidi php/projects.php), pa mu dajemo veći deo
+       gradijenta — brojka ostaje čitka i kad je pa1 tamno ljubičasta. */
+    background: linear-gradient(115deg, var(--pa2, var(--mint)) 15%, var(--pa1, var(--cyan)) 125%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.pd-metric .l {
+    margin-top: 12px;
+    font-size: 13px;
+    line-height: 1.4;
+    color: var(--txt-muted);
+}
+
+/* Priča: izazov / pristup / rezultat */
+.pd-story {
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    gap: clamp(32px, 5vw, 80px);
+    align-items: start;
+}
+.pd-story-aside {
+    position: sticky;
+    top: calc(var(--nav-h) + 40px);
+}
+.pd-summary {
+    font-size: clamp(19px, 1.9vw, 26px);
+    line-height: 1.45;
+    font-weight: 600;
+    letter-spacing: -0.022em;
+    color: var(--txt);
+}
+.pd-services {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 30px;
+}
+.pd-service {
+    padding: 7px 14px;
+    border-radius: 100px;
+    border: 1px solid var(--line-strong);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--txt-soft);
+}
+.pd-block { padding-bottom: 42px; }
+.pd-block:last-child { padding-bottom: 0; }
+.pd-block-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 16px;
+}
+.pd-block-num {
+    font-family: var(--ff-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: var(--violet);
+}
+.pd-block-title {
+    font-size: clamp(21px, 2vw, 27px);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    color: var(--txt);
+}
+.pd-block-line {
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+}
+.pd-block p {
+    font-size: 16.5px;
+    line-height: 1.7;
+    color: var(--txt-soft);
+    max-width: 62ch;
+}
+
+/* Ključne funkcionalnosti */
+.pd-hl {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+.pd-hl-card {
+    padding: 30px 28px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid var(--line);
+    transition: transform .45s var(--ease), border-color .3s, background .3s;
+}
+.pd-hl-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--line-strong);
+    background: rgba(255, 255, 255, 0.055);
+}
+.pd-hl-ic {
+    width: 44px; height: 44px;
+    border-radius: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 19px;
+    margin-bottom: 20px;
+    color: var(--pa2, var(--mint));
+    background: color-mix(in srgb, var(--pa1, #5dd3f5) 16%, transparent);
+    border: 1px solid color-mix(in srgb, var(--pa2, #cffbf6) 26%, transparent);
+    transition: transform .4s var(--ease);
+}
+.pd-hl-card:hover .pd-hl-ic { transform: scale(1.08) rotate(-7deg); }
+.pd-hl-title {
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 9px;
+    color: var(--txt);
+}
+.pd-hl-desc {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--txt-soft);
+}
+
+/* Galerija */
+.pd-gallery {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+}
+.pd-gallery figure:first-child { grid-column: 1 / -1; }
+.pd-gallery figure { margin: 0; }
+.pd-shot-btn {
+    position: relative;
+    display: block;
+    width: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: var(--bg-2);
+    transition: border-color .3s, transform .5s var(--ease), box-shadow .5s;
+}
+.pd-shot-btn img { width: 100%; height: auto; display: block; transition: transform .8s var(--ease); }
+.pd-shot-btn:hover {
+    transform: translateY(-4px);
+    border-color: var(--pa1, var(--cyan));
+    box-shadow: 0 30px 70px -34px color-mix(in srgb, var(--pa1, #5dd3f5) 70%, transparent);
+}
+.pd-shot-btn:hover img { transform: scale(1.03); }
+.pd-shot-btn .zoom {
+    position: absolute;
+    top: 14px; right: 14px;
+    width: 40px; height: 40px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--deep);
+    background: var(--pa2, var(--mint));
+    opacity: 0;
+    transform: scale(.8);
+    transition: opacity .3s, transform .3s var(--ease);
+}
+.pd-shot-btn:hover .zoom { opacity: 1; transform: scale(1); }
+.pd-gallery figcaption {
+    margin-top: 14px;
+    font-family: var(--ff-mono);
+    font-size: 12.5px;
+    letter-spacing: 0.04em;
+    color: var(--txt-muted);
+}
+
+/* Tehnologije */
+.pd-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.pd-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border-radius: 100px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--line-strong);
+    font-family: var(--ff-mono);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--txt);
+}
+.pd-chip::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--pa1, var(--cyan));
+}
+
+/* Prethodni / sledeći projekat */
+/* Kartice susednih projekata sa trakom vizuala (`.pd-nav-card`) su odbačene
+   2026-08-05 — zamenio ih je `.pd-next` red u bloku `.pd-close` (niže). */
+
+/* ---------- Lightbox ---------- */
+.lb {
+    position: fixed;
+    inset: 0;
+    z-index: 500;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(8, 5, 18, 0.92);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+}
+.lb.is-open { display: flex; animation: lb-in .3s var(--ease); }
+@keyframes lb-in { from { opacity: 0; } to { opacity: 1; } }
+.lb-img {
+    max-width: min(1200px, 94vw);
+    max-height: 82vh;
+    width: auto;
+    border-radius: 18px;
+    border: 1px solid var(--line-strong);
+    box-shadow: 0 40px 120px rgba(0, 0, 0, .7);
+}
+.lb-cap {
+    position: absolute;
+    bottom: 26px; left: 0; right: 0;
+    text-align: center;
+    font-family: var(--ff-mono);
+    font-size: 12.5px;
+    color: var(--txt-muted);
+    padding: 0 24px;
+}
+.lb-close,
+.lb-prev,
+.lb-next {
+    position: absolute;
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--txt);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--line-strong);
+    transition: background .25s, color .25s, transform .3s var(--ease);
+}
+.lb-close:hover, .lb-prev:hover, .lb-next:hover {
+    background: var(--mint);
+    color: var(--deep);
+    transform: scale(1.08);
+}
+.lb-close { top: 24px; right: 24px; }
+.lb-prev  { left: 24px; top: 50%; margin-top: -24px; }
+.lb-next  { right: 24px; top: 50%; margin-top: -24px; }
+
+/* ==========================================================
+   PROJEKAT — ŠABLON "WEB" (sajtovi i web aplikacije)
+   Sve što priča o proizvodu: ekran u browser ramu, tok rada od zadatka do
+   rezultata, funkcionalnosti u mreži bez kartica i spisak tehnologija.
+   Vidi partials/project-web.php.
+   ========================================================== */
+
+/* Red bedževa u herou (kategorija + „uživo“ / kanali) */
+.pd-badges {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 26px;
+}
+.pd-badges .pd-badge { margin-bottom: 0; }
+
+.pdw-live {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 8px 16px;
+    border-radius: 100px;
+    border: 1px solid var(--line-strong);
+    background: rgba(255, 255, 255, 0.04);
+    font-family: var(--ff-mono);
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--txt-soft);
+}
+.pdw-live .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #3ddc97;
+    animation: pd-pulse 2.4s var(--ease) infinite;
+}
+@keyframes pd-pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(61, 220, 151, 0.45); }
+    70%  { box-shadow: 0 0 0 9px rgba(61, 220, 151, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(61, 220, 151, 0); }
+}
+
+/* ---------- Glavni vizual u „browser“ ramu ---------- */
+.pdw-window {
+    position: relative;
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid var(--line-strong);
+    background: rgba(26, 18, 48, 0.9);
+    box-shadow: 0 60px 140px -50px rgba(0, 0, 0, 0.8);
+    will-change: transform;
+    transition: transform .4s var(--ease);
+}
+.pdw-bar {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 16px;
+    padding: 13px 18px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.02));
+    border-bottom: 1px solid var(--line);
+}
+.pdw-dots { display: flex; gap: 7px; }
+.pdw-dots i {
+    width: 11px; height: 11px;
+    border-radius: 50%;
+    background: var(--line-strong);
+}
+.pdw-dots i:first-child  { background: var(--pa1, var(--cyan)); }
+.pdw-dots i:nth-child(2) { background: var(--pa2, var(--mint)); opacity: .7; }
+.pdw-url {
+    justify-self: center;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    max-width: 100%;
+    padding: 7px 18px;
+    border-radius: 100px;
+    background: rgba(13, 8, 32, 0.5);
+    border: 1px solid var(--line);
+    font-family: var(--ff-mono);
+    font-size: 12.5px;
+    color: var(--txt-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.pdw-url .vi { color: var(--pa2, var(--mint)); font-size: 13px; }
+.pdw-tools { display: flex; flex-direction: column; gap: 4px; }
+.pdw-tools i { width: 16px; height: 2px; border-radius: 2px; background: var(--line-strong); }
+.pdw-window img { width: 100%; height: auto; display: block; }
+
+/* ---------- Tok rada: zadatak -> pristup -> rezultat ---------- */
+.pdw-flow {
+    list-style: none;
+    position: relative;
+    padding-left: 34px;
+}
+.pdw-flow::before {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 12px;
+    bottom: 12px;
+    width: 1px;
+    background: linear-gradient(180deg, var(--cyan), var(--mint), transparent);
+}
+.pdw-step {
+    position: relative;
+    padding-bottom: clamp(34px, 4vw, 54px);
+    /* dete .stagger-a — transform i opacity moraju da ostanu u transition-u */
+    transition: transform .6s var(--ease), opacity .6s var(--ease);
+}
+.pdw-step:last-child { padding-bottom: 0; }
+.pdw-step-dot {
+    position: absolute;
+    left: -34px;
+    top: 9px;
+    width: 11px; height: 11px;
+    border-radius: 50%;
+    background: var(--cyan);
+    box-shadow: 0 0 0 5px rgba(93, 211, 245, 0.14);
+}
+.pdw-step-head {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 14px;
+}
+.pdw-step-n {
+    font-family: var(--ff-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: var(--cyan);
+    flex: none;
+}
+.pdw-step-title {
+    font-size: clamp(21px, 2vw, 28px);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    color: var(--txt);
+}
+.pdw-step p {
+    font-size: 16.5px;
+    line-height: 1.7;
+    color: var(--txt-soft);
+    max-width: 62ch;
+}
+
+/* ---------- Funkcionalnosti: mreža 2x3 BEZ kartica (isti jezik kao .pf-areas) ---------- */
+.pdw-feat { display: grid; grid-template-columns: repeat(2, 1fr); }
+.pdw-feat-item {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: clamp(16px, 2vw, 28px);
+    align-items: start;
+    padding: clamp(24px, 2.8vw, 38px) 0;
+    border-top: 1px solid var(--line);
+    transition: transform .6s var(--ease), opacity .6s var(--ease);
+}
+.pdw-feat-item:nth-child(odd)  { padding-right: clamp(24px, 3.4vw, 60px); }
+.pdw-feat-item:nth-child(even) {
+    padding-left: clamp(24px, 3.4vw, 60px);
+    border-left: 1px solid var(--line);
+}
+.pdw-feat-item:nth-last-child(-n+2) { border-bottom: 1px solid var(--line); }
+.pdw-feat-item::before {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; top: -1px;
+    height: 1px;
+    background: linear-gradient(90deg, var(--cyan), var(--mint), transparent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .55s var(--ease);
+}
+.pdw-feat-item:hover::before { transform: scaleX(1); }
+.pdw-feat-n {
+    font-family: var(--ff-mono);
+    font-size: clamp(26px, 3vw, 40px);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: rgba(236, 233, 245, 0.16);
+    transition: color .35s;
+}
+.pdw-feat-item:hover .pdw-feat-n { color: var(--cyan); }
+.pdw-feat-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: clamp(17px, 1.6vw, 21px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--txt);
+    margin-bottom: 10px;
+}
+.pdw-feat-ic {
+    display: inline-flex;
+    font-size: 19px;
+    color: var(--mint);
+    flex: none;
+}
+.pdw-feat-desc {
+    font-size: 15.5px;
+    line-height: 1.65;
+    color: var(--txt-soft);
+    max-width: 46ch;
+}
+
+/* ---------- Tehnologije / alati: kompaktan red na dnu sekcije „Isporučeno“ ----------
+   Nema svoju sekciju ni numeraciju (izbor korisnika 2026-08-05). Chip-ovi su
+   postojeći `.pd-stack`/`.pd-chip`, ovde je samo odvajanje linijom. */
+.pd-tech {
+    margin-top: clamp(34px, 4vw, 56px);
+    padding-top: clamp(26px, 3vw, 38px);
+    border-top: 1px solid var(--line);
+}
+.pd-tech .pd-meta-label { margin-bottom: 16px; }
+.pd-tech .pd-stack { margin: 0; }
+/* Mreža funkcionalnosti (`.pdw-feat`) već zatvara donju liniju — ne duplirati je.
+   Na social šablonu `.pd-hl` kartice nemaju liniju, pa tamo border-top ostaje. */
+.pdw-feat + .pd-tech { border-top: 0; padding-top: clamp(20px, 2.4vw, 30px); }
+
+/* ==========================================================
+   PROJEKAT — ŠABLON "SOCIAL" (vođenje društvenih mreža)
+   Kanal, ne proizvod: profil + mreža objava umesto ekrana, rubrike u 9:16,
+   kalendar objavljivanja i kanali/alati. Vidi partials/project-social.php.
+   ========================================================== */
+
+.pds-chan-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 15px;
+    border-radius: 100px;
+    border: 1px solid var(--line-strong);
+    background: rgba(255, 255, 255, 0.04);
+    font-family: var(--ff-mono);
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--txt-soft);
+}
+.pds-chan-chip .vi { color: var(--pa2, var(--mint)); font-size: 14px; }
+
+/* ---------- Hero vizual: kartica profila + mreža objava ---------- */
+.pds-stage-grid {
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    gap: clamp(24px, 3vw, 46px);
+    align-items: stretch;
+}
+.pds-profile {
+    /* Kartica je visine svog sadržaja, ali je sticky unutar svog grid polja
+       (polje je visine mreže objava desno), pa prati skrol umesto da ostavi
+       praznu površinu ispod sebe. */
+    align-self: start;
+    position: sticky;
+    top: calc(var(--nav-h) + 24px);
+    padding: clamp(26px, 3vw, 40px);
+    border-radius: 28px;
+    background: rgba(26, 18, 48, 0.72);
+    border: 1px solid var(--line-strong);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 40px 100px -50px rgba(0, 0, 0, 0.8);
+}
+.pds-profile-head {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 20px;
+}
+.pds-avatar {
+    width: 74px; height: 74px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    flex: none;
+    font-family: var(--ff-mono);
+    font-size: 25px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--deep);
+    background: linear-gradient(135deg, var(--pa2, var(--mint)), var(--pa1, var(--cyan)));
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.06);
+}
+.pds-handle {
+    font-family: var(--ff-mono);
+    font-size: 13.5px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--pa2, var(--mint));
+}
+.pds-name {
+    font-size: clamp(20px, 2vw, 26px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--txt);
+    margin-top: 3px;
+}
+.pds-bio {
+    font-size: 14.5px;
+    color: var(--txt-muted);
+    padding-bottom: 22px;
+    margin-bottom: 22px;
+    border-bottom: 1px solid var(--line);
+}
+.pds-chan {
+    list-style: none;
+    display: grid;
+    gap: 8px;
+    margin-top: 12px;
+}
+.pds-chan-row {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 15px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--line);
+}
+.pds-chan-row .ic { display: inline-flex; font-size: 17px; color: var(--pa2, var(--mint)); }
+.pds-chan-row .nm { font-size: 15px; font-weight: 700; letter-spacing: -0.01em; }
+.pds-chan-row .hd { font-family: var(--ff-mono); font-size: 12px; color: var(--txt-muted); }
+
+.pds-feed {
+    margin: 0;
+    will-change: transform;
+    transition: transform .4s var(--ease);
+}
+.pds-feed img {
+    width: 100%;
+    height: auto;
+    /* padding + podloga => pločice ne naslanjaju na zaobljenu ivicu rama */
+    padding: 14px;
+    background: #120c28;
+    border-radius: 24px;
+    border: 1px solid var(--line-strong);
+    box-shadow: 0 60px 140px -50px rgba(0, 0, 0, 0.8);
+}
+.pds-feed figcaption {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    margin-top: 16px;
+    font-family: var(--ff-mono);
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--txt-muted);
+}
+.pds-feed figcaption .vi { color: var(--pa2, var(--mint)); font-size: 14px; }
+/* Metrike ne preklapaju vizual (levo stoji kartica profila) */
+.pds-stage .pd-metrics { margin-top: clamp(28px, 3.6vw, 46px); }
+
+/* ---------- Priča: zadatak / pristup / rezultat kao blokovi sa akcentnom ivicom ---------- */
+.pds-blocks { display: grid; gap: clamp(16px, 1.8vw, 24px); }
+.pds-block {
+    padding: clamp(22px, 2.4vw, 30px) clamp(22px, 2.6vw, 34px);
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--cyan);
+    transition: transform .6s var(--ease), opacity .6s var(--ease), background .3s, border-color .3s;
+}
+.pds-block:hover { background: rgba(255, 255, 255, 0.05); }
+.pds-block-title {
+    font-size: clamp(19px, 1.8vw, 24px);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    color: var(--txt);
+    margin-bottom: 10px;
+}
+.pds-block p { font-size: 16.5px; line-height: 1.7; color: var(--txt-soft); }
+
+/* ---------- Rubrike: vizual 9:16 (format u kome sadržaj i nastaje) ---------- */
+.pds-pillars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(20px, 2.4vw, 34px);
+}
+.pds-pillar {
+    display: flex;
+    flex-direction: column;
+    transition: transform .6s var(--ease), opacity .6s var(--ease);
+}
+.pds-pillar-media {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 1px solid var(--line-strong);
+    border-radius: 22px;
+    overflow: hidden;
+    background: none;
+    transition: border-color .3s, box-shadow .4s var(--ease);
+}
+.pds-pillar-media img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 9 / 16;
+    object-fit: cover;
+    transition: transform .8s var(--ease);
+}
+.pds-pillar-media:hover,
+.pds-pillar-media:focus-visible {
+    border-color: var(--pa2, var(--mint));
+    box-shadow: 0 34px 80px -34px rgba(0, 0, 0, 0.85);
+}
+.pds-pillar-media:hover img { transform: scale(1.04); }
+.pds-pillar-media .play {
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
+    width: 46px; height: 46px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 17px;
+    color: var(--deep);
+    background: var(--pa2, var(--mint));
+    opacity: 0;
+    transform: scale(.85);
+    transition: opacity .35s var(--ease), transform .35s var(--ease);
+}
+.pds-pillar-media:hover .play { opacity: 1; transform: scale(1); }
+.pds-pillar-body { padding-top: 22px; }
+.pds-pillar-n {
+    font-family: var(--ff-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    color: var(--pa2, var(--mint));
+}
+.pds-pillar-title {
+    font-size: clamp(19px, 1.8vw, 23px);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    color: var(--txt);
+    margin: 8px 0 10px;
+}
+.pds-pillar-desc { font-size: 15.5px; line-height: 1.65; color: var(--txt-soft); }
+.pds-pillar-body .pd-meta-label { margin: 20px 0 10px; }
+.pds-pillar-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.pds-pillar-tags span {
+    padding: 6px 13px;
+    border-radius: 100px;
+    font-family: var(--ff-mono);
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: var(--txt-soft);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--line);
+}
+
+/* Podnaslov reda (profil / identitet / izveštaji) + red 16:10 prikaza */
+.pds-shots-head {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin: clamp(56px, 7vw, 90px) 0 clamp(20px, 2.4vw, 30px);
+}
+.pds-shots-head .pd-meta-label { margin: 0; white-space: nowrap; }
+.pds-shots-head .line { flex: 1; height: 1px; background: var(--line); }
+.pds-shots {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(16px, 2vw, 26px);
+}
+.pds-shots figure { margin: 0; }
+.pds-shots figcaption {
+    margin-top: 14px;
+    font-family: var(--ff-mono);
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--txt-muted);
+}
+
+/* ---------- Kalendar objavljivanja ---------- */
+.pds-rhythm {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--line-strong);
+}
+.pds-slot {
+    position: relative;
+    padding: clamp(24px, 3vw, 38px) clamp(16px, 2vw, 26px) clamp(24px, 3vw, 38px) 0;
+    border-bottom: 1px solid var(--line);
+    transition: transform .6s var(--ease), opacity .6s var(--ease);
+}
+.pds-slot + .pds-slot {
+    padding-left: clamp(16px, 2vw, 26px);
+    border-left: 1px solid var(--line);
+}
+.pds-slot::before {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; top: -1px;
+    height: 1px;
+    background: linear-gradient(90deg, var(--cyan), var(--mint), transparent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .55s var(--ease);
+}
+.pds-slot:hover::before { transform: scaleX(1); }
+.pds-slot-i {
+    display: block;
+    font-family: var(--ff-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: var(--txt-muted);
+    margin-bottom: 16px;
+}
+.pds-slot-day {
+    display: block;
+    font-family: var(--ff-mono);
+    font-size: clamp(14px, 1.4vw, 17px);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--cyan);
+}
+.pds-slot-what {
+    display: block;
+    margin-top: 12px;
+    font-size: clamp(17px, 1.7vw, 21px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--txt);
+}
+
+/* Kartice kanala (`.pds-chan-card`) su uklonjene 2026-08-05 — kanali sa nalozima
+   već stoje u kartici profila u herou, pa je zasebna sekcija bila ponavljanje.
+   Alati žive kao `.pd-tech` chip red na dnu sekcije „Šta radimo na profilu“. */
+
+/* ==========================================================
+   PROJEKAT — ZATVARANJE STRANICE: jedna svetla sekcija u dva stupca
+   Levo poziv na kontakt, desno susedni projekti kao redovi. Bez outer kartice,
+   senki i slika — samo linije, isti jezik kao `.pf-areas` i `.pdw-feat`
+   (izbor korisnika 2026-08-05). Akcenti su violet/plavi jer je sekcija svetla.
+   Vidi partials/project-close.php.
+   ========================================================== */
+.pd-close {
+    display: grid;
+    grid-template-columns: 1fr minmax(300px, 36%);
+    gap: clamp(30px, 4.5vw, 76px);
+    align-items: start;
+}
+.pd-close-nav {
+    border-left: 1px solid var(--line);
+    padding-left: clamp(26px, 3.4vw, 56px);
+}
+.pd-close-nav > .pd-meta-label { margin-bottom: 6px; }
+.pd-cta-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--ff-mono);
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--violet);
+    margin-bottom: 18px;
+}
+.pd-cta-eyebrow .bullet { color: var(--blue); }
+.pd-cta-title {
+    font-size: clamp(28px, 3.4vw, 46px);
+    line-height: 1.03;
+    letter-spacing: -0.035em;
+    font-weight: 800;
+    color: var(--txt);
+}
+.pd-cta-title em {
+    font-style: italic;
+    font-weight: 500;
+    background: linear-gradient(120deg, var(--violet), var(--blue));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.pd-cta-lead {
+    margin-top: 16px;
+    font-size: clamp(15px, 1.3vw, 17.5px);
+    line-height: 1.6;
+    color: var(--txt-soft);
+    max-width: 52ch;
+}
+.pd-cta-meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 22px;
+    font-family: var(--ff-mono);
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--txt-muted);
+}
+.pd-cta-meta .pulse {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #2fbf85;
+    animation: pd-pulse 2.4s var(--ease) infinite;
+}
+.pd-cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    margin-top: clamp(26px, 3vw, 38px);
+}
+
+/* Susedni projekat = red, ne kartica: oznaka smera, naziv, kategorija, strelica.
+   Donju liniju grupe nosi omotač, a ne poslednji red — u istoj koloni posle
+   redova stoji i link „Pogledajte sve projekte“, pa :last-of-type ne bi radio. */
+.pd-next-list { border-bottom: 1px solid var(--line); }
+.pd-next {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 16px;
+    padding: clamp(18px, 2vw, 24px) 16px;
+    margin: 0 -16px;
+    border-top: 1px solid var(--line);
+    transition: background .3s;
+}
+.pd-next:hover { background: rgba(79, 70, 152, 0.05); }
+.pd-next-dir {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--ff-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--txt-muted);
+    margin-bottom: 8px;
+}
+.pd-next-dir .vi { font-size: 12px; color: var(--violet); }
+.pd-next-title {
+    display: block;
+    font-size: clamp(20px, 1.9vw, 25px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    color: var(--txt);
+    transition: color .25s;
+}
+.pd-next:hover .pd-next-title { color: var(--violet); }
+.pd-next-cat {
+    display: block;
+    margin-top: 7px;
+    font-family: var(--ff-mono);
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--txt-muted);
+}
+.pd-next-go {
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    flex: none;
+    font-size: 14px;
+    color: var(--txt-soft);
+    border: 1px solid var(--line-strong);
+    transition: background .3s, color .3s, border-color .3s, transform .4s var(--ease);
+}
+.pd-next:hover .pd-next-go {
+    background: var(--violet);
+    border-color: var(--violet);
+    color: var(--mint);
+}
+.pd-next--prev:hover .pd-next-go { transform: translateX(-4px); }
+.pd-next--next:hover .pd-next-go { transform: translateX(4px); }
+
+.pd-close-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: clamp(22px, 2.6vw, 32px);
+    font-family: var(--ff-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--violet);
+}
+.pd-close-all .vi { transition: transform .35s var(--ease); }
+.pd-close-all:hover .vi { transform: translateX(4px); }
+
+/* ==========================================================
+   PORTFOLIO NA SVETLIM SEKCIJAMA (--light / --cream)
+   Portfolio stranice koriste isti ritam svetlo/tamno kao početna,
+   pa svaka .pf-/.pd- komponenta mora da radi i na beloj podlozi.
+   Akcent projekta (--pa*) se na svetlom zamenjuje violet/blue parom
+   iz palete — isto kao .svc i .step na početnoj.
+   ========================================================== */
+
+/* Ključne funkcionalnosti */
+.section--light .pd-hl-card,
+.section--cream .pd-hl-card {
+    background: #ffffff;
+    border-color: var(--line);
+}
+.section--light .pd-hl-card:hover,
+.section--cream .pd-hl-card:hover {
+    background: #ffffff;
+    border-color: var(--line-strong);
+    box-shadow: 0 22px 60px -26px rgba(42, 28, 74, 0.35);
+}
+.section--light .pd-hl-ic,
+.section--cream .pd-hl-ic {
+    color: var(--violet);
+    background: rgba(79, 70, 152, 0.08);
+    border-color: rgba(79, 70, 152, 0.2);
+}
+.section--light .pd-hl-card:hover .pd-hl-ic,
+.section--cream .pd-hl-card:hover .pd-hl-ic {
+    background: var(--violet);
+    color: var(--mint);
+    border-color: var(--violet);
+}
+.section--light .pd-hl-title,
+.section--cream .pd-hl-title { color: var(--deep); }
+
+/* Tehnologije */
+.section--light .pd-chip,
+.section--cream .pd-chip {
+    background: #ffffff;
+    border-color: var(--line);
+    color: var(--deep);
+}
+.section--light .pd-chip::before,
+.section--cream .pd-chip::before { background: var(--violet); }
+
+/* Prethodni / sledeći projekat: `.pd-next` je od početka pisan za svetle sekcije
+   (blok `.pd-close` stoji samo tamo), pa mu ovde ne treba varijanta. */
+
+/* Galerija */
+.section--light .pd-shot-btn:hover,
+.section--cream .pd-shot-btn:hover {
+    border-color: var(--violet);
+    box-shadow: 0 26px 60px -28px rgba(42, 28, 74, 0.5);
+}
+.section--light .pd-shot-btn .zoom,
+.section--cream .pd-shot-btn .zoom { background: var(--deep); color: var(--mint); }
+
+/* Usluge na projektu */
+.section--light .pd-service,
+.section--cream .pd-service { color: var(--txt-soft); border-color: var(--line-strong); }
+
+/* Oblasti rada (#scope je bela sekcija) — mint/cijan akcenti prelaze u violet/plavo */
+.section--light .pf-area::before,
+.section--cream .pf-area::before {
+    background: linear-gradient(90deg, var(--violet), var(--blue), transparent);
+}
+.section--light .pf-area-n,
+.section--cream .pf-area-n { color: rgba(26, 18, 48, 0.14); }
+.section--light .pf-area:hover .pf-area-n,
+.section--cream .pf-area:hover .pf-area-n { color: var(--violet); }
+.section--light .pf-area-title,
+.section--cream .pf-area-title { color: var(--deep); }
+.section--light .pf-area-list li,
+.section--cream .pf-area-list li {
+    background: rgba(79, 70, 152, 0.05);
+    border-color: rgba(79, 70, 152, 0.16);
+    color: var(--deep);
+}
+.section--light .pf-area-list li::before,
+.section--cream .pf-area-list li::before { background: var(--violet); }
+.section--light .pf-area-list li:hover,
+.section--cream .pf-area-list li:hover {
+    background: #ffffff;
+    border-color: var(--violet);
+    color: var(--violet);
+}
+
+/* Tok rada (šablon „web“, sekcija #story je cream) */
+.section--light .pdw-flow::before,
+.section--cream .pdw-flow::before {
+    background: linear-gradient(180deg, var(--violet), var(--blue), transparent);
+}
+.section--light .pdw-step-dot,
+.section--cream .pdw-step-dot {
+    background: var(--violet);
+    box-shadow: 0 0 0 5px rgba(79, 70, 152, 0.12);
+}
+.section--light .pdw-step-n,
+.section--cream .pdw-step-n { color: var(--violet); }
+
+/* Funkcionalnosti (bela sekcija) */
+.section--light .pdw-feat-item::before,
+.section--cream .pdw-feat-item::before {
+    background: linear-gradient(90deg, var(--violet), var(--blue), transparent);
+}
+.section--light .pdw-feat-n,
+.section--cream .pdw-feat-n { color: rgba(26, 18, 48, 0.14); }
+.section--light .pdw-feat-item:hover .pdw-feat-n,
+.section--cream .pdw-feat-item:hover .pdw-feat-n { color: var(--violet); }
+.section--light .pdw-feat-ic,
+.section--cream .pdw-feat-ic { color: var(--violet); }
+
+/* Priča na social projektu (cream sekcija) */
+.section--light .pds-block,
+.section--cream .pds-block {
+    background: #ffffff;
+    border-color: var(--line);
+    border-left-color: var(--violet);
+}
+.section--light .pds-block:hover,
+.section--cream .pds-block:hover {
+    background: #ffffff;
+    box-shadow: 0 22px 60px -26px rgba(42, 28, 74, 0.35);
+}
+
+/* Kalendar objavljivanja (cream sekcija) */
+.section--light .pds-slot::before,
+.section--cream .pds-slot::before {
+    background: linear-gradient(90deg, var(--violet), var(--blue), transparent);
+}
+.section--light .pds-slot-day,
+.section--cream .pds-slot-day { color: var(--violet); }
+
+
+/* ---------- Responsive (portfolio) ---------- */
+@media (max-width: 1199.98px) {
+    .pd-hl { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 991.98px) {
+    .pd-story { grid-template-columns: 1fr; }
+    .pd-story-aside { position: static; }
+    .pd-meta { grid-template-columns: repeat(2, 1fr); gap: 26px; }
+    .pd-metrics { margin-top: -46px; }
+
+    /* Social: profil ide iznad mreže objava (bez sticky ponašanja) */
+    .pds-stage-grid { grid-template-columns: 1fr; }
+    .pds-profile { position: static; }
+    .pds-stage .pd-metrics { margin-top: clamp(24px, 4vw, 40px); }
+
+    /* Kalendar objavljivanja: 2 kolone => linija samo u desnoj koloni */
+    .pds-rhythm { grid-template-columns: repeat(2, 1fr); }
+    .pds-slot + .pds-slot { padding-left: 0; border-left: 0; }
+    .pds-rhythm .pds-slot:nth-child(even) {
+        padding-left: clamp(16px, 2vw, 26px);
+        border-left: 1px solid var(--line);
+    }
+}
+@media (max-width: 767.98px) {
+    /* Funkcionalnosti: jedna kolona => nema vertikalne linije */
+    .pdw-feat { grid-template-columns: 1fr; }
+    .pdw-feat-item:nth-child(odd) { padding-right: 0; }
+    .pdw-feat-item:nth-child(even) { padding-left: 0; border-left: 0; }
+    .pdw-feat-item:nth-last-child(2) { border-bottom: 0; }
+
+    .pdw-flow { padding-left: 26px; }
+    .pdw-step-dot { left: -26px; }
+
+    .pds-pillars { grid-template-columns: repeat(2, 1fr); }
+    .pds-shots { grid-template-columns: 1fr; }
+
+    .pf-grid { grid-template-columns: 1fr; gap: 18px; }
+    .pf-body { padding: 22px 22px 24px; }
+
+    /* jedna kolona => nema vertikalne linije, samo linije između polja */
+    .pf-areas { grid-template-columns: 1fr; }
+    .pf-area:nth-child(odd) { padding-right: 0; }
+    .pf-area:nth-child(even) { padding-left: 0; border-left: 0; }
+    .pf-area:nth-last-child(2) { border-bottom: 0; }
+
+    .pd-hl { grid-template-columns: 1fr; }
+    .pd-gallery { grid-template-columns: 1fr; }
+    .pd-metrics { grid-template-columns: 1fr; margin-top: 24px; }
+    /* Zatvaranje stranice: kontakt iznad, susedni projekti ispod (bez linije levo) */
+    .pd-close { grid-template-columns: 1fr; gap: clamp(38px, 6vw, 56px); }
+    .pd-close-nav { border-left: 0; padding-left: 0; }
+    .lb-prev { left: 12px; }
+    .lb-next { right: 12px; }
+}
+@media (max-width: 575.98px) {
+    .pds-pillars { grid-template-columns: 1fr; }
+    .pds-rhythm { grid-template-columns: 1fr; }
+    .pds-rhythm .pds-slot:nth-child(even) { padding-left: 0; border-left: 0; }
+    .pds-slot { padding-right: 0; }
+    .pds-profile-head { gap: 14px; }
+    .pds-avatar { width: 62px; height: 62px; font-size: 21px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
         animation-duration: 0.01ms !important;

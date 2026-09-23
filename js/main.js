@@ -73,7 +73,9 @@
             const duration = 1800;
             const start = performance.now();
             const tick = (now) => {
-                const p = Math.min((now - start) / duration, 1);
+                // Clamp na [0,1]: prvi rAF timestamp ume da bude MANJI od start-a,
+                // pa bi bez ovoga jedan frejm ispisao negativan broj (npr. "-2%").
+                const p = Math.min(Math.max((now - start) / duration, 0), 1);
                 const eased = 1 - Math.pow(1 - p, 4);
                 el.textContent = Math.floor(target * eased) + suffix;
                 if (p < 1) requestAnimationFrame(tick);
@@ -108,7 +110,13 @@
     const navLinks = document.querySelectorAll('.nav-link, .nav-mobile a');
     if (sections.length && navLinks.length && 'IntersectionObserver' in window) {
         const setActive = (id) => {
-            navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + id));
+            navLinks.forEach(l => {
+                // Stavke koje NISU sidra (npr. "Projekti" -> /projekti) preskačemo:
+                // njihovo "active" stanje postavlja PHP ($nav_active u header.php).
+                const h = l.getAttribute('href') || '';
+                if (h.charAt(0) !== '#') return;
+                l.classList.toggle('active', h === '#' + id);
+            });
         };
         const sIO = new IntersectionObserver((entries) => {
             entries.forEach(en => { if (en.isIntersecting) setActive(en.target.id); });
@@ -286,6 +294,87 @@
         });
     }
 
+    // PORTFOLIO: filter kategorija je uklonjen 2026-08-05 (mreža prikazuje sve
+    // projekte odjednom) — ne vraćati JS filter niti brojač #pfCount.
+
+    // ===== Traka napretka skrolovanja (sve stranice; markup je u partials/header.php) =====
+    const scrollProgress = document.getElementById('scrollProgress');
+    if (scrollProgress) {
+        const updateProgress = () => {
+            const max = document.documentElement.scrollHeight - window.innerHeight;
+            const p = max > 0 ? Math.min(window.scrollY / max, 1) : 0;
+            scrollProgress.style.transform = 'scaleX(' + p + ')';
+        };
+        window.addEventListener('scroll', updateProgress, { passive: true });
+        window.addEventListener('resize', updateProgress, { passive: true });
+        // load + hashchange: kad se na stranicu dođe sa sidrom u URL-u (npr. /#contact),
+        // skok na sidro se odigra pre nego što ovaj skript izmeri poziciju, pa bez
+        // ovoga traka ostane prazna dok korisnik ne skroluje.
+        window.addEventListener('load', updateProgress);
+        window.addEventListener('hashchange', updateProgress);
+        updateProgress();
+    }
+
+    // ===== PROJEKAT: blagi 3D tilt glavnog vizuala (desktop, bez reduced-motion) =====
+    if (!isCoarse && !reduced) {
+        document.querySelectorAll('.js-tilt').forEach(el => {
+            const strength = 5; // stepeni
+            el.addEventListener('mousemove', (e) => {
+                const r = el.getBoundingClientRect();
+                const x = (e.clientX - (r.left + r.width / 2)) / (r.width / 2);
+                const y = (e.clientY - (r.top + r.height / 2)) / (r.height / 2);
+                el.style.transform =
+                    'perspective(1400px) rotateY(' + (x * strength) + 'deg) rotateX(' + (-y * strength) + 'deg)';
+            });
+            el.addEventListener('mouseleave', () => { el.style.transform = ''; });
+        });
+    }
+
+    // ===== PROJEKAT: lightbox za galeriju =====
+    const lb = document.getElementById('lightbox');
+    if (lb) {
+        const shots = Array.from(document.querySelectorAll('.js-lb'));
+        const lbImg = document.getElementById('lbImg');
+        const lbCap = document.getElementById('lbCap');
+        let idx = 0;
+        let lastFocus = null;
+
+        const show = (i) => {
+            idx = (i + shots.length) % shots.length;
+            const b = shots[idx];
+            lbImg.src = b.dataset.src;
+            lbImg.alt = b.dataset.cap || '';
+            lbCap.textContent = b.dataset.cap || '';
+        };
+        const open = (i) => {
+            lastFocus = document.activeElement;
+            show(i);
+            lb.hidden = false;
+            lb.classList.add('is-open');
+            document.body.style.overflow = 'hidden';
+            document.getElementById('lbClose').focus();
+        };
+        const close = () => {
+            lb.classList.remove('is-open');
+            lb.hidden = true;
+            document.body.style.overflow = '';
+            if (lastFocus) lastFocus.focus();
+        };
+
+        shots.forEach((b, i) => b.addEventListener('click', () => open(i)));
+        document.getElementById('lbClose').addEventListener('click', close);
+        document.getElementById('lbPrev').addEventListener('click', () => show(idx - 1));
+        document.getElementById('lbNext').addEventListener('click', () => show(idx + 1));
+        // Klik na pozadinu (ne na sliku/dugmad) zatvara
+        lb.addEventListener('click', (e) => { if (e.target === lb) close(); });
+        document.addEventListener('keydown', (e) => {
+            if (!lb.classList.contains('is-open')) return;
+            if (e.key === 'Escape') close();
+            else if (e.key === 'ArrowLeft') show(idx - 1);
+            else if (e.key === 'ArrowRight') show(idx + 1);
+        });
+    }
+
     // ===== Contact form validation =====
     const form = document.getElementById('contactForm');
     if (!form) return;
@@ -295,7 +384,7 @@
     const feedback = document.getElementById('formFeedback');
     const submitBtn = document.getElementById('submitBtn');
 
-    // reCAPTCHA v3 — key i akcija dolaze iz data-atributa forme (index.php).
+    // reCAPTCHA v3 — key i akcija dolaze iz data-atributa forme (partials/contact.php).
     // Ako key nije podešen, preskačemo (forma radi bez captche, npr. na lokalu).
     const recaptchaKey = form.dataset.recaptchaKey || '';
     const recaptchaAction = form.dataset.recaptchaAction || 'contact';

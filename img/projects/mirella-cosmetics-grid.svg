@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900" width="900" height="900" role="img" aria-label="Mirella — mreža objava" fill="none">
+  <title>Mirella — mreža objava</title>
+  <defs>
+    <linearGradient id="q0d0ca2acc" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5d54b8"/><stop offset="1" stop-color="#abbbe5"/>
+    </linearGradient>
+    <linearGradient id="q0d0ca2panel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#241a44"/><stop offset="1" stop-color="#160f30"/>
+    </linearGradient>
+    <linearGradient id="q0d0ca2deep" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4f4698"/><stop offset="1" stop-color="#241a44"/>
+    </linearGradient>
+    <linearGradient id="q0d0ca2fade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0d0820" stop-opacity="0"/><stop offset="1" stop-color="#0d0820" stop-opacity=".85"/>
+    </linearGradient>
+    <filter id="q0d0ca2blur" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="90"/>
+    </filter>
+  </defs>
+  <rect width="900" height="900" fill="#120c28"/>
+
+  <g transform="translate(0 0)">
+    <rect width="292" height="292" rx="16" fill="url(#q0d0ca2deep)"/>
+    <circle cx="146" cy="132" r="84" fill="#5d54b8" opacity=".28"/>
+    <circle cx="146" cy="132" r="46" fill="#abbbe5" opacity=".95"/>
+    <path d="M134 110l34 22-34 22z" fill="#160f30"/>
+    <rect x="22" y="236" width="140" height="12" rx="6" fill="#ffffff" fill-opacity=".2"/>
+    <rect x="236" y="22" width="34" height="34" rx="11" fill="#abbbe5" fill-opacity=".22"/>
+  </g>
+  <g transform="translate(304 0)">
+    <rect width="292" height="292" rx="16" fill="url(#q0d0ca2panel)"/>
+    <rect x="22" y="22" width="248" height="248" rx="14" fill="#5d54b8" opacity=".8"/>
+    <rect x="48" y="92" width="196" height="18" rx="9" fill="#160f30" fill-opacity=".35"/>
+    <rect x="48" y="124" width="150" height="18" rx="9" fill="#160f30" fill-opacity=".28"/>
+    <rect x="48" y="156" width="176" height="18" rx="9" fill="#160f30" fill-opacity=".2"/>
+    <circle cx="58" cy="216" r="12" fill="#160f30" fill-opacity=".3"/>
+  </g>
+  <g transform="translate(608 0)">
+    <rect width="292" height="292" rx="16" fill="url(#q0d0ca2panel)"/>
+    <rect x="22" y="22" width="248" height="248" rx="14" fill="#5d54b8" opacity=".8"/>
+    <rect x="48" y="92" width="196" height="18" rx="9" fill="#160f30" fill-opacity=".35"/>
+    <rect x="48" y="124" width="150" height="18" rx="9" fill="#160f30" fill-opacity=".28"/>
+    <rect x="48" y="156" width="176" height="18" rx="9" fill="#160f30" fill-opacity=".2"/>
+    <circle cx="58" cy="216" r="12" fill="#160f30" fill-opacity=".3"/>
+  </g>
+  <g transform="translate(0 304)">
+    <rect width="292" height="292" rx="16" fill="url(#q0d0ca2panel)"/>
+    <circle cx="146" cy="116" r="56" fill="#abbbe5" opacity=".9"/>
+    <path d="M42 292c0-58 47-96 104-96s104 38 104 96z" fill="#5d54b8" opacity=".55"/>
+    <rect x="22" y="22" width="96" height="12" rx="6" fill="#ffffff" fill-opacity=".18"/>
+  </g>
+  <g transform="translate(304 304)">
+    <rect width="292" height="292" rx="16" fill="url(#q0d0ca2panel)"/>
+    <rect x="22" y="22" width="248" height="188" rx="14" fill="url(#q0d0ca2acc)" opacity=".9"/>
+    <circle cx="146" cy="116" r="52" fill="#160f30" fill-opacity=".22"/>
+    <rect x="22" y="232" width="170" height="12" rx="6" fill="#ffffff" fill-opacity=".2"/>
+    <rect x="22" y="254" width="110" height="12" rx="6" fill="#ffffff" fill-opacity=".1"/>
+  </g>
+  <g transform="translate(608 304)">
+    <rect width="292" height="292" rx="16" fill="url(#q0d0ca2panel)"/>
+    <circle cx="146" cy="116" r="56" fill="#abbbe5" opacity=".9"/>
+    <path d="M42 292c0-58 47-96 104-96s104 38 104 96z" fill="#5d54b8" opacity=".55"/>
+    <rect x="22" y="22" width="96" height="12" rx="6" fill="#ffffff" fill-opacity=".18"/>
+  </g>
+  <g transform="translate(0 608)">
+    <rect width="292" height="292" rx="16" fill="url(#q0d0ca2deep)"/>
+    <rect x="22" y="22" width="248" height="248" rx="14" fill="#ffffff" fill-opacity=".04"/>
+    <rect x="40" y="174" width="28" height="58" rx="10" fill="#abbbe5" opacity=".85"/>
+    <rect x="86" y="170" width="28" height="62" rx="10" fill="#5d54b8" opacity=".85"/>
+    <rect x="132" y="116" width="28" height="116" rx="10" fill="#abbbe5" opacity=".85"/>
+    <rect x="178" y="85" width="28" height="147" rx="10" fill="#5d54b8" opacity=".85"/>
+    <rect x="224" y="164" width="28" height="68" rx="10" fill="#abbbe5" opacity=".85"/>
+    <rect x="40" y="248" width="120" height="10" rx="5" fill="#ffffff" fill-opacity=".16"/>
+  </g>
+  <g transform="translate(304 608)">
+    <rect width="292" height="292" rx="16" fill="url(#q0d0ca2panel)"/>
+    <circle cx="146" cy="116" r="56" fill="#abbbe5" opacity=".9"/>
+    <path d="M42 292c0-58 47-96 104-96s104 38 104 96z" fill="#5d54b8" opacity=".55"/>
+    <rect x="22" y="22" width="96" height="12" rx="6" fill="#ffffff" fill-opacity=".18"/>
+  </g>
+  <g transform="translate(608 608)">
+    <rect width="292" height="292" rx="16" fill="url(#q0d0ca2panel)"/>
+    <rect x="22" y="22" width="248" height="188" rx="14" fill="url(#q0d0ca2acc)" opacity=".9"/>
+    <circle cx="146" cy="116" r="52" fill="#160f30" fill-opacity=".22"/>
+    <rect x="22" y="232" width="170" height="12" rx="6" fill="#ffffff" fill-opacity=".2"/>
+    <rect x="22" y="254" width="110" height="12" rx="6" fill="#ffffff" fill-opacity=".1"/>
+  </g>
+</svg>
