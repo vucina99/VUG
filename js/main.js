@@ -13,7 +13,10 @@
         if (toTop) toTop.classList.toggle('is-visible', window.scrollY > 700);
     };
     window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
+    // Prvo merenje u rAF, ne odmah: čitanje scrollY dok skript još radi primora
+    // browser na sinhroni layout cele strane (Lighthouse „forced reflow“, ~275 ms
+    // na sporom telefonu). U rAF-u čita već izračunat layout.
+    requestAnimationFrame(onScroll);
 
     // ===== Mobile menu =====
     const navToggle = document.getElementById('navToggle');
@@ -198,8 +201,10 @@
             heroGlow.style.transform = `translate(${x - 250}px, ${y - 250}px)`;
         };
         hero.addEventListener('mousemove', updateGlow);
-        // Inicijalno centrirano
-        heroGlow.style.transform = `translate(${hero.offsetWidth / 2 - 250}px, ${hero.offsetHeight / 2 - 250}px)`;
+        // Inicijalno centrirano (u rAF-u, iz istog razloga kao onScroll gore)
+        requestAnimationFrame(() => {
+            heroGlow.style.transform = `translate(${hero.offsetWidth / 2 - 250}px, ${hero.offsetHeight / 2 - 250}px)`;
+        });
     }
 
     // ===== Testimonials interactive slider (auto-scroll + drag + pause) =====
@@ -222,22 +227,47 @@
             resumeTimer = setTimeout(() => { paused = false; }, RESUME_AFTER);
         };
 
+        // Polovina širine traka (kartice su renderovane 2x). Meri se samo kad se
+        // traka promeni (ResizeObserver), ne u svakom frejmu - čitanje scrollWidth
+        // u rAF petlji je ranije forsiralo layout 60x u sekundi.
+        let half = 0;
+        const measure = () => { half = tTrack.scrollWidth / 2; };
+        if ('ResizeObserver' in window) new ResizeObserver(measure).observe(tTrack);
+        else { measure(); window.addEventListener('resize', measure, { passive: true }); }
+
+        let rafId = 0;
+        let running = false;
         const tick = (now) => {
-            const dt = (now - lastT) / 1000;
+            // Clamp: posle povratka na tab/ekran dt bi bio ogroman i traka bi skočila.
+            const dt = Math.min((now - lastT) / 1000, 0.1);
             lastT = now;
-            if (!paused && !isDragging && tTrack.scrollWidth > 0) {
+            if (!paused && !isDragging && half > 0) {
                 tMarquee.scrollLeft += SPEED * dt;
             }
             // Seamless loop — 2x renderovane kartice, vracamo se na pola kad predjemo
-            const half = tTrack.scrollWidth / 2;
             if (half > 0 && tMarquee.scrollLeft >= half) {
                 tMarquee.scrollLeft -= half;
             } else if (tMarquee.scrollLeft < 0) {
                 tMarquee.scrollLeft += half;
             }
-            requestAnimationFrame(tick);
+            rafId = requestAnimationFrame(tick);
         };
-        requestAnimationFrame(tick);
+        const start = () => {
+            if (running) return;
+            running = true;
+            lastT = performance.now();
+            rafId = requestAnimationFrame(tick);
+        };
+        const stop = () => { running = false; cancelAnimationFrame(rafId); };
+        // Petlja radi SAMO dok je traka na ekranu - ranije je radila stalno i
+        // trošila glavnu nit (lošiji INP) i dok je korisnik na drugom delu strane.
+        if ('IntersectionObserver' in window) {
+            new IntersectionObserver((entries) => {
+                entries.forEach(en => (en.isIntersecting ? start() : stop()));
+            }).observe(tMarquee);
+        } else {
+            start();
+        }
 
         // Pauziraj na bilo koju interakciju
         tMarquee.addEventListener('touchstart', pauseScroll, { passive: true });
@@ -312,7 +342,7 @@
         // ovoga traka ostane prazna dok korisnik ne skroluje.
         window.addEventListener('load', updateProgress);
         window.addEventListener('hashchange', updateProgress);
-        updateProgress();
+        requestAnimationFrame(updateProgress);
     }
 
     // ===== PROJEKAT: blagi 3D tilt glavnog vizuala (desktop, bez reduced-motion) =====

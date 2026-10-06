@@ -13,10 +13,9 @@
  *
  * Opciono:
  *   $SITE_URL          [default 'https://vugagency.com']
- *   $meta_keywords     [default '']  — izostavlja se ako je prazno
  *   $robots            [default 'index, follow, max-image-preview:large, max-snippet:-1']
- *   $alt_links         [default []]  — niz ['hreflang'=>..., 'href'=>...] za hreflang alternate
- *   $og_image          [default $SITE_URL/img/og-image.png]
+ *                      — na engleskoj verziji se UVEK pregazi u 'noindex, follow' (vidi ispod)
+ *   $og_image        [default $SITE_URL/img/og-image.png]
  *   $og_type           [default 'website']
  *   $og_image_alt      [default 'VUG — Digitalna agencija' / 'Digital Agency']
  *   $geo_region        — npr. 'RS-14' (izostavlja se ako nije zadato)
@@ -25,14 +24,28 @@
  *   $extra_head        — sirovi HTML za stranicu (page-specific <style>/<link>)
  */
 $SITE_URL      = $SITE_URL      ?? 'https://vugagency.com';
-$meta_keywords = $meta_keywords ?? '';
 $robots        = $robots        ?? 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
-$alt_links     = $alt_links     ?? [];
-$og_image      = $og_image      ?? ($SITE_URL . '/img/og-image.png');
+$og_image     = $og_image      ?? ($SITE_URL . '/img/og-image.png');
 $og_type       = $og_type       ?? 'website';
 $json_ld       = $json_ld       ?? null;
 $extra_head    = $extra_head    ?? '';
 $is_sr         = (($lang ?? 'sr') === 'sr');
+
+/* SAMO SRPSKA VERZIJA SE INDEKSIRA (odluka 2026-10-01, potvrđena 2026-10-06).
+   Engleska verzija ostaje dostupna posetiocima (prekidač jezika), ali je
+   noindex na SVAKOJ stranici, uključujući /en - pravilo je ovde, u deljenom
+   head-u, pa važi i za stranice koje se tek dodaju. Namerno:
+   - BEZ Disallow u robots.txt: Google mora da puzi /en stranice da bi uopšte
+     video noindex; blokirana stranica bi ostala u indeksu.
+   - BEZ hreflang veza (ni na srpskoj verziji): hreflang je signal „indeksiraj
+     obe verzije“ i u sukobu je sa noindex-om - Google (Gary Illyes, 2022) kaže
+     da jedan noindex u hreflang klasteru može da povuče ceo klaster.
+   - BEZ meta keywords: Google ga ne koristi, a Bing natrpan tag tretira kao spam signal.
+   - Canonical na engleskoj stranici ostaje samoreferentan: canonical ka srpskoj
+     + noindex bi bili kontradiktorni signali. */
+if (!$is_sr) {
+    $robots = 'noindex, follow';
+}
 $og_image_alt  = $og_image_alt  ?? ('VUG — ' . ($is_sr ? 'Digitalna agencija' : 'Digital Agency'));
 $css_v         = @filemtime(dirname(__DIR__) . '/css/style.css');
 $GA_ID         = 'G-W07YT5991W';
@@ -59,9 +72,6 @@ $critical_css = str_replace('../fonts/', $base . '/fonts/', $critical_css);
 
     <title><?= htmlspecialchars($meta_title) ?></title>
     <meta name="description" content="<?= htmlspecialchars($meta_description) ?>">
-<?php if ($meta_keywords !== ''): ?>
-    <meta name="keywords" content="<?= htmlspecialchars($meta_keywords) ?>">
-<?php endif; ?>
     <meta name="author" content="VUG">
     <meta name="publisher" content="VUG">
     <meta name="robots" content="<?= htmlspecialchars($robots) ?>">
@@ -73,17 +83,15 @@ $critical_css = str_replace('../fonts/', $base . '/fonts/', $critical_css);
     <meta name="geo.placename" content="<?= htmlspecialchars($geo_placename) ?>">
 <?php endif; ?>
 
-    <!-- Canonical + hreflang -->
+    <!-- Canonical (bez hreflang - indeksira se samo srpska verzija, vidi gore) -->
     <link rel="canonical" href="<?= htmlspecialchars($canonical) ?>">
-<?php foreach ($alt_links as $alt): ?>
-    <link rel="alternate" hreflang="<?= htmlspecialchars($alt['hreflang']) ?>" href="<?= htmlspecialchars($alt['href']) ?>">
-<?php endforeach; ?>
 
     <!-- Open Graph -->
     <meta property="og:type" content="<?= htmlspecialchars($og_type) ?>">
     <meta property="og:locale" content="<?= $is_sr ? 'sr_RS' : 'en_US' ?>">
-    <meta property="og:locale:alternate" content="<?= $is_sr ? 'en_US' : 'sr_RS' ?>">
-    <meta property="og:site_name" content="VUG">
+    <!-- og:site_name = isti naziv kao WebSite.name u JSON-LD-u početne (Google
+         ih poredi kad bira naziv sajta u rezultatima). -->
+    <meta property="og:site_name" content="VUG Digital Agency">
     <meta property="og:title" content="<?= htmlspecialchars($meta_title) ?>">
     <meta property="og:description" content="<?= htmlspecialchars($meta_description) ?>">
     <meta property="og:url" content="<?= htmlspecialchars($canonical) ?>">
@@ -162,10 +170,12 @@ $critical_css = str_replace('../fonts/', $base . '/fonts/', $critical_css);
          a onload ga prebaci na "all". <noscript> je fallback bez JS-a.
          Stoji PRE $extra_head, pa stranični <style> blokovi ostaju POSLE njega
          u kaskadi i dalje pobeđuju — isti redosled kao pre razdvajanja CSS-a. -->
-    <!-- preload vraća prioritet na High: media="print" resurs Chrome inače
-         preuzima sa najnižim prioritetom, pa bi na sporoj vezi sadržaj ispod
-         prvog ekrana mogao nakratko da bude bez stilova. -->
-    <link rel="preload" as="style" href="<?= $base ?>/css/style.css?v=<?= $css_v ?>">
+    <!-- BEZ <link rel="preload" as="style"> (uklonjen 2026-10-06): preload je
+         dizao style.css (~107 KB) na najviši prioritet, pa se otimao o propusni
+         opseg sa HTML-om, fontovima i hero slikom. Lighthouse mobilni bez njega:
+         FCP 2,6 s -> 1,8 s (landing), 2,9 s -> 2,3 s (početna). Cena: na vrlo
+         sporoj vezi sadržaj ISPOD prvog ekrana može nakratko biti bez stilova
+         dok se fajl ne učita - prvi ekran je pokriven inline critical CSS-om. -->
     <link rel="stylesheet" href="<?= $base ?>/css/style.css?v=<?= $css_v ?>" media="print" onload="this.media='all';this.onload=null">
     <noscript><link rel="stylesheet" href="<?= $base ?>/css/style.css?v=<?= $css_v ?>"></noscript>
 <?= $extra_head ?>

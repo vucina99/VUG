@@ -6,9 +6,8 @@ return [
     'lang_current_label' => 'EN',
 
     // Meta
-    'meta_title' => 'VUG - Web & Mobile App Development, SEO & Marketing',
-    'meta_description' => 'Digital agency from Pančevo - websites, mobile apps, social media management, SEO and branding. Request your free quote.',
-    'meta_keywords' => 'website development, websites, web applications, mobile applications, social media management, internet marketing, logo design, digital agency, VUG',
+    'meta_title' => 'VUG Digital Agency Pančevo - websites, apps and marketing',
+    'meta_description' => 'VUG Digital Agency from Pančevo - website and app development, social media management and marketing. Free quote within 48h.',
 
     // Nav
     'nav_home' => 'Home',
@@ -21,7 +20,7 @@ return [
     'nav_cta' => 'Get in touch',
 
     // Hero
-    'hero_badge' => 'Digital agency · Websites · Apps · Marketing',
+    'hero_badge' => 'VUG Digital Agency · Pančevo',
     'hero_title_1' => 'We build brands',
     'hero_title_2' => 'that get remembered',
     'hero_subtitle' => 'We build projects that not only look attractive - they bring you clients. Websites, web and mobile apps, social media management and internet marketing under one roof.',
@@ -38,6 +37,7 @@ return [
     'services_eyebrow' => 'Our services',
     'services_title' => 'Everything your brand needs online',
     'services_subtitle' => 'From the idea to the launch - and beyond - we cover every digital touchpoint between your brand and its audience.',
+    'services_local' => 'Based in Belgrade or Pančevo? You will find everything about the service - process, pricing and timelines - on our <a href="{base}/en/izrada-web-sajta-beograd">website development Belgrade</a> and <a href="{base}/en/izrada-web-sajta-pancevo">website development Pančevo</a> pages.',
 
     'service_1_title' => 'Websites & web apps',
     'service_1_desc' => 'Complex web applications, online stores and business websites - fast, secure and SEO-optimized, with custom code. Solutions that scale together with your business.',
@@ -73,7 +73,7 @@ return [
     // About
     'about_eyebrow' => 'About VUG',
     'about_title' => 'Strategy, quality and reliable execution.',
-    'about_p1' => 'VUG was born from a belief that every brand deserves a digital story worthy of its ambition.',
+    'about_p1' => 'VUG Digital Agency was founded in Pančevo, out of a belief that every brand deserves a digital story worthy of its ambition.',
     'about_p2' => 'We believe that a successful digital presence is not a matter of trends, but of strategy, quality and consistent execution. That is why we help companies build a recognizable presence, improve their business and achieve measurable results through carefully crafted digital solutions.',
     'about_p3' => 'Our approach is built on direct communication, clearly defined deadlines and complete transparency. We work thoughtfully, without unnecessary complexity or generic solutions, focused on long-term value and sustainable growth.',
     'about_p4' => 'Whether you are launching a new brand, developing a digital product or looking to improve an existing business, our goal is the same - to build a solution that will be a reliable foundation for your next step.',
@@ -308,7 +308,7 @@ return [
     'form_err_recaptcha' => 'We could not verify that you are not a robot. Please refresh the page and try again.',
 
     // Footer
-    'footer_tagline' => 'A digital agency dedicated to strategy, quality and measurable results.',
+    'footer_tagline' => 'VUG Digital Agency - a digital agency from Pančevo, dedicated to strategy, quality and measurable results.',
     'footer_nav' => 'Navigation',
     'footer_services' => 'Useful links',
     'footer_company' => 'Agency',

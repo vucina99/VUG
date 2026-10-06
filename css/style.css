@@ -152,6 +152,24 @@
     margin-bottom: 0;
     max-width: 50ch;
 }
+/* Red ispod mreže usluga sa internim linkovima ka lokalnim stranicama
+   (izrada web sajta Beograd / Pančevo). Tekstualni link, ne dugme ni kartica. */
+.svc-local {
+    margin-top: clamp(32px, 4vw, 48px);
+    font-size: clamp(15.5px, 1.3vw, 17px);
+    line-height: 1.7;
+    color: var(--txt-soft);
+    max-width: 78ch;
+}
+.svc-local a {
+    color: var(--violet);
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    transition: color .25s;
+}
+.svc-local a:hover { color: var(--blue); }
 .svc-tags {
     display: flex;
     flex-wrap: wrap;
@@ -1444,7 +1462,9 @@ textarea.form-control { resize: vertical; min-height: 110px; padding-top: 14px; 
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.12em;
-    color: var(--txt-muted);
+    /* 0.55 umesto --txt-muted (0.45): na tamnom futeru 0.45 daje kontrast 3.9:1,
+       ispod WCAG AA praga 4.5:1 (Lighthouse, 2026-10-06). 0.55 = 5.4:1. */
+    color: rgba(236, 233, 245, 0.55);
     margin-bottom: 18px;
 }
 .footer-list {
@@ -1467,7 +1487,7 @@ textarea.form-control { resize: vertical; min-height: 110px; padding-top: 14px; 
     gap: 16px 24px;
     flex-wrap: wrap;
     font-size: 12.5px;
-    color: var(--txt-muted);
+    color: rgba(236, 233, 245, 0.55); /* kontrast 5.4:1, vidi .footer-h */
 }
 .footer-legal {
     display: flex;
@@ -1475,7 +1495,7 @@ textarea.form-control { resize: vertical; min-height: 110px; padding-top: 14px; 
     gap: 8px 20px;
 }
 .footer-legal a {
-    color: var(--txt-muted);
+    color: rgba(236, 233, 245, 0.55);
     transition: color .2s;
 }
 .footer-legal a:hover { color: var(--mint); }
@@ -1603,7 +1623,9 @@ textarea.form-control { resize: vertical; min-height: 110px; padding-top: 14px; 
 .section--cream {
     --txt: #1a1230;
     --txt-soft: rgba(26, 18, 48, 0.66);
-    --txt-muted: rgba(26, 18, 48, 0.5);
+    /* 0.62 (ranije 0.5): na cream #eef2fa 0.5 daje 3.3:1, ispod WCAG AA 4.5:1
+       za sitan mono tekst (.s-index). 0.62 = 4.85:1 na cream, 5.06:1 na beloj. */
+    --txt-muted: rgba(26, 18, 48, 0.62);
     --line: rgba(26, 18, 48, 0.08);
     --line-strong: rgba(26, 18, 48, 0.16);
     color: var(--txt);

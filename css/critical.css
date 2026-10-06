@@ -570,6 +570,12 @@ ul { list-style: none; }
     color: var(--txt);
     max-width: 100%;
 }
+/* Na početnoj su .hero-tag (brend) i .hero-title (slogan) delovi JEDNOG <h1>
+   (brend mora u H1 zbog SEO-a). Omotač nasleđuje font roditelja, pa .hero-tag
+   (inline-flex) dobija ISTU visinu reda kao kad je bio u zasebnom <div>-u -
+   sa display:flex bi se sve ispod pomerilo ~6px naviše. */
+.hero-h1 { font: inherit; letter-spacing: normal; }
+.hero-h1 > .hero-title { display: block; }
 .hero-title em {
     display: block;
     padding-bottom: 0.15em;

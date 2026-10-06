@@ -3,7 +3,7 @@ $lang = isset($_GET['lang']) && $_GET['lang'] === 'en' ? 'en' : 'sr';
 $t = require __DIR__ . '/lang/' . $lang . '.php';
 require __DIR__ . '/php/icons.php'; // inline SVG ikonice: vug_icon() + vug_icon_sprite()
 
-// Produkcijski domen — koristi se za canonical, hreflang, OG i JSON-LD.
+// Produkcijski domen — koristi se za canonical, OG i JSON-LD.
 // (Canonical MORA da pokazuje na produkciju, ne na localhost.)
 $SITE_URL   = 'https://vugagency.com';
 $url_sr     = $SITE_URL . '/';
@@ -97,11 +97,19 @@ for ($i = 1; $i <= 8; $i++) {
     ];
 }
 
+// Naziv brenda — JEDAN izvor za Organization i WebSite čvor (i na landing.php).
+// Ciljamo brend pretrage „vug“, „vug agency“, „vug digital agency“, „vug pančevo“:
+// pun naziv je `name`, kraći oblici su `alternateName`. Isti naziv stoji i u
+// og:site_name, <title> i H1 početne - Google ih poredi kad bira naziv sajta.
+// MORA da se poklapa sa nazivom u Google poslovnom profilu.
+$brand_name = 'VUG Digital Agency';
+$brand_alt  = ['VUG', 'VUG Agency', 'VUG agencija'];
+
 $org = [
     '@type' => ['Organization', 'ProfessionalService'],
     '@id' => $org_id,
-    'name' => 'VUG',
-    'alternateName' => 'VUG Digital Agency',
+    'name' => $brand_name,
+    'alternateName' => $brand_alt,
     'url' => $SITE_URL . '/',
     'logo' => ['@type' => 'ImageObject', 'url' => $SITE_URL . '/img/icon-512.png', 'width' => 512, 'height' => 512],
     'image' => $og_image,
@@ -155,10 +163,12 @@ $schema = [
     '@graph' => [
         $org,
         [
+            // Naziv sajta u Google rezultatima (site name) - mora biti na početnoj.
             '@type' => 'WebSite',
             '@id' => $site_id,
             'url' => $SITE_URL . '/',
-            'name' => 'VUG',
+            'name' => $brand_name,
+            'alternateName' => $brand_alt,
             'inLanguage' => $lang === 'sr' ? 'sr-RS' : 'en',
             'publisher' => ['@id' => $org_id],
         ],
@@ -181,20 +191,7 @@ $schema = [
 /* ── SEO varijable za deljeni head (partials/head.php) ── */
 $meta_title       = $t['meta_title'];
 $meta_description = $t['meta_description'];
-$meta_keywords    = $t['meta_keywords'];
-// hreflang: srpski je primarni jezik sajta, pa x-default vodi NA NJEGA.
-// Regionalne varijante (RS/BA/ME/HR) postoje da Google srpsku verziju nudi i
-// korisnicima iz okruženja — sa samo `sr-RS` svi ostali padnu na x-default.
-// Isti niz mora da stoji na OBE jezičke verzije (hreflang je recipročan).
-$alt_links = [
-    ['hreflang' => 'sr',        'href' => $url_sr],
-    ['hreflang' => 'sr-RS',     'href' => $url_sr],
-    ['hreflang' => 'sr-BA',     'href' => $url_sr],
-    ['hreflang' => 'sr-ME',     'href' => $url_sr],
-    ['hreflang' => 'sr-HR',     'href' => $url_sr],
-    ['hreflang' => 'en',        'href' => $url_en],
-    ['hreflang' => 'x-default', 'href' => $url_sr],
-];
+// Bez hreflang-a: indeksira se samo srpska verzija (pravilo je u partials/head.php).
 $geo_region    = 'RS-14';
 $geo_placename = 'Pančevo';
 $json_ld       = $schema;
@@ -207,15 +204,21 @@ require __DIR__ . '/partials/head.php';
 <header class="hero" id="home">
     <div class="hero-glow" id="heroGlow" aria-hidden="true"></div>
     <div class="container position-relative">
-        <div class="hero-tag">
-            <span class="dot"></span>
-            <span class="line"></span>
-            <?= $t['hero_badge'] ?>
-        </div>
-
-        <h1 class="hero-title">
-            <?= $t['hero_title_1'] ?>
-            <em><?= $t['hero_title_2'] ?></em>
+        <?php /* H1 = naziv brenda (hero_badge: „VUG Digital Agency · Pančevo“) + slogan.
+                 Brend MORA da bude u H1 početne - to je jedan od signala po kojima
+                 Google bira naziv sajta i rangira brend pretrage („vug pančevo“).
+                 Vizuelno se ništa ne menja: .hero-h1 je samo omotač, a delovi
+                 zadržavaju postojeće klase .hero-tag / .hero-title. */ ?>
+        <h1 class="hero-h1">
+            <span class="hero-tag">
+                <span class="dot"></span>
+                <span class="line"></span>
+                <?= $t['hero_badge'] ?>
+            </span>
+            <span class="hero-title">
+                <?= $t['hero_title_1'] ?>
+                <em><?= $t['hero_title_2'] ?></em>
+            </span>
         </h1>
 
         <p class="hero-lead"><?= $t['hero_subtitle'] ?></p>
@@ -289,6 +292,10 @@ require __DIR__ . '/partials/head.php';
             </a>
             <?php endforeach; ?>
         </div>
+
+        <?php // Kontekstualni interni linkovi ka lokalnim stranicama - početna ima najviše
+              // autoriteta (brend linkovi), pa ga ovim prenosi na „izrada web sajta Beograd/Pančevo“. ?>
+        <p class="svc-local reveal"><?= strtr($t['services_local'], ['{base}' => $base]) ?></p>
     </div>
 </section>
 
@@ -443,7 +450,7 @@ require __DIR__ . '/partials/head.php';
                 <article class="t-card" <?= $pass === 1 ? 'aria-hidden="true"' : '' ?>>
                     <div class="t-mark">"</div>
                     <p class="t-quote"><?= $tst['quote'] ?></p>
-                    <div class="t-stars" aria-label="5/5">
+                    <div class="t-stars" role="img" aria-label="5/5">
                         <?= vug_icon('star-fill') ?><?= vug_icon('star-fill') ?><?= vug_icon('star-fill') ?><?= vug_icon('star-fill') ?><?= vug_icon('star-fill') ?>
                     </div>
                     <div class="t-author">

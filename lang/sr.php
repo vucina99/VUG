@@ -6,9 +6,8 @@ return [
     'lang_current_label' => 'SR',
 
     // Meta
-    'meta_title' => 'VUG - Izrada web sajtova, aplikacija i digitalni marketing',
-    'meta_description' => 'Digitalna agencija iz Pančeva - izrada web sajtova, mobilne aplikacije, društvene mreže, SEO i brending. Besplatna ponuda.',
-    'meta_keywords' => 'izrada sajtova, izrada web sajtova, web aplikacije, mobilne aplikacije, vođenje društvenih mreža, internet marketing, izrada logoa, digitalna agencija, VUG',
+    'meta_title' => 'VUG Digital Agency Pančevo - sajtovi, aplikacije i marketing',
+    'meta_description' => 'VUG Digital Agency iz Pančeva - izrada sajtova i aplikacija, vođenje društvenih mreža i marketing. Besplatna ponuda za 48h.',
 
     // Nav
     'nav_home' => 'Početna',
@@ -21,7 +20,7 @@ return [
     'nav_cta' => 'Pošaljite upit',
 
     // Hero
-    'hero_badge' => 'Digitalna agencija · Sajtovi · Aplikacije · Marketing',
+    'hero_badge' => 'VUG Digital Agency · Pančevo',
     'hero_title_1' => 'Gradimo brendove',
     'hero_title_2' => 'koji se pamte',
     'hero_subtitle' => 'Radimo projekte koji ne samo da izgledaju atraktivno - već donose klijente. Izrada web sajtova, web i mobilnih aplikacija, vođenje društvenih mreža i internet marketing pod jednim krovom.',
@@ -38,6 +37,9 @@ return [
     'services_eyebrow' => 'Naše usluge',
     'services_title' => 'Sve što Vašem brendu treba na internetu',
     'services_subtitle' => 'Od ideje do lansiranja, pa i posle - pokrivamo svaki digitalni dodir Vašeg brenda sa publikom.',
+    // Interni linkovi sa početne ka lokalnim landing stranicama (opisni anchor = ciljni upit).
+    // {base} menja index.php (bazna putanja: '' na produkciji, '/VUG digital' na lokalu).
+    'services_local' => 'Poslujete u Beogradu ili Pančevu? Sve o usluzi - proces, cenu i rokove - naći ćete na stranicama <a href="{base}/izrada-web-sajta-beograd">izrada web sajta Beograd</a> i <a href="{base}/izrada-web-sajta-pancevo">izrada web sajta Pančevo</a>.',
 
     'service_1_title' => 'Izrada sajtova i web aplikacija',
     'service_1_desc' => 'Kompleksne web aplikacije, web prodavnice i poslovne web prezentacije - brzi, sigurni i SEO optimizovani, uz custom kod. Pravimo rešenja koja rastu zajedno sa Vašim biznisom.',
@@ -73,7 +75,7 @@ return [
     // About
     'about_eyebrow' => 'O agenciji VUG',
     'about_title' => 'Strategija, kvalitet i pouzdana realizacija.',
-    'about_p1' => 'VUG je nastao iz uverenja da svaki brend zaslužuje digitalnu priču dostojnu njegove ambicije.',
+    'about_p1' => 'VUG Digital Agency je nastala u Pančevu, iz uverenja da svaki brend zaslužuje digitalnu priču dostojnu njegove ambicije.',
     'about_p2' => 'Verujemo da uspešan digitalni nastup nije pitanje trenda, već strategije, kvaliteta i dosledne realizacije. Zato kompanijama pomažemo da izgrade prepoznatljivo prisustvo, unaprede poslovanje i ostvare merljive rezultate kroz pažljivo osmišljena digitalna rešenja.',
     'about_p3' => 'Naš pristup zasniva se na direktnoj komunikaciji, jasno definisanim rokovima i potpunoj transparentnosti. Radimo promišljeno, bez nepotrebne kompleksnosti i generičkih rešenja, sa fokusom na dugoročnu vrednost i održiv rast.',
     'about_p4' => 'Bez obzira na to da li pokrećete novi brend, razvijate digitalni proizvod ili želite da unapredite postojeće poslovanje, naš cilj je isti - da izgradimo rešenje koje će biti pouzdana osnova Vašeg narednog koraka.',
@@ -308,7 +310,7 @@ return [
     'form_err_recaptcha' => 'Nismo uspeli da potvrdimo da niste robot. Osvežite stranicu i pokušajte ponovo.',
 
     // Footer
-    'footer_tagline' => 'Digitalna agencija posvećena strategiji, kvalitetu i merljivim rezultatima.',
+    'footer_tagline' => 'VUG Digital Agency - digitalna agencija iz Pančeva, posvećena strategiji, kvalitetu i merljivim rezultatima.',
     'footer_nav' => 'Navigacija',
     'footer_services' => 'Korisni linkovi',
     'footer_company' => 'Agencija',

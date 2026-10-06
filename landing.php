@@ -29,26 +29,35 @@ $phone_intl  = '+381' . ltrim($phone_clean, '0');
 
 /* ──────────────────────────────────────────────────────────────────────────
    Podaci po gradu (name = nominativ, loc = lokativ „u …”, gen = genitiv).
-   VAŽNO ZA SEO: tekst (intro, naslov sekcije, pasusi, meta) je NAMERNO
-   jedinstven za svaki grad - Pančevo i Beograd nemaju isti sadržaj.
+   VAŽNO ZA SEO: tekst (intro, naslov sekcije, pasusi, meta, lista „uključuje“
+   u herou) je NAMERNO jedinstven za svaki grad - Pančevo i Beograd nemaju isti
+   sadržaj. `checks` je do 2026-10-06 bio zajednički u $COPY, pa je pet stavki
+   bilo identično na obe stranice iste usluge - ne vraćati ga u $COPY.
    ────────────────────────────────────────────────────────────────────────── */
 $CITY = [
     'pancevo' => [
         'other' => 'beograd', 'region' => 'RS-14',
         'sr' => [
             'name' => 'Pančevo', 'loc' => 'Pančevu', 'gen' => 'Pančeva',
-            'intro' => 'Potrebna Vam je profesionalna izrada web sajta u Pančevu? VUG kreira moderne, brze i funkcionalne sajtove po meri za preduzetnike i kompanije koje žele veću vidljivost, više upita i snažnije prisustvo na internetu.',
+            'intro' => 'Potrebna Vam je profesionalna izrada sajta u Pančevu? VUG je lokalna agencija koja se bavi izradom web sajtova po meri - modernih, brzih i funkcionalnih, za preduzetnike i kompanije koje žele veću vidljivost, više upita i snažnije prisustvo na internetu.',
             'sec_h2' => 'Zašto Vašem biznisu u Pančevu treba profesionalan sajt?',
             'p1' => 'Pančevo je grad u kojem posao i dalje najviše ide od preporuke i poznanstva - ali sve više kupaca prvo „proveri” firmu na internetu pre nego što pozove. Ako Vas u tom trenutku ne pronađu ili naiđu na zastareo sajt, poverenje tiho odlazi konkurenciji koja je uložila u svoje online prisustvo.',
             'p2' => '<strong>Mi smo domaća agencija - sedište nam je u Pančevu.</strong> Za dogovor Vam ne treba više od kratke šetnje ili poziva, a sve možemo rešiti i onlajn. Izrada web sajtova i web aplikacija je jedna od naših ključnih delatnosti: svaki projekat radimo posvećeno i po meri Vašeg posla, bez šablonskih rešenja koja se ne izdvajaju od drugih.',
             'p3' => 'Za lokalni biznis presudno je da se pojavi baš kad neko iz okoline traži uslugu. Zato Vaš sajt gradimo da bude <span class="lp-mark">brz</span>, pregledan i prilagođen svim mobilnim telefonima, te povezan sa Google profilom i mapama - da Vas podjednako lako nađu klijenti iz Pančeva, Srbije pa i celog sveta.',
             'p4' => 'Radimo sa klijentima iz svih delatnosti. Pre nego što napravimo prvi korak ka realizaciji projekta, prvo se dobro upoznamo sa Vašim biznisom: čime se bavite, ko su Vaši klijenti i šta želite da postignete. Tek onda gradimo sajt po meri - uz direktan razgovor, jasne rokove i cene bez skrivenih troškova - tako da rezultat nije samo još jedan web sajt na internetu, već web sajt koji će Vam donositi <strong>konkretne pozive i upite</strong>.',
-            'meta_title' => 'Izrada web sajta Pančevo - brzi i optimizovani sajtovi | VUG',
-            'meta_desc'  => 'Izrada web sajtova u Pančevu - brzi, optimizovani sajtovi po meri, gotovi za 8-12 dana. Besplatna ponuda za 48h.',
+            'meta_title' => 'Izrada sajta Pančevo - lokalna izrada web sajtova | VUG',
+            'meta_desc'  => 'Izrada web sajtova u Pančevu - lokalna agencija, sajt po meri gotov za 8-12 dana, brz i spreman za Google. Besplatna ponuda za 48h.',
+            'checks' => [
+                ['palette2', 'Dizajn po meri Vašeg brenda', 'Unikatan dizajn koji gradimo za Vas'],
+                ['phone', 'Prilagođeno mobilnim uređajima', 'Savršen prikaz na telefonu, tabletu i računaru'],
+                ['graph-up', 'Brz i lako pronalažljiv', 'Brzo učitavanje i spremnost za Google pretragu'],
+                ['cash-coin', 'Napravljen da donosi upite', 'Jasni pozivi na akciju koji pretvaraju posetioce u klijente'],
+                ['tools', 'Podrška nakon lansiranja', 'Tu smo za izmene, savete i održavanje'],
+            ],
         ],
         'en' => [
             'name' => 'Pančevo', 'loc' => 'Pančevo', 'gen' => 'Pančevo',
-            'intro' => 'Do you need professional website development in Pančevo? VUG creates modern, fast and functional custom websites for entrepreneurs and companies that want greater visibility, more enquiries and a stronger online presence.',
+            'intro' => 'Do you need professional website development in Pančevo? VUG is a local agency that builds custom websites - modern, fast and functional, for entrepreneurs and companies that want greater visibility, more enquiries and a stronger online presence.',
             'sec_h2' => 'Why your Pančevo business needs a professional website',
             'p1' => 'In Pančevo business still grows mostly through word of mouth and personal contacts - but more and more customers now “check” a company online before they ever call. If they can’t find you at that moment, or land on an outdated site, trust quietly moves to a competitor who invested in their online presence.',
             'p2' => '<strong>We are a local agency based in Pančevo.</strong> Arranging a meeting is as easy as a short walk or a call, and we can handle everything online too. Building websites and web applications is one of our core activities: we treat every project with care and tailor it to your business, never using cookie-cutter templates that don’t stand out from the rest.',
@@ -56,20 +65,34 @@ $CITY = [
             'p4' => 'We work with clients from every industry. Before we take the first step toward your project, we first get to know your business properly: what your business is about, who your clients are and what you want to achieve. Only then do we build a tailored site - through direct conversation, clear deadlines and pricing with no hidden costs - so the result isn’t just another website on the internet, but a website that will bring you <strong>real calls and enquiries</strong>.',
             'meta_title' => 'Website development Pančevo - fast, optimised websites | VUG',
             'meta_desc'  => 'Website development in Pančevo - fast, optimised custom websites, ready in 8-12 days. Free quote within 48h.',
+            'checks' => [
+                ['palette2', 'Design tailored to your brand', 'A unique design we build just for you'],
+                ['phone', 'Optimised for mobile devices', 'Perfect on phones, tablets and desktops'],
+                ['graph-up', 'Fast and easy to find', 'Fast loading and search-ready'],
+                ['cash-coin', 'Built to bring enquiries', 'Clear calls to action that turn visitors into clients'],
+                ['tools', 'Support after launch', 'We’re here for changes, advice and maintenance'],
+            ],
         ],
     ],
     'beograd' => [
         'other' => 'pancevo', 'region' => 'RS-00',
         'sr' => [
             'name' => 'Beograd', 'loc' => 'Beogradu', 'gen' => 'Beograda',
-            'intro' => 'Izrada web sajta u Beogradu koji privlači pažnju i izdvaja Vašu firmu od konkurencije. VUG kreira profesionalne, brze i SEO optimizovane sajtove osmišljene da donose više poseta, upita i novih klijenata.',
+            'intro' => 'Izrada sajta u Beogradu koji privlači pažnju i izdvaja Vašu firmu od konkurencije. VUG kreira profesionalne, brze i SEO optimizovane web sajtove osmišljene da donose više poseta, upita i novih klijenata.',
             'sec_h2' => 'Kako se izdvojiti sajtom na beogradskom tržištu?',
             'p1' => 'Beograd je najveće i najzahtevnije tržište u Srbiji - za pažnju istih kupaca svakodnevno se bori na hiljade firmi. Ovde nije dovoljno samo „imati sajt”. Ako se sporo učitava, izgleda zastarelo ili se ne pojavljuje u rezultatima pretrage, korisnik će za svega nekoliko sekundi preći na konkurenciju. Da biste zadržali njegovu pažnju, Vaše online prisustvo mora od prvog trenutka da <strong>uliva poverenje</strong>.',
             'p2' => '<strong>Tu VUG pravi razliku.</strong> Izrada web sajtova i web aplikacija jedna je od naših ključnih delatnosti, a svakom projektu pristupamo strateški. Analiziramo kome se obraćate, kako nastupa Vaša konkurencija i šta je potrebno da Vaša ponuda bude predstavljena jasnije, brže i ubedljivije. Rezultat je sajt po meri Vašeg poslovanja, osmišljen da Vas izdvoji na tržištu.',
             'p3' => 'Svaki sajt izrađujemo tako da bude <span class="lp-mark">brz</span>, pregledan i potpuno prilagođen svim uređajima. Jasna struktura vodi posetioca od prvog kontakta sa Vašim brendom do poziva, poruke ili slanja upita. Pre početka projekta detaljno se upoznajemo sa Vašim poslovanjem, ciljevima i konkurencijom, kako konačno rešenje ne bi bilo samo vizuelno privlačno, već i usmereno ka konkretnim rezultatima.',
             'p4' => 'Sarađujemo sa firmama različitih veličina i delatnosti širom Beograda. Komunikaciju vodimo brzo i profesionalno, uživo ili onlajn, uz jasno definisane rokove i transparentne cene bez skrivenih troškova. Naš cilj nije da napravimo još jedan sajt koji će se izgubiti među konkurencijom, već <strong>digitalno rešenje koje će Vam donositi konkretne upite i nove klijente</strong>.',
-            'meta_title' => 'Izrada web sajta Beograd - profesionalni sajtovi | VUG',
-            'meta_desc'  => 'Izrada web sajtova u Beogradu - moderni i brzi sajtovi koji se izdvajaju od konkurencije. Gotovo za 8-12 dana, ponuda za 48h.',
+            'meta_title' => 'Izrada sajta Beograd - izrada web sajtova po meri | VUG',
+            'meta_desc'  => 'Izrada web sajta u Beogradu po meri Vašeg posla - brz, moderan i SEO optimizovan sajt gotov za 8-12 dana. Besplatna ponuda za 48h.',
+            'checks' => [
+                ['palette2', 'Vizuelni identitet bez šablona', 'Izgled koji se ne meša sa stotinama sličnih sajtova'],
+                ['phone', 'Besprekoran na svakom ekranu', 'Većina posetilaca dolazi sa telefona - njih planiramo prve'],
+                ['graph-up', 'Vidljiv na Google pretrazi', 'Tehnička SEO osnova i optimizovana brzina od prvog dana'],
+                ['cash-coin', 'Fokus na upite i prodaju', 'Svaka stranica vodi posetioca ka pozivu ili poruci'],
+                ['tools', 'Održavanje i dorade', 'Posle lansiranja ostajemo uz Vas za izmene i nove funkcije'],
+            ],
         ],
         'en' => [
             'name' => 'Belgrade', 'loc' => 'Belgrade', 'gen' => 'Belgrade',
@@ -81,6 +104,13 @@ $CITY = [
             'p4' => 'We work with companies of different sizes and industries across Belgrade. We communicate quickly and professionally, in person or online, with clearly defined deadlines and transparent pricing with no hidden costs. Our goal isn’t to build just another site that gets lost among the competition, but a <strong>digital solution that brings you real enquiries and new clients</strong>.',
             'meta_title' => 'Website development Belgrade - custom, fast websites | VUG',
             'meta_desc'  => 'Website development in Belgrade - modern, fast websites that stand out from the competition. Ready in 8-12 days, quote within 48h.',
+            'checks' => [
+                ['palette2', 'A visual identity with no templates', 'A look that doesn’t blend in with hundreds of similar sites'],
+                ['phone', 'Flawless on every screen', 'Most visitors arrive on a phone - we plan for them first'],
+                ['graph-up', 'Visible in Google Search', 'A technical SEO foundation and optimised speed from day one'],
+                ['cash-coin', 'Focused on enquiries and sales', 'Every page guides the visitor toward a call or a message'],
+                ['tools', 'Maintenance and upgrades', 'After launch we stay with you for changes and new features'],
+            ],
         ],
     ],
 ];
@@ -99,6 +129,13 @@ $CITY_SOCIAL = [
             'p4' => 'Pre nego što krenemo, upoznamo se sa Vašim poslovanjem i ciljevima. Radimo sa firmama, radnjama i lokalima iz Pančeva i okoline - uz jasne rokove, transparentne cene i mesečne izveštaje, tako da tačno vidite šta dobijate za svoj novac.',
             'meta_title' => 'Vođenje društvenih mreža Pančevo - Instagram i Facebook',
             'meta_desc'  => 'Vođenje društvenih mreža u Pančevu - content plan, dizajn, reels i oglašavanje koji dovode kupce. Besplatna ponuda za 48h.',
+            'checks' => [
+                ['tag', 'Content plan i objave', 'Mesečni plan sadržaja i redovno objavljivanje'],
+                ['palette2', 'Dizajn vizuala', 'Grafika, priče i reels koji privlače pažnju'],
+                ['chat-dots', 'Community management', 'Odgovaramo na poruke i komentare umesto Vas'],
+                ['cash-coin', 'Oglašavanje (Meta Ads)', 'Ciljane kampanje koje dovode kupce, ne samo lajkove'],
+                ['graph-up', 'Mesečni izveštaji', 'Jasni rezultati i preporuke za sledeći korak'],
+            ],
         ],
         'en' => [
             'name' => 'Pančevo', 'loc' => 'Pančevo', 'gen' => 'Pančevo',
@@ -110,6 +147,13 @@ $CITY_SOCIAL = [
             'p4' => 'Before we start, we get to know your business and goals. We work with companies, shops and local venues in Pančevo and the surrounding area - with clear deadlines, transparent pricing and monthly reports, so you see exactly what you get for your money.',
             'meta_title' => 'Social media management Pančevo - Instagram & Facebook',
             'meta_desc'  => 'Social media management in Pančevo - content plan, design, reels and ads that bring customers. Free quote within 48h.',
+            'checks' => [
+                ['tag', 'Content plan & posting', 'A monthly content plan and consistent posting'],
+                ['palette2', 'Visual design', 'Graphics, stories and reels that grab attention'],
+                ['chat-dots', 'Community management', 'We reply to messages and comments for you'],
+                ['cash-coin', 'Advertising (Meta Ads)', 'Targeted campaigns that bring customers, not just likes'],
+                ['graph-up', 'Monthly reports', 'Clear results and recommendations for the next step'],
+            ],
         ],
     ],
     'beograd' => [
@@ -124,6 +168,13 @@ $CITY_SOCIAL = [
             'p4' => 'Sarađujemo sa brendovima različitih veličina i delatnosti širom Beograda, uz jasno definisane rokove, transparentne cene i redovne mesečne izveštaje. Kao rezultat, dobijate društvene mreže koje ne služe samo za lep utisak, već <strong>donose merljive upite i prodaju</strong>.',
             'meta_title' => 'Vođenje društvenih mreža Beograd - sve mreže na jednom mestu',
             'meta_desc'  => 'Vođenje društvenih mreža u Beogradu - strategija, sadržaj, reels i oglasi koji donose upite i prodaju. Besplatna ponuda za 48h.',
+            'checks' => [
+                ['tag', 'Strategija i raspored objava', 'Sadržaj usklađen sa ciljevima i navikama Vaše publike'],
+                ['palette2', 'Prepoznatljiv vizuelni stil', 'Dosledan izgled feed-a, priča i reels-a koji zaustavlja skrol'],
+                ['chat-dots', 'Komunikacija sa pratiocima', 'Brzi odgovori na poruke i komentare u tonu Vašeg brenda'],
+                ['cash-coin', 'Meta i TikTok kampanje', 'Oglasi ciljani na publiku koja zaista kupuje'],
+                ['graph-up', 'Merljivi rezultati', 'Izveštaj svakog meseca - brojke i plan za naredni period'],
+            ],
         ],
         'en' => [
             'name' => 'Belgrade', 'loc' => 'Belgrade', 'gen' => 'Belgrade',
@@ -135,6 +186,13 @@ $CITY_SOCIAL = [
             'p4' => 'We work with brands of different sizes and industries across Belgrade, with clearly defined deadlines, transparent pricing and regular monthly reports. As a result, you get social channels that aren’t just for a good impression but <strong>deliver measurable enquiries and sales</strong>.',
             'meta_title' => 'Social media management Belgrade - all networks in one place',
             'meta_desc'  => 'Social media management in Belgrade - strategy, content, reels and ads that bring enquiries and sales. Free quote within 48h.',
+            'checks' => [
+                ['tag', 'Strategy and posting schedule', 'Content aligned with your goals and your audience’s habits'],
+                ['palette2', 'A recognisable visual style', 'A consistent look across feed, stories and reels that stops the scroll'],
+                ['chat-dots', 'Talking with your followers', 'Quick replies to messages and comments in your brand’s voice'],
+                ['cash-coin', 'Meta and TikTok campaigns', 'Ads targeted at the audience that actually buys'],
+                ['graph-up', 'Measurable results', 'A report every month - the numbers and a plan for what’s next'],
+            ],
         ],
     ],
 ];
@@ -163,15 +221,7 @@ $COPY = [
         'cta_read'   => 'Pročitaj više',
         'sec_eyebrow'=> 'Zašto VUG',
         'side_h' => 'Naš web sajt <em>uključuje</em>',
-        'checks' => [
-            ['palette2', 'Dizajn po meri Vašeg brenda', 'Unikatan dizajn koji gradimo za Vas'],
-            ['phone', 'Prilagođeno mobilnim uređajima', 'Savršen prikaz na telefonu, tabletu i računaru'],
-            ['graph-up', 'Brz i lako pronalažljiv', 'Brzo učitavanje i spremnost za Google pretragu'],
-            ['cash-coin', 'Napravljen da donosi upite', 'Jasni pozivi na akciju koji pretvaraju posetioce u klijente'],
-            ['tools', 'Podrška nakon lansiranja', 'Tu smo za izmene, savete i održavanje'],
-        ],
         'img_alt'  => 'Izrada modernog web sajta u {loc} - VUG',
-        'meta_kw'  => 'izrada web sajta {name}, izrada sajtova {name}, web dizajn {name}, izrada web aplikacija {name}, digitalna agencija {name}',
         'svc_type' => 'Izrada web sajtova',
         'svc_name' => 'Izrada web sajta {name}',
     ],
@@ -185,15 +235,7 @@ $COPY = [
         'cta_read'   => 'Read more',
         'sec_eyebrow'=> 'Why VUG',
         'side_h' => 'Our website <em>includes</em>',
-        'checks' => [
-            ['palette2', 'Design tailored to your brand', 'A unique design we build just for you'],
-            ['phone', 'Optimised for mobile devices', 'Perfect on phones, tablets and desktops'],
-            ['graph-up', 'Fast and easy to find', 'Fast loading and search-ready'],
-            ['cash-coin', 'Built to bring enquiries', 'Clear calls to action that turn visitors into clients'],
-            ['tools', 'Support after launch', 'We’re here for changes, advice and maintenance'],
-        ],
         'img_alt'  => 'Modern website development in {loc} - VUG',
-        'meta_kw'  => 'website development {name}, web design {name}, web development {name}, web application development {name}, digital agency {name}',
         'svc_type' => 'Website development',
         'svc_name' => 'Website development {name}',
     ],
@@ -210,15 +252,7 @@ $COPY_SOCIAL = [
         'cta_read'   => 'Pročitaj više',
         'sec_eyebrow'=> 'Zašto VUG',
         'side_h' => 'Vođenje mreža <em>uključuje</em>',
-        'checks' => [
-            ['tag', 'Content plan i objave', 'Mesečni plan sadržaja i redovno objavljivanje'],
-            ['palette2', 'Dizajn vizuala', 'Grafika, priče i reels koji privlače pažnju'],
-            ['chat-dots', 'Community management', 'Odgovaramo na poruke i komentare umesto Vas'],
-            ['cash-coin', 'Oglašavanje (Meta Ads)', 'Ciljane kampanje koje dovode kupce, ne samo lajkove'],
-            ['graph-up', 'Mesečni izveštaji', 'Jasni rezultati i preporuke za sledeći korak'],
-        ],
         'img_alt'  => 'Vođenje društvenih mreža u {loc} - VUG',
-        'meta_kw'  => 'vođenje društvenih mreža {name}, društvene mreže {name}, instagram {name}, marketing na mrežama {name}, digitalna agencija {name}',
         'svc_type' => 'Vođenje društvenih mreža',
         'svc_name' => 'Vođenje društvenih mreža {name}',
     ],
@@ -232,15 +266,7 @@ $COPY_SOCIAL = [
         'cta_read'   => 'Read more',
         'sec_eyebrow'=> 'Why VUG',
         'side_h' => 'Social media management <em>includes</em>',
-        'checks' => [
-            ['tag', 'Content plan & posting', 'A monthly content plan and consistent posting'],
-            ['palette2', 'Visual design', 'Graphics, stories and reels that grab attention'],
-            ['chat-dots', 'Community management', 'We reply to messages and comments for you'],
-            ['cash-coin', 'Advertising (Meta Ads)', 'Targeted campaigns that bring customers, not just likes'],
-            ['graph-up', 'Monthly reports', 'Clear results and recommendations for the next step'],
-        ],
         'img_alt'  => 'Social media management in {loc} - VUG',
-        'meta_kw'  => 'social media management {name}, social media marketing {name}, instagram {name}, facebook {name}, digital agency {name}',
         'svc_type' => 'Social media management',
         'svc_name' => 'Social media management {name}',
     ],
@@ -263,7 +289,7 @@ $hero_img    = $svc === 'social' ? 'social-mockup.svg' : 'web-mockup.svg';
 $slug        = $slug_base . $loc;
 $url_sr_page = ($base === '' ? '' : $base) . '/' . $slug;              // base-aware (za linkove)
 $url_en_page = $base . '/en/' . $slug;
-$abs_sr      = $SITE_URL . '/' . $slug;                                 // apsolutni (canonical/hreflang)
+$abs_sr      = $SITE_URL . '/' . $slug;                                 // apsolutni (canonical)
 $abs_en      = $SITE_URL . '/en/' . $slug;
 
 $canonical  = $lang === 'en' ? $abs_en : $abs_sr;
@@ -271,21 +297,11 @@ $href_other = $lang === 'en' ? $url_sr_page : $url_en_page;
 $home       = $lang === 'en' ? $base . '/en' : ($base === '' ? '/' : $base . '/');
 $og_image   = $SITE_URL . '/img/og-image.png';
 
-// Vidi komentar u index.php - isti skup jezika na svim stranicama.
-$alt_links = [
-    ['hreflang' => 'sr',        'href' => $abs_sr],
-    ['hreflang' => 'sr-RS',     'href' => $abs_sr],
-    ['hreflang' => 'sr-BA',     'href' => $abs_sr],
-    ['hreflang' => 'sr-ME',     'href' => $abs_sr],
-    ['hreflang' => 'sr-HR',     'href' => $abs_sr],
-    ['hreflang' => 'en',        'href' => $abs_en],
-    ['hreflang' => 'x-default', 'href' => $abs_sr],
-];
+// Bez hreflang-a: indeksira se samo srpska verzija, EN je noindex (partials/head.php).
 
 /* ── SEO varijable za deljeni head ── */
 $meta_title       = $c['meta_title'];
 $meta_description = $c['meta_desc'];
-$meta_keywords    = $fill($P['meta_kw']);
 $og_image_alt     = $fill($P['img_alt']);
 $geo_region       = $cc['region'];
 $geo_placename    = $NAME;
@@ -309,7 +325,7 @@ $json_ld = [
             // adresa stajala kao čist tekst u izvoru (vidi pravilo u CLAUDE.md).
             'provider' => [
                 '@type' => ['Organization', 'ProfessionalService'],
-                '@id' => $org_id, 'name' => 'VUG', 'alternateName' => 'VUG Digital Agency',
+                '@id' => $org_id, 'name' => 'VUG Digital Agency', 'alternateName' => ['VUG', 'VUG Agency', 'VUG agencija'],
                 'url' => $SITE_URL . '/',
                 'logo' => ['@type' => 'ImageObject', 'url' => $SITE_URL . '/img/icon-512.png', 'width' => 512, 'height' => 512],
                 'image' => $og_image,
@@ -341,7 +357,8 @@ $json_ld = [
             '@type' => 'WebSite',
             '@id' => $SITE_URL . '/#website',
             'url' => $SITE_URL . '/',
-            'name' => 'VUG',
+            'name' => 'VUG Digital Agency',
+            'alternateName' => ['VUG', 'VUG Agency', 'VUG agencija'],
             'inLanguage' => $lang === 'sr' ? 'sr-RS' : 'en',
             'publisher' => ['@id' => $org_id],
         ],
@@ -459,6 +476,11 @@ $extra_head = <<<'HTML'
             padding-bottom:.1em;}
         .lp-lead{font-size:clamp(16px,1.5vw,19px);line-height:1.65;color:var(--txt-soft);max-width:56ch;margin:22px 0 30px;}
         .lp-actions{display:flex;flex-wrap:wrap;gap:14px;align-items:center;}
+        /* Hero slika je LCP: BEZ .reveal (opacity:0 dok main.js ne doda .in-view - LCP je
+           tako čekao JS, 2026-10-06). Ulazak je samo translate (hero-rise iz critical.css),
+           opacity ostaje 1, pa je slika vidljiva od prvog frejma. */
+        .lp-figure{animation:hero-rise .8s .1s var(--ease) both;}
+        @media(prefers-reduced-motion:reduce){.lp-figure{animation:none;}}
         .lp-figure img{width:100%;height:auto;display:block;}
         .lp-cols{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(28px,5vw,64px);align-items:start;}
         @media(max-width:860px){.lp-cols{grid-template-columns:1fr;}}
@@ -474,7 +496,8 @@ $extra_head = <<<'HTML'
         .btn--cyan{background:linear-gradient(135deg,var(--cyan),var(--mint));color:var(--deep);}
         .btn--cyan .vi{color:var(--deep);}
         .btn--cyan:hover{transform:translateY(-2px);filter:brightness(1.05);}
-        .btn--blue{background:var(--blue);color:#fff;}
+        /* #3275b4 umesto --blue (#3b82c4): beli tekst na --blue ima kontrast 4.06:1, ispod WCAG AA 4.5:1 */
+        .btn--blue{background:#3275b4;color:#fff;}
         .btn--blue .vi{color:#fff;}
         .btn--blue:hover{transform:translateY(-2px);filter:brightness(1.08);}
         .btn--blue:hover .vi{transform:translateX(4px);}
@@ -619,7 +642,7 @@ require __DIR__ . '/partials/header.php';
                     <a href="#tekst" class="btn btn--blue is-magnetic"><?= vug_icon('arrow-down') ?> <?= htmlspecialchars($P['cta_read']) ?></a>
                 </div>
             </div>
-            <div class="lp-figure reveal">
+            <div class="lp-figure">
                 <!-- LCP element prvog ekrana: NE sme loading="lazy"; fetchpriority ga diže na vrh reda. -->
                 <img src="<?= $base ?>/img/<?= $hero_img ?>" width="640" height="480" alt="<?= htmlspecialchars($og_image_alt) ?>" fetchpriority="high" decoding="async">
             </div>
@@ -647,7 +670,7 @@ require __DIR__ . '/partials/header.php';
             <aside class="lp-side">
                 <div class="lp-side-h"><span class="lp-side-t"><?= $P['side_h'] ?></span></div>
                 <ul class="lp-check">
-                    <?php foreach ($P['checks'] as $ch): ?>
+                    <?php foreach ($c['checks'] as $ch): ?>
                     <li>
                         <span class="lp-ic"><?= vug_icon($ch[0]) ?></span>
                         <span class="lp-ct"><strong><?= htmlspecialchars($ch[1]) ?></strong><small><?= htmlspecialchars($ch[2]) ?></small></span>
