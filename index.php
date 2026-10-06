@@ -84,18 +84,12 @@ for ($i = 1; $i <= 10; $i++) {
     ];
 }
 
-// Recenzije klijenata — odgovaraju 5★ karticama prikazanim u sekciji #testimonials.
-// (Markup MORA da prati sadržaj vidljiv na stranici — svaka recenzija ovde je i renderovana.)
-$review_items = [];
-for ($i = 1; $i <= 8; $i++) {
-    if (empty($t["testimonial_{$i}_quote"])) continue;
-    $review_items[] = [
-        '@type' => 'Review',
-        'author' => ['@type' => 'Person', 'name' => $t["testimonial_{$i}_name"]],
-        'reviewRating' => ['@type' => 'Rating', 'ratingValue' => '5', 'bestRating' => '5', 'worstRating' => '1'],
-        'reviewBody' => $t["testimonial_{$i}_quote"],
-    ];
-}
+// Recenzije klijenata NAMERNO NISU u JSON-LD-u (uklonjeno 2026-10-06).
+// Search Console je prijavio kritičnu grešku „više recenzija bez objekta za
+// prosečnu ocenu“ (niz `review` bez `aggregateRating`). Rešenje NIJE dodavanje
+// aggregateRating-a: Google ne prikazuje zvezdice za Organization/LocalBusiness
+// kad firma sama objavljuje recenzije o sebi (self-serving reviews), pa markup
+// ne bi doneo ništa osim rizika. Recenzije ostaju vidljive u sekciji #testimonials.
 
 // Naziv brenda — JEDAN izvor za Organization i WebSite čvor (i na landing.php).
 // Ciljamo brend pretrage „vug“, „vug agency“, „vug digital agency“, „vug pančevo“:
@@ -153,9 +147,6 @@ $org = [
 ];
 if (!empty($social_links)) {
     $org['sameAs'] = array_values($social_links);
-}
-if (!empty($review_items)) {
-    $org['review'] = $review_items;
 }
 
 $schema = [
