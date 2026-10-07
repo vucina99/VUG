@@ -283,7 +283,13 @@ return [
     'contact_subtitle' => 'Send us a brief and take the first step toward making it real.',
     'contact_info_email' => 'office@vugagency.com',
     'contact_info_phone' => '065 9377 030',
-    'contact_info_location' => 'Vojvođanska 12b, 26000 Pančevo, Serbia',
+    'contact_info_location' => 'Vojvođanska 12b, Pančevo, Serbia',
+    // Address link to the Google Business Profile (contact section + footer). Same URL in both languages.
+    'contact_info_maps_url' => 'https://share.google/wW8vHdh47mp3baN9D',
+    'contact_info_maps_aria' => 'VUG Digital Agency, Vojvođanska 12b, Pančevo on Google Maps',
+    // Full address with postal code - legal texts only (legal.php).
+    'contact_info_location_full' => 'Vojvođanska 12b, 26000 Pančevo, Serbia',
+    'contact_map_title' => 'Map - VUG Digital Agency, Vojvođanska 12b, Pančevo',
     'contact_info_hours' => 'Every day · 24/7',
 
     'form_name' => 'Full name',

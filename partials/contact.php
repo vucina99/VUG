@@ -49,7 +49,10 @@ $is_sr              = (($lang ?? 'sr') === 'sr');
                         <div class="info-ic"><?= vug_icon('geo-alt-fill') ?></div>
                         <div>
                             <span class="info-label"><?= $is_sr ? 'Sedište' : 'HQ' ?></span>
-                            <span><?= $t['contact_info_location'] ?></span>
+                            <a href="<?= htmlspecialchars($t['contact_info_maps_url']) ?>"
+                               target="_blank"
+                               rel="noopener"
+                               aria-label="<?= htmlspecialchars($t['contact_info_maps_aria']) ?>"><?= $t['contact_info_location'] ?></a>
                         </div>
                     </li>
                     <li>
@@ -116,6 +119,21 @@ $is_sr              = (($lang ?? 'sr') === 'sr');
                 }
                 </script>
             </form>
+
+            <!-- Google mapa sedišta. Upit je NAZIV + adresa, ne samo adresa: sama
+                 adresa Google spušta pin na „Vojvođanska 12A“, a sa nazivom pogađa
+                 poslovni profil (pin, ocena, „Uputstva“). hl=sr-Latn drži nazive
+                 ulica na latinici. loading="lazy": sekcija je na dnu stranice, pa se
+                 iframe (~500 KB, Google kolačići) ne učitava dok posetilac ne priđe.
+                 Stoji POSLE forme u DOM-u, pa je na mobilnom ispod forme; na
+                 desktopu je grid-area-om spuštena ispod info kartica (style.css). -->
+            <div class="contact-map reveal">
+                <iframe src="https://www.google.com/maps?q=<?= rawurlencode('VUG Digital Agency, Vojvođanska 12b, 26000 Pančevo') ?>&amp;hl=<?= $is_sr ? 'sr-Latn' : 'en' ?>&amp;z=16&amp;output=embed"
+                        title="<?= htmlspecialchars($t['contact_map_title']) ?>"
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                        allowfullscreen></iframe>
+            </div>
         </div>
     </div>
 </section>

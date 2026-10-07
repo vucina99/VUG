@@ -29,7 +29,7 @@ $routes = [
 ];
 
 $company = 'VUG';
-$addr    = $t['contact_info_location'];
+$addr    = $t['contact_info_location_full'];
 
 // Email u pravnim tekstovima ide kao %EMAIL% token, a ne kao čista adresa:
 // legal_text() prvo escapuje tekst, pa token zameni HTML-entity obfuskacijom
@@ -82,7 +82,7 @@ $C['sr'] = [
             ['Šta su kolačići', 'Kolačići su male tekstualne datoteke koje sajt čuva u Vašem pregledaču kako bi funkcionisao ispravno i merio posete.'],
             ['Neophodni kolačići', 'Potrebni za osnovno funkcionisanje sajta i bezbednost (npr. zaštita kontakt forme putem reCAPTCHA).'],
             ['Analitički kolačići', 'Google Analytics postavlja kolačiće za anonimnu statistiku poseta. Ovi kolačići pomažu da razumemo kako se sajt koristi i da ga unapredimo.'],
-            ['Kolačići trećih strana', 'Google (Analytics, reCAPTCHA) može postavljati sopstvene kolačiće u skladu sa svojim politikama privatnosti.'],
+            ['Kolačići trećih strana', 'Google (Analytics, reCAPTCHA, Google Maps mapa u kontakt sekciji) može postavljati sopstvene kolačiće u skladu sa svojim politikama privatnosti.'],
             ['Upravljanje kolačićima', 'Kolačiće možete obrisati ili blokirati u podešavanjima svog pregledača. Blokiranje pojedinih kolačića može uticati na funkcionalnost sajta. [Za proveru pravnika: potreba za cookie-consent banerom.]'],
             ['Kontakt', "Za pitanja u vezi sa kolačićima: {$email}."],
         ],
@@ -127,7 +127,7 @@ $C['en'] = [
             ['What cookies are', 'Cookies are small text files a site stores in your browser so it can work correctly and measure visits.'],
             ['Essential cookies', 'Required for basic site functionality and security (e.g. contact‑form protection via reCAPTCHA).'],
             ['Analytics cookies', 'Google Analytics sets cookies for anonymous visit statistics. These help us understand how the site is used and improve it.'],
-            ['Third‑party cookies', 'Google (Analytics, reCAPTCHA) may set its own cookies in accordance with its privacy policies.'],
+            ['Third‑party cookies', 'Google (Analytics, reCAPTCHA, the Google Maps map in the contact section) may set its own cookies in accordance with its privacy policies.'],
             ['Managing cookies', 'You can delete or block cookies in your browser settings. Blocking some cookies may affect site functionality. [For lawyer review: whether a cookie‑consent banner is required.]'],
             ['Contact', "For questions about cookies: {$email}."],
         ],
