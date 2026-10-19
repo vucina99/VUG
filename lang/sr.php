@@ -6,8 +6,11 @@ return [
     'lang_current_label' => 'SR',
 
     // Meta
-    'meta_title' => 'VUG Digital Agency Pančevo - sajtovi, aplikacije i marketing',
-    'meta_description' => 'VUG Digital Agency iz Pančeva - izrada sajtova i aplikacija, vođenje društvenih mreža i marketing. Besplatna ponuda za 48h.',
+    // Početna cilja SAMO brend + „digitalna agencija pančevo“. Bez naziva usluga
+    // („sajtovi“, „izrada sajtova“, „vođenje društvenih mreža“) uz Pančevo - te upite
+    // nose landing stranice; sa njima je početna (2026-10-06) preuzimala „izrada sajta pančevo“.
+    'meta_title' => 'VUG Digital Agency | Digitalna agencija za Vaš biznis',
+    'meta_description' => 'VUG Digital Agency - Vaš strateški partner u razvoju brenda, jačanju digitalnog prisustva i ostvarivanju merljivih rezultata. Zakažite besplatne konsultacije.',
 
     // Nav
     'nav_home' => 'Početna',
@@ -17,13 +20,20 @@ return [
     'nav_references' => 'Reference',
     'nav_faq' => 'FAQ',
     'nav_contact' => 'Kontakt',
+    // Padajuća lista „Usluge“ u meniju + kolona usluga u futeru (jedan izvor naziva).
+    // Opisni naziv = ciljni upit landing stranice (interni link sa svake stranice).
+    'nav_services_all' => 'Naše usluge',
+    'lp_web_beograd' => 'Izrada web sajta Beograd',
+    'lp_web_pancevo' => 'Izrada web sajta Pančevo',
+    'lp_social_beograd' => 'Vođenje društvenih mreža Beograd',
+    'lp_social_pancevo' => 'Vođenje društvenih mreža Pančevo',
     'nav_cta' => 'Pošaljite upit',
 
     // Hero
-    'hero_badge' => 'VUG Digital Agency · Pančevo',
+    'hero_badge' => 'VUG Digitalna agencija · Pančevo',
     'hero_title_1' => 'Gradimo brendove',
     'hero_title_2' => 'koji se pamte',
-    'hero_subtitle' => 'Radimo projekte koji ne samo da izgledaju atraktivno - već donose klijente. Izrada web sajtova, web i mobilnih aplikacija, vođenje društvenih mreža i internet marketing pod jednim krovom.',
+    'hero_subtitle' => 'VUG radi projekte koji ne samo da izgledaju atraktivno - već privlače pažnju, grade poverenje i donose klijente. Spajamo kreativnost i strategiju kako bismo Vaš brend izdvojili od konkurencije i ostvarili konkretne rezultate.',
     'hero_cta_primary' => 'Pokrenite projekat',
     'hero_cta_secondary' => 'Pogledajte usluge',
     'hero_stat_1_num' => '54+',
@@ -37,9 +47,6 @@ return [
     'services_eyebrow' => 'Naše usluge',
     'services_title' => 'Sve što Vašem brendu treba na internetu',
     'services_subtitle' => 'Od ideje do lansiranja, pa i posle - pokrivamo svaki digitalni dodir Vašeg brenda sa publikom.',
-    // Interni linkovi sa početne ka lokalnim landing stranicama (opisni anchor = ciljni upit).
-    // {base} menja index.php (bazna putanja: '' na produkciji, '/VUG digital' na lokalu).
-    'services_local' => 'Poslujete u Beogradu ili Pančevu? Sve o usluzi - proces, cenu i rokove - naći ćete na stranicama <a href="{base}/izrada-web-sajta-beograd">izrada web sajta Beograd</a> i <a href="{base}/izrada-web-sajta-pancevo">izrada web sajta Pančevo</a>.',
 
     'service_1_title' => 'Izrada sajtova i web aplikacija',
     'service_1_desc' => 'Kompleksne web aplikacije, web prodavnice i poslovne web prezentacije - brzi, sigurni i SEO optimizovani, uz custom kod. Pravimo rešenja koja rastu zajedno sa Vašim biznisom.',
@@ -62,9 +69,9 @@ return [
 
     'service_5_title' => 'Vođenje društvenih mreža',
     'service_5_desc' => 'Instagram, Facebook, TikTok, LinkedIn - kreiramo sadržaj, planiramo objave, odgovaramo na komentare i pretvaramo pratioce u kupce.',
-    'service_5_tag_1' => 'Content',
+    'service_5_tag_1' => 'Kreiranje sadržaja',
     'service_5_tag_2' => 'Reels',
-    'service_5_tag_3' => 'Community',
+    'service_5_tag_3' => 'Komunikacija sa pratiocima',
 
     'service_6_title' => 'Marketing i oglašavanje',
     'service_6_desc' => 'Google Ads, Meta Ads i Google Business - postavljamo kampanje koje se isplate, sa jasno merljivim rezultatima.',
@@ -90,16 +97,16 @@ return [
 
     // Process
     'process_eyebrow' => 'Naš proces',
-    'process_title' => 'Od prvog razgovora do live sajta',
+    'process_title' => 'Od prvog razgovora do live projekta',
     'process_subtitle' => 'Strukturiran put koji čini saradnju predvidljivom i bez stresa.',
     'process_1_title' => 'Razgovor',
     'process_1_desc' => 'Slušamo. Razumemo Vaš biznis, ciljeve, publiku i konkurenciju.',
     'process_2_title' => 'Strategija',
     'process_2_desc' => 'Pravimo plan - mapu sajta, ključne reči, dizajn smer i tehnologiju.',
     'process_3_title' => 'Dizajn & razvoj',
-    'process_3_desc' => 'Skiciramo, dizajniramo, pa kodiramo. Vi imate uvid u svakom koraku.',
+    'process_3_desc' => 'Skiciramo, dizajniramo, kodiramo. Vi imate uvid u svakom koraku.',
     'process_4_title' => 'Lansiranje & rast',
-    'process_4_desc' => 'Sajt ide live, kampanje kreću, a mi merimo i optimizujemo dalje.',
+    'process_4_desc' => 'Sajt se lansira, kampanje kreću, a mi merimo i optimizujemo dalje.',
 
     // Marquee
     'marquee_words' => ['Web Design', 'Web Development', 'Branding', 'SEO', 'Social Media', 'Marketing', 'UI/UX', 'E‑commerce', 'Strategija', 'Digital'],
@@ -166,7 +173,7 @@ return [
         [
             'Društvene mreže i oglašavanje',
             'Instagram, Facebook, TikTok i LinkedIn, uz pažljivo vođene Google i Meta kampanje. Kreiramo sadržaj, planiramo objave i upravljamo budžetom sa jasnim fokusom na rezultate.',
-            ['Content & reels', 'Community', 'Google Ads', 'Meta Ads'],
+            ['Sadržaj i reels', 'Komunikacija sa pratiocima', 'Google Ads', 'Meta Ads'],
         ],
     ],
 
@@ -262,7 +269,7 @@ return [
     'faq_5_q' => 'Da li nudite održavanje nakon izrade?',
     'faq_5_a' => 'Da. Nakon završetka projekta možemo nastaviti saradnju kroz mesečno održavanje. Održavanje može uključiti tehničku podršku, sigurnosne provere, backup, ažuriranja, manje izmene i praćenje performansi. Na taj način Vaš sajt ostaje stabilan, siguran i funkcionalan i nakon lansiranja.',
     'faq_6_q' => 'Šta uključuje vođenje društvenih mreža?',
-    'faq_6_a' => 'Vođenje društvenih mreža može uključivati izradu content plana, pisanje tekstova za objave, dizajn vizuala, pripremu story i reels sadržaja, zakazivanje i objavljivanje postova, komunikaciju sa publikom, analizu rezultata i mesečno izveštavanje. Po potrebi možemo uključiti i organizaciju snimanja, oglašavanje i influenser kampanje.',
+    'faq_6_a' => 'Vođenje društvenih mreža može uključivati izradu plana sadržaja, pisanje tekstova za objave, dizajn vizuala, pripremu story i reels sadržaja, zakazivanje i objavljivanje postova, komunikaciju sa publikom, analizu rezultata i mesečno izveštavanje. Po potrebi možemo uključiti i organizaciju snimanja, oglašavanje i influenser kampanje.',
     'faq_7_q' => 'Kako izgleda proces saradnje?',
     'faq_7_a' => 'Kroz 4 koraka: razgovor (besplatan), strategija i ponuda, dizajn i razvoj (sa nedeljnim izveštajima), lansiranje i podrška. U svakom trenutku znate gde smo i šta sledi.',
     'faq_8_q' => 'Da li radite SEO optimizaciju sajta?',
@@ -275,7 +282,7 @@ return [
     // CTA banner
     'cta_eyebrow' => 'Sledeći korak',
     'cta_title' => 'Dobra ideja zaslužuje pravu realizaciju',
-    'cta_subtitle' => 'Besplatna konsultacija, jasna ponuda u roku od 48h, bez obaveza. Dobra saradnja počinje dobrim razgovorom.',
+    'cta_subtitle' => 'Besplatna konsultacija, jasna ponuda u roku od 24h, bez obaveza. Dobra saradnja počinje dobrim razgovorom.',
     'cta_primary' => 'Pošaljite upit',
     'cta_secondary' => 'Pozovite nas',
 
@@ -288,7 +295,7 @@ return [
     'contact_info_location' => 'Vojvođanska 12b, Pančevo, Srbija',
     // Link adrese ka Google poslovnom profilu (kontakt sekcija + futer). URL je isti na oba jezika.
     'contact_info_maps_url' => 'https://share.google/wW8vHdh47mp3baN9D',
-    'contact_info_maps_aria' => 'VUG Digital Agency, Vojvođanska 12b, Pančevo na Google Maps',
+    'contact_info_maps_aria' => 'VUG Digital Agency, Vojvođanska 12b, Pančevo na Google mapama',
     // Puna adresa sa poštanskim brojem - samo za pravne tekstove (legal.php).
     'contact_info_location_full' => 'Vojvođanska 12b, 26000 Pančevo, Srbija',
     'contact_map_title' => 'Mapa - VUG Digital Agency, Vojvođanska 12b, Pančevo',
@@ -305,7 +312,7 @@ return [
     'form_message' => 'Vaša poruka',
     'form_message_ph' => 'Opišite nam Vaš projekat...',
     'form_submit' => 'Pošaljite poruku',
-    'form_sending' => 'Šaljem...',
+    'form_sending' => 'Šaljemo...',
     'form_success' => 'Vaša poruka je uspešno poslata i uskoro će biti pregledana od strane VUG tima.',
     'form_error' => 'Došlo je do greške. Molimo pokušajte ponovo ili nas pozovite.',
     'form_err_name' => 'Unesite ime i prezime (najmanje 2 karaktera).',

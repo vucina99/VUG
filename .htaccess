@@ -40,6 +40,14 @@ ErrorDocument 404 /404.php
     RewriteCond %{HTTP:X-Forwarded-Proto} !https
     RewriteRule ^ https://vugagency.com%{REQUEST_URI} [R=301,L]
 
+    # 3) Kosa crta na kraju -> čist URL (301), za landing i pravne stranice.
+    #    Canonical bi to i sam pokrio, ali ovako Google i linkovi vide samo jednu
+    #    adresu. %1 = pun REQUEST_URI bez završne kose crte, pa radi i u podfolderu
+    #    (lokal) i u rootu; query string (npr. utm_*) Apache prenosi sam.
+    #    /en/ -> /en rešava index.php, zato nije ovde.
+    RewriteCond %{REQUEST_URI} ^(.+)/$
+    RewriteRule ^((en/)?(izrada-web-sajta|vodjenje-drustvenih-mreza)-(pancevo|beograd)|politika-privatnosti|uslovi-koriscenja|politika-kolacica)/$ %1 [R=301,L]
+
     # ------------------------------------------------------
     # Cist URL za jezik: /en -> index.php?lang=en (srpski ostaje na /)
     # Radi i u podfolderu (lokal) i u rootu (produkcija).

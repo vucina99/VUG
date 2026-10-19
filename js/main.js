@@ -28,6 +28,8 @@
             nav.classList.remove('is-open');
             navToggle.setAttribute('aria-expanded', 'false');
             navMobile.setAttribute('aria-hidden', 'true');
+            // „Usluge“ (<details>) se zatvara zajedno sa menijem - sledeći put je opet zatvoren
+            navMobile.querySelectorAll('details[open]').forEach(d => { d.open = false; });
         };
         navToggle.addEventListener('click', () => {
             const isOpen = navToggle.classList.toggle('is-open');
@@ -35,8 +37,36 @@
             nav.classList.toggle('is-open', isOpen);
             navToggle.setAttribute('aria-expanded', String(isOpen));
             navMobile.setAttribute('aria-hidden', String(!isOpen));
+            if (!isOpen) navMobile.querySelectorAll('details[open]').forEach(d => { d.open = false; });
         });
         navMobile.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+    }
+
+    // ===== Padajuća lista „Usluge“ =====
+    // Na mišu je čist CSS (:hover / :focus-within). Na ekranima bez hover-a
+    // (tablet u širokom režimu, gde je desktop meni vidljiv) prvi dodir na
+    // „Usluge“ samo otvori listu, drugi vodi na #services; dodir van liste je zatvara.
+    const navDd = document.getElementById('navDd');
+    if (navDd && window.matchMedia('(hover: none)').matches) {
+        const trigger = navDd.querySelector('.nav-dd-trigger');
+        trigger.addEventListener('click', (e) => {
+            if (!navDd.classList.contains('is-open')) {
+                e.preventDefault(); // smooth scroll ispod preskače već obrađen klik
+                navDd.classList.add('is-open');
+            }
+        });
+        document.addEventListener('click', (e) => {
+            if (!navDd.contains(e.target)) navDd.classList.remove('is-open');
+        });
+    }
+    // Esc zatvara listu otvorenu tastaturom (fokus izlazi iz liste)
+    if (navDd) {
+        navDd.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                navDd.classList.remove('is-open');
+                if (document.activeElement) document.activeElement.blur();
+            }
+        });
     }
 
     // ===== Reveal on scroll =====
@@ -97,6 +127,7 @@
     // ===== Smooth scroll =====
     document.querySelectorAll('a[href^="#"]').forEach(a => {
         a.addEventListener('click', (e) => {
+            if (e.defaultPrevented) return; // npr. prvi dodir na „Usluge“ samo otvori listu
             const href = a.getAttribute('href');
             if (href.length > 1) {
                 const tgt = document.querySelector(href);

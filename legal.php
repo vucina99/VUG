@@ -55,7 +55,7 @@ $C['sr'] = [
             ['Podaci koje prikupljamo', "Kada popunite kontakt formu, prikupljamo podatke koje sami unesete: ime i prezime, email adresu, naslov i sadržaj poruke. Server dodatno beleži IP adresu i podatke o pregledaču radi zaštite od zloupotrebe (spam) i bezbednosti."],
             ['Svrha obrade', 'Podatke koristimo isključivo da odgovorimo na Vaš upit i uspostavimo kontakt u vezi sa uslugama. Ne koristimo ih za automatsko donošenje odluka niti ih prodajemo trećim licima.'],
             ['Pravni osnov', 'Obrada se zasniva na Vašem pristanku koji dajete slanjem forme, odnosno na legitimnom interesu za komunikaciju sa potencijalnim klijentima. [Za proveru pravnika: precizan pravni osnov po Zakonu o zaštiti podataka o ličnosti.]'],
-            ['Analitika (Google Analytics)', 'Sajt koristi Google Analytics za anonimnu statistiku poseta (broj posetilaca, izvori saobraćaja, ponašanje na stranici). Google može postavljati kolačiće — više u Politici kolačića.'],
+            ['Analitika (Google Analytics)', 'Sajt koristi Google Analytics za anonimnu statistiku poseta (broj posetilaca, izvori saobraćaja, ponašanje na stranici). Google može postavljati kolačiće - više u Politici kolačića.'],
             ['Zaštita od spama (Google reCAPTCHA)', 'Kontakt forma je zaštićena Google reCAPTCHA v3 servisom radi sprečavanja zloupotrebe. Na reCAPTCHA se primenjuju Google-ova Politika privatnosti i Uslovi korišćenja.'],
             ['Čuvanje podataka', 'Poruke iz kontakt forme čuvamo onoliko koliko je potrebno da obradimo Vaš upit i eventualnu saradnju. [Za proveru pravnika: tačan rok čuvanja.]'],
             ['Vaša prava', 'Imate pravo na pristup, ispravku, brisanje i ograničenje obrade svojih podataka, kao i pravo na prigovor. Zahtev možete poslati na ' . $email . '.'],
@@ -100,7 +100,7 @@ $C['en'] = [
             ['Data we collect', 'When you fill in the contact form we collect the data you enter: full name, email address, subject and message. The server additionally logs the IP address and browser information to protect against abuse (spam) and for security.'],
             ['Purpose of processing', 'We use the data solely to respond to your enquiry and get in touch regarding our services. We do not use it for automated decision‑making and we do not sell it to third parties.'],
             ['Legal basis', 'Processing is based on the consent you give by submitting the form, or on the legitimate interest of communicating with prospective clients. [For lawyer review: exact legal basis under applicable data protection law.]'],
-            ['Analytics (Google Analytics)', 'The site uses Google Analytics for anonymous visit statistics (visitor count, traffic sources, on‑page behaviour). Google may set cookies — see the Cookie Policy.'],
+            ['Analytics (Google Analytics)', 'The site uses Google Analytics for anonymous visit statistics (visitor count, traffic sources, on‑page behaviour). Google may set cookies - see the Cookie Policy.'],
             ['Spam protection (Google reCAPTCHA)', 'The contact form is protected by Google reCAPTCHA v3 to prevent abuse. Google’s Privacy Policy and Terms of Service apply to reCAPTCHA.'],
             ['Data retention', 'We keep contact‑form messages for as long as needed to handle your enquiry and any collaboration. [For lawyer review: exact retention period.]'],
             ['Your rights', 'You have the right to access, rectify, erase and restrict the processing of your data, as well as the right to object. Requests can be sent to ' . $email . '.'],
@@ -144,7 +144,7 @@ $phone_clean = preg_replace('/\s+/', '', $t['contact_info_phone']);
 $doc_slugs   = ['privacy' => 'politika-privatnosti', 'terms' => 'uslovi-koriscenja', 'cookies' => 'politika-kolacica'];
 $slug        = $doc_slugs[$doc];
 
-$meta_title       = $page['title'] . ' — VUG';
+$meta_title       = $page['title'] . ' - VUG';
 // Meta description ne sme da sadrži %EMAIL% token (ni samu adresu) — izbacujemo
 // celu rečenicu u kojoj se nalazi; opis i tako treba da bude kratak.
 $meta_description = trim(preg_replace('/\s*[^.]*%EMAIL%[^.]*\.\s*/u', ' ', $page['intro']));

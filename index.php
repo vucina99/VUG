@@ -195,7 +195,7 @@ require __DIR__ . '/partials/head.php';
 <header class="hero" id="home">
     <div class="hero-glow" id="heroGlow" aria-hidden="true"></div>
     <div class="container position-relative">
-        <?php /* H1 = naziv brenda (hero_badge: „VUG Digital Agency · Pančevo“) + slogan.
+        <?php /* H1 = naziv brenda (hero_badge: „VUG Digitalna agencija · Pančevo“) + slogan („Gradimo brendove koji se pamte“).
                  Brend MORA da bude u H1 početne - to je jedan od signala po kojima
                  Google bira naziv sajta i rangira brend pretrage („vug pančevo“).
                  Vizuelno se ništa ne menja: .hero-h1 je samo omotač, a delovi
@@ -242,7 +242,7 @@ require __DIR__ . '/partials/head.php';
     </div>
 
     <div class="scroll-cue" aria-hidden="true">
-        <span><?= $lang === 'sr' ? 'Skroluj' : 'Scroll' ?></span>
+        <span><?= $lang === 'sr' ? 'Skrolujte' : 'Scroll' ?></span>
         <span class="stick"></span>
     </div>
 </header>
@@ -284,9 +284,8 @@ require __DIR__ . '/partials/head.php';
             <?php endforeach; ?>
         </div>
 
-        <?php // Kontekstualni interni linkovi ka lokalnim stranicama - početna ima najviše
-              // autoriteta (brend linkovi), pa ga ovim prenosi na „izrada web sajta Beograd/Pančevo“. ?>
-        <p class="svc-local reveal"><?= strtr($t['services_local'], ['{base}' => $base]) ?></p>
+        <?php // Linkovi ka lokalnim landing stranicama su u meniju (padajuća lista „Usluge“)
+              // i u futeru - pasus „Poslujete u Beogradu ili Pančevu?“ je uklonjen 2026-10-19. ?>
     </div>
 </section>
 
@@ -386,7 +385,7 @@ require __DIR__ . '/partials/head.php';
 
             <ul class="cta-pro-perks">
                 <li><?= vug_icon('check2-circle') ?> <?= $lang === 'sr' ? 'Besplatna konsultacija' : 'Free consultation' ?></li>
-                <li><?= vug_icon('check2-circle') ?> <?= $lang === 'sr' ? 'Ponuda u roku od 48h' : 'Quote within 48h' ?></li>
+                <li><?= vug_icon('check2-circle') ?> <?= $lang === 'sr' ? 'Ponuda u roku od 24h' : 'Quote within 24h' ?></li>
                 <li><?= vug_icon('check2-circle') ?> <?= $lang === 'sr' ? 'Bez obaveza' : 'No strings attached' ?></li>
             </ul>
 
@@ -550,15 +549,15 @@ TEAM ("Ko stoji iza VUG-a") — samo ako postoje stvarni podaci (ime, uloga, fot
             // w/h = originalne dimenzije (za aspect-ratio hint); WebP verzija se servira preko <picture>.
             $partners = [
                 ['file' => 'janko.PNG',        'name' => 'Janko Maksimović', 'href' => 'https://jankomaksimovic.rs/', 'w' => 360, 'h' => 200],
-                ['file' => 'stetext.png',      'name' => 'Stetext' , 'href' => 'https://stetex.rs/', 'w' => 200, 'h' => 83],
+                ['file' => 'stetext.png',      'name' => 'ŠteteX' , 'href' => 'https://stetex-naplata-stete.rs/', 'w' => 200, 'h' => 83],
                 ['file' => 'qelectronics.png', 'name' => 'Q Electronics' , 'href' => 'https://qelectronics.rs/', 'w' => 600, 'h' => 100],
                 ['file' => 'gotovac.png',      'name' => 'Gotovac' , 'href' => 'https://advokatigotovac.com/', 'w' => 640, 'h' => 144],
                 ['file' => 'padel.PNG',        'name' => 'Padel Pančevo' , 'href' => 'https://padelpancevo.com/', 'w' => 500, 'h' => 500],
                 ['file' => 'tara.png',         'name' => 'Tara' , 'href' => 'https://taraorg.com/', 'w' => 550, 'h' => 416],
                 ['file' => 'vastrener.webp',   'name' => 'Vaš Trener' , 'href' => 'http://vastrener.com/', 'w' => 350, 'h' => 309],
                 ['file' => 'rakija.png',       'name' => 'Rakia Connect' , 'href' => 'https://rakia-connect.com/', 'w' => 600, 'h' => 326],
-                ['file' => 'kalupizza.PNG',    'name' => 'Kalu Pizza' , 'href' => 'https://kalupizza.rs/', 'w' => 500, 'h' => 374],
-                ['file' => 'moravka.png',      'name' => 'Pro-Moravka' , 'href' => 'https://promoravka.rs/', 'w' => 500, 'h' => 500],
+                ['file' => 'kalupizza.PNG',    'name' => 'KaluPizza' , 'href' => 'https://kalupizza.rs/', 'w' => 500, 'h' => 374],
+                ['file' => 'moravka.png',      'name' => 'Pro Moravka' , 'href' => 'https://promoravka.rs/', 'w' => 500, 'h' => 500],
                 ['file' => 'kosta.png',        'name' => 'Kosta' , 'href' => 'https://advokati-rs.com/beograd/yuristy/kosta-panovski/', 'w' => 428, 'h' => 573],
                 ['file' => 'pro-tim.png',      'name' => 'PRO-TIM Auto Plac' , 'href' => 'https://www.polovniautomobili.com/pro-tim-auto-plac-kragujevac', 'w' => 640, 'h' => 640],
             ];
@@ -570,7 +569,7 @@ TEAM ("Ko stoji iza VUG-a") — samo ako postoje stvarni podaci (ime, uloga, fot
                 <picture>
                     <source type="image/webp" srcset="img/partners/<?= rawurlencode($webp) ?>">
                     <img src="img/partners/<?= rawurlencode($p['file']) ?>"
-                         alt="<?= htmlspecialchars($p['name']) ?> — logo"
+                         alt="<?= htmlspecialchars($p['name']) ?> - logo"
                          width="<?= $p['w'] ?>" height="<?= $p['h'] ?>"
                          loading="lazy" decoding="async">
                 </picture>

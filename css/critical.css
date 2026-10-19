@@ -408,6 +408,72 @@ ul { list-style: none; }
     background: var(--mint);
 }
 
+/* Padajuća lista „Usluge“ (landing stranice). Otvara se na hover i :focus-within
+   (tastatura), a .is-open postavlja js/main.js na ekranima bez hover-a. */
+.nav-dd { position: relative; }
+.nav-dd-trigger .vi {
+    font-size: 10px;
+    margin-left: 6px;
+    transform: rotate(90deg);
+    transition: transform .25s var(--ease);
+}
+.nav-dd:hover .nav-dd-trigger .vi,
+.nav-dd:focus-within .nav-dd-trigger .vi,
+.nav-dd.is-open .nav-dd-trigger .vi { transform: rotate(-90deg); }
+.nav-dd-menu {
+    position: absolute;
+    top: calc(100% + 14px);
+    left: 50%;
+    min-width: 290px;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    border-radius: 18px;
+    border: 1px solid var(--line-strong);
+    background: rgba(13, 8, 32, 0.97);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.6);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translate(-50%, 8px);
+    transition: opacity .2s, transform .25s var(--ease), visibility .25s;
+}
+/* Nevidljivi „most“ preko razmaka do liste - inače se lista zatvori dok miš prelazi */
+.nav-dd-menu::before {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    top: -16px;
+    height: 16px;
+}
+.nav-dd:hover .nav-dd-menu,
+.nav-dd:focus-within .nav-dd-menu,
+.nav-dd.is-open .nav-dd-menu {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translate(-50%, 0);
+}
+.nav-dd-item {
+    display: block;
+    padding: 11px 14px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--txt-soft);
+    white-space: nowrap;
+    transition: color .2s, background .2s;
+}
+.nav-dd-item:hover,
+.nav-dd-item:focus-visible,
+.nav-dd-item[aria-current="page"] {
+    color: var(--mint);
+    background: rgba(255, 255, 255, 0.05);
+}
+
 .nav-actions {
     display: inline-flex;
     align-items: center;
@@ -493,7 +559,52 @@ ul { list-style: none; }
     border-bottom: 1px solid var(--line);
     transition: color .25s var(--ease), padding-left .25s var(--ease);
 }
-.nav-mobile a:last-child { border-bottom: none; color: var(--mint); }
+.nav-mobile > a:last-child { border-bottom: none; color: var(--mint); }
+/* Meni je sada viši (+4 podstavke) - na niskim ekranima (telefon položen) skroluje se */
+.nav-mobile { max-height: calc(100dvh - var(--nav-h)); overflow-y: auto; }
+/* „Usluge“ u hamburger meniju - <details>, zatvoren dok se ne dodirne.
+   summary izgleda isto kao ostale stavke menija (.nav-mobile a) + strelica. */
+.nav-mobile-dd { border-bottom: 1px solid var(--line); }
+.nav-mobile-dd summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 4px;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--txt);
+    cursor: pointer;
+    list-style: none;
+    transition: color .25s var(--ease);
+}
+.nav-mobile-dd summary::-webkit-details-marker { display: none; }
+.nav-mobile-dd summary .vi {
+    font-size: 12px;
+    color: var(--txt-soft);
+    transform: rotate(90deg);
+    transition: transform .25s var(--ease);
+}
+.nav-mobile-dd[open] summary { color: var(--mint); }
+.nav-mobile-dd[open] summary .vi { transform: rotate(-90deg); color: var(--mint); }
+.nav-mobile-dd[open] .nav-mobile-sub { animation: navSubIn .25s var(--ease); }
+@keyframes navSubIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: none; }
+}
+/* Stavke ispod „Usluge“ - uvučene i manje */
+.nav-mobile-sub {
+    display: flex;
+    flex-direction: column;
+    padding: 0 0 10px 16px;
+}
+.nav-mobile-sub a {
+    padding: 9px 4px;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--txt-soft);
+    border-bottom: none;
+}
+.nav-mobile-sub a[aria-current="page"] { color: var(--mint); }
 /* Trenutna sekcija u hamburger meniju — mint tekst + svetleća tačka */
 .nav-mobile a.active {
     color: var(--mint);

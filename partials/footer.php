@@ -48,10 +48,11 @@ $root         = dirname(__DIR__);
             <div>
                 <div class="footer-h"><?= $t['footer_services'] ?></div>
                 <ul class="footer-list">
-                    <li><a href="<?= $base ?>/izrada-web-sajta-beograd"><?= $is_sr ? 'Izrada web sajta Beograd' : 'Web design Beograd' ?></a></li>
-                    <li><a href="<?= $base ?>/izrada-web-sajta-pancevo"><?= $is_sr ? 'Izrada web sajta Pančevo' : 'Web design Pančevo' ?></a></li>
-                    <li><a href="<?= $base ?>/vodjenje-drustvenih-mreza-beograd"><?= $is_sr ? 'Vođenje mreža Beograd' : 'Social media Belgrade' ?></a></li>
-                    <li><a href="<?= $base ?>/vodjenje-drustvenih-mreza-pancevo"><?= $is_sr ? 'Vođenje mreža Pančevo' : 'Social media Pančevo' ?></a></li>
+                    <?php /* Isti spisak kao padajuća lista „Usluge“ u meniju ($nav_lp i
+                             $nav_lp_base iz partials/header.php; EN ide na /en/<slug>). */ ?>
+                    <?php foreach ($nav_lp as $lp_slug => $lp_label): ?>
+                    <li><a href="<?= $nav_lp_base ?>/<?= $lp_slug ?>"><?= htmlspecialchars($lp_label) ?></a></li>
+                    <?php endforeach; ?>
                 </ul>
             </div>
             <div>
@@ -76,7 +77,7 @@ $root         = dirname(__DIR__);
     </div>
 </footer>
 
-<a href="#main" class="to-top" aria-label="Top"><?= vug_icon('arrow-up') ?></a>
+<a href="#main" class="to-top" aria-label="<?= $is_sr ? 'Na vrh' : 'Back to top' ?>"><?= vug_icon('arrow-up') ?></a>
 
 <!-- reCAPTCHA se učitava LENJO (na prvu interakciju sa formom) preko js/main.js. -->
 <script src="<?= $base ?>/js/main.js?v=<?= @filemtime($root . '/js/main.js') ?>" defer></script>

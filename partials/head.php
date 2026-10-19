@@ -17,7 +17,7 @@
  *                      — na engleskoj verziji se UVEK pregazi u 'noindex, follow' (vidi ispod)
  *   $og_image        [default $SITE_URL/img/og-image.png]
  *   $og_type           [default 'website']
- *   $og_image_alt      [default 'VUG — Digitalna agencija' / 'Digital Agency']
+ *   $og_image_alt      [default 'VUG - Digitalna agencija' / 'Digital Agency']
  *   $geo_region        — npr. 'RS-14' (izostavlja se ako nije zadato)
  *   $geo_placename     — npr. 'Pančevo'
  *   $json_ld           — PHP niz koji se serijalizuje u <script type="application/ld+json">
@@ -46,7 +46,7 @@ $is_sr         = (($lang ?? 'sr') === 'sr');
 if (!$is_sr) {
     $robots = 'noindex, follow';
 }
-$og_image_alt  = $og_image_alt  ?? ('VUG — ' . ($is_sr ? 'Digitalna agencija' : 'Digital Agency'));
+$og_image_alt  = $og_image_alt  ?? ('VUG - ' . ($is_sr ? 'Digitalna agencija' : 'Digital Agency'));
 $css_v         = @filemtime(dirname(__DIR__) . '/css/style.css');
 $GA_ID         = 'G-W07YT5991W';
 
@@ -88,7 +88,7 @@ $critical_css = str_replace('../fonts/', $base . '/fonts/', $critical_css);
 
     <!-- Open Graph -->
     <meta property="og:type" content="<?= htmlspecialchars($og_type) ?>">
-    <meta property="og:locale" content="<?= $is_sr ? 'sr_RS' : 'en_US' ?>">
+    <meta property="og:locale" content="<?= $is_sr ? 'sr_RS' : 'en_GB' ?>">
     <!-- og:site_name = isti naziv kao WebSite.name u JSON-LD-u početne (Google
          ih poredi kad bira naziv sajta u rezultatima). -->
     <meta property="og:site_name" content="VUG Digital Agency">
