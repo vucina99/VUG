@@ -79,6 +79,29 @@ return [
     ],
 ],
 
+'marketing' => [
+    'sr' => [
+        'serv_eyebrow'   => 'Usluge',
+        'proc_eyebrow'   => 'Kako radimo',
+        'ind_eyebrow'    => 'Za koga radimo',
+        'price_eyebrow'  => 'Cena',
+        'faq_eyebrow'    => 'Česta pitanja',
+        'price_note_h'   => 'Kako dolazimo do ponude',
+        'cta_primary'    => 'Zatražite besplatnu ponudu',
+        'cta_phone'      => 'Pozovite odmah',
+    ],
+    'en' => [
+        'serv_eyebrow'   => 'Services',
+        'proc_eyebrow'   => 'How we work',
+        'ind_eyebrow'    => 'Who we work with',
+        'price_eyebrow'  => 'Pricing',
+        'faq_eyebrow'    => 'FAQ',
+        'price_note_h'   => 'How we arrive at a quote',
+        'cta_primary'    => 'Request a free quote',
+        'cta_phone'      => 'Call us now',
+    ],
+],
+
 ], /* end ui */
 
 /* ══════════════════════════════════════════════════════════════════════════
@@ -712,6 +735,321 @@ return [
 ],
 
 ], /* end social */
+
+/* ────────────────────────────────────────────────────────────────────────────
+   MARKETING AGENCIJA (oglašavanje, Google profil, SEO, strategija)
+   Razgraničenje: svakodnevni sadržaj i komunikacija sa pratiocima su na
+   stranicama za društvene mreže - ovde se pominju samo uz link ka njima.
+   ──────────────────────────────────────────────────────────────────────────── */
+'marketing' => [
+
+/* ═══ PANČEVO ═══ */
+'pancevo' => [
+'sr' => [
+
+'serv_h2'   => 'Šta radimo za Vaš marketing u Pančevu <em>-</em>',
+'serv_lead' => 'Kanale oglašavanja biramo na osnovu toga gde Vaši potencijalni klijenti pretražuju proizvode i usluge, a ne prema trenutnim trendovima. U zavisnosti od delatnosti, najveći potencijal mogu imati Google Ads kampanje ili optimizovan Google poslovni profil - konkretan predlog dobijate nakon prvog razgovora.',
+'serv' => [
+    ['search',     'Google Ads kampanje',                     'Planiranje i vođenje Google Ads kampanja usmerenih ka korisnicima iz Pančeva i okoline koji aktivno pretražuju Vaše proizvode i usluge. Kroz kontinuiranu optimizaciju oglasa i budžeta radimo na povećanju broja relevantnih poseta, poziva i upita.'],
+    ['cash-coin',  'Meta oglašavanje (Facebook i Instagram)', 'Kreiranje i vođenje oglasnih kampanja na Facebooku i Instagramu, prilagođenih Vašoj ciljnoj grupi i poslovnim ciljevima. Preciznim odabirom publike, kreativnih rešenja i oglasnih formata povećavamo prepoznatljivost brenda i podstičemo interesovanje potencijalnih klijenata.'],
+    ['geo-alt',    'Google poslovni profil',                  'Optimizacija Google poslovnog profila radi unapređenja vidljivosti u lokalnim pretragama i na Google mapama. Uređujemo informacije o poslovanju, kategorije, usluge i vizuelni sadržaj, uz strategiju za prikupljanje recenzija i jačanje poverenja potencijalnih klijenata.'],
+    ['graph-up',   'SEO optimizacija',                        'Tehnička, sadržajna i lokalna SEO optimizacija web sajta sa ciljem poboljšanja pozicija na Google pretrazi. Unapređujemo strukturu, sadržaj i performanse sajta kako bismo povećali organsku vidljivost i privukli korisnike koji pretražuju Vaše usluge.'],
+    ['bar-chart',  'Analitika i praćenje konverzija',         'Implementacija analitičkih alata i praćenja ključnih aktivnosti korisnika, uključujući pozive, poruke i kontakt forme. Analizom prikupljenih podataka utvrđujemo efikasnost kampanja i donosimo odluke o daljoj optimizaciji marketinških ulaganja.'],
+    ['diagram-3',  'Marketinška strategija',                  'Razvoj sveobuhvatne marketinške strategije prilagođene Vašem poslovanju, ciljnoj grupi i konkurentskom okruženju. Definišemo komunikacione kanale, ključne poruke, budžet i plan aktivnosti za naredna tri do šest meseci, sa fokusom na ostvarivanje merljivih poslovnih rezultata.'],
+],
+
+'proc_h2'   => 'Od prvog razgovora do pokretanja kampanje <em>-</em>',
+'proc_lead' => 'Četiri jasno definisana koraka, a prvi upiti se najčešće ostvaruju već tokom prvog meseca. Kampanje se vode na Vašim nalozima, pa podaci i istorija oglašavanja uvek ostaju u Vašem vlasništvu.',
+'proc' => [
+    ['Analiza poslovanja',       'Upoznajemo Vašu ponudu, cene i ciljnu grupu i analiziramo nastup konkurencije iz Pančeva na Google-u i društvenim mrežama, kao i trenutno stanje Vašeg sajta i Google profila.'],
+    ['Strategija i merenje',     'Definišemo kanale, budžet i ciljeve za prvi mesec i postavljamo praćenje poziva, poruka i formi. Nijedna kampanja se ne pokreće bez definisanog sistema merenja.'],
+    ['Pokretanje kampanja',      'Pripremamo tekstove oglasa i vizuale i podešavamo ciljnu publiku. Tokom prvih nedelja kontinuirano pratimo rezultate i prilagođavamo kampanje u skladu sa ostvarenim učinkom.'],
+    ['Izveštavanje i optimizacija', 'Na kraju svakog meseca dostavljamo izveštaj sa troškovima, brojem upita i cenom po kontaktu, uz konkretne predloge za dalje unapređenje kampanja.'],
+],
+
+'ind_h2'   => 'Za koga radimo marketing u Pančevu <em>-</em>',
+'ind_lead' => 'Najbrže rezultate ostvaruju delatnosti kod kojih potencijalni klijenti traže uslugu u svojoj blizini i odluku donose brzo. U nastavku su oblasti iz Pančeva i okoline za koje najčešće realizujemo kampanje.',
+'ind' => [
+    'Majstori, vodoinstalateri i električari',
+    'Stomatološke i lekarske ordinacije',
+    'Auto-servisi i vulkanizeri',
+    'Restorani i dostava hrane',
+    'Saloni lepote i kozmetički studiji',
+    'Advokati i knjigovodstvene agencije',
+    'Teretane i sportski klubovi',
+    'Nekretnine i građevinske firme',
+    'Škole, kursevi i obuke',
+    'Prodavnice i online prodavnice',
+    'Smeštaj, apartmani i turizam',
+    'Proizvođači i distributeri',
+],
+
+'price_h2'   => 'Koliko košta marketing za firmu u Pančevu <em>-</em>',
+'price_lead' => 'Cena saradnje sastoji se iz naše mesečne naknade i budžeta za oglase, koji uplaćujete direktno Google-u i Meti sa svog naloga. Visinu oba iznosa određuju sledeće stavke.',
+'price' => [
+    ['Broj kanala',               'Obim posla zavisi od toga da li se kampanje vode samo na Google-u ili u kombinaciji sa Meta oglašavanjem i SEO optimizacijom, jer svaki kanal zahteva posebna podešavanja, kreativna rešenja i praćenje.'],
+    ['Budžet za oglase',          'Iznos zavisi isključivo od rezultata koje želite da postignete, kao i broja kanala na kojima se vrši komunikacija. Preporuku dajemo nakon detaljne analize, kako bismo definisali optimalni ulog koji će doneti očekivane rezultate.'],
+    ['Izrada kreativnih rešenja', 'Tekstovi oglasa, grafike i kratki video formati. Ukoliko raspolažete sopstvenim fotografijama i video materijalom, koristimo ih; u suprotnom, kompletnu pripremu materijala preuzimamo mi.'],
+    ['Početno podešavanje',       'Otvaranje naloga, podešavanje merenja konverzija i optimizacija Google profila realizuju se jednokratno, na početku saradnje.'],
+    ['Obim izveštavanja',         'Mesečni izveštaj je uvek uključen, dok se nedeljni pregledi i sastanci uživo dogovaraju prema potrebi.'],
+],
+'price_note' => 'Našu naknadu i budžet za oglase uvek prikazujemo odvojeno, kako biste imali potpun uvid u strukturu ulaganja. Nakon kratkog razgovora dostavljamo pisanu ponudu sa predlogom budžeta i ciljevima za prvi mesec - u roku od 24 sata, bez naknade i bez obaveze.',
+
+'rev' => true,   // sekcija „Šta kažu klijenti“ (partials/testimonials.php)
+
+'faq_h2'   => 'Česta pitanja o marketingu u Pančevu <em>-</em>',
+'faq_lead' => 'Odgovori na pitanja koja vlasnici firmi iz Pančeva najčešće postavljaju pre pokretanja oglašavanja.',
+'faq' => [
+    ['star-fill',  'Zašto angažovati agenciju umesto samostalnog vođenja oglasa?',
+                   'Pokretanje oglasa je tehnički jednostavno, ali bez stručnog podešavanja budžet se lako troši bez rezultata. Postavljamo merenje, testiramo više verzija oglasa i redovno optimizujemo kampanje, kako bi isto ulaganje donelo <strong>više poziva i upita</strong>, a Vi više vremena posvetili svom poslovanju.'],
+    ['briefcase',  'Koliki je budžet za oglase potreban u Pančevu?',
+                   'Visina budžeta zavisi od delatnosti i nivoa konkurencije. Lokalno tržište je manje od beogradskog, pa je cena klika često niža. U prvom mesecu kampanje pokrećemo sa umerenim budžetom, koji povećavamo kada utvrdimo <strong>kolika je cena jednog upita</strong>.'],
+    ['clock',      'Kada mogu da očekujem prve rezultate?',
+                   'Google Ads i Meta kampanje donose prve upite već tokom prvih nedelja. Rezultati SEO optimizacije i Google profila dolaze postepeno - realno je očekivati dva do tri meseca do <strong>stabilnih pozicija na pretrazi</strong>.'],
+    ['geo-alt',    'Da li optimizujete i Google poslovni profil?',
+                   'Da, i preporučujemo ga kao jedan od prvih koraka. Za pretrage poput „frizer Pančevo“ Google najpre prikazuje mapu sa tri firme, a <strong>optimizovan profil sa recenzijama</strong> ima presudan uticaj na to koje će se firme tu pojaviti.'],
+    ['chat-dots',  'Da li vodite i društvene mreže?',
+                   'Da, kao zasebnu uslugu - oglašavanje, svakodnevno kreiranje sadržaja i komunikacija sa pratiocima predstavljaju različite segmente posla. Više o tome kako izgleda kompletno <a href="{lp_social_pancevo}">vođenje društvenih mreža u Pančevu</a> pročitajte na posebnoj stranici.'],
+    ['code-slash', 'Da li je potreban novi sajt da bi oglasi bili uspešni?',
+                   'Ne nužno. Ukoliko je sajt brz, prilagođen mobilnim uređajima i ima jasan poziv na akciju, oglasi mogu odmah da vode ka njemu. U suprotnom, isti tim realizuje i <a href="{lp_web_pancevo}">izradu web sajta u Pančevu</a>, kako bi kampanja i stranica činile funkcionalnu celinu.'],
+    ['person',     'Na čije ime se otvaraju nalozi za oglašavanje?',
+                   'Na ime Vaše firme. Google Ads, Meta nalog i Google poslovni profil su u Vašem vlasništvu, a mi im pristupamo kao saradnici. <strong>U slučaju prestanka saradnje, sve kampanje i podaci ostaju Vama.</strong>'],
+    ['graph-up',   'Kako mogu da pratim isplativost marketinga?',
+                   'Svakog meseca dobijate izveštaj sa ključnim pokazateljima: <strong>potrošenim budžetom, brojem poziva i upita i cenom jednog kontakta</strong>. Na osnovu tih podataka zajedno donosimo odluke o daljim koracima i raspodeli budžeta.'],
+],
+'area_served' => ['Pančevo', 'Starčevo', 'Omoljica', 'Jabuka', 'Kačarevo', 'Dolovo', 'Opovo', 'Kovačica', 'Kovin', 'Alibunar', 'Vršac', 'Južnobanatski okrug', 'Beograd', 'Srbija'],
+],
+
+'en' => [
+
+'serv_h2'   => 'What we do for your marketing in Pančevo <em>-</em>',
+'serv_lead' => 'We choose advertising channels based on where your potential clients search for products and services, not on current trends. Depending on the industry, Google Ads campaigns or an optimised Google Business Profile may hold the greatest potential - you receive a concrete recommendation after the first conversation.',
+'serv' => [
+    ['search',     'Google Ads campaigns',                    'Planning and managing Google Ads campaigns aimed at users in Pančevo and the surrounding area who are actively searching for your products and services. Through continuous optimisation of ads and budget, we work to increase the number of relevant visits, calls and enquiries.'],
+    ['cash-coin',  'Meta advertising (Facebook and Instagram)', 'Creating and managing advertising campaigns on Facebook and Instagram, tailored to your target audience and business goals. Through precise selection of audience, creative and ad formats, we increase brand awareness and generate interest among potential clients.'],
+    ['geo-alt',    'Google Business Profile',                 'Optimising your Google Business Profile to improve visibility in local search and on Google Maps. We refine business information, categories, services and visual content, with a strategy for collecting reviews and building the trust of potential clients.'],
+    ['graph-up',   'SEO optimisation',                        'Technical, content and local SEO for your website, aimed at improving rankings in Google Search. We improve the site’s structure, content and performance to increase organic visibility and attract users searching for your services.'],
+    ['bar-chart',  'Analytics and conversion tracking',       'Implementing analytics tools and tracking key user actions, including calls, messages and contact forms. By analysing the data collected, we assess campaign effectiveness and make decisions on further optimisation of your marketing investment.'],
+    ['diagram-3',  'Marketing strategy',                      'Developing a comprehensive marketing strategy tailored to your business, target audience and competitive environment. We define communication channels, key messages, budget and an activity plan for the next three to six months, with a focus on achieving measurable business results.'],
+],
+
+'proc_h2'   => 'From the first conversation to campaign launch <em>-</em>',
+'proc_lead' => 'Four clearly defined steps, with the first enquiries usually achieved during the first month. Campaigns run in your own accounts, so the data and advertising history always remain your property.',
+'proc' => [
+    ['Business analysis',         'We learn about your offer, prices and target audience and analyse how competitors in Pančevo present themselves on Google and social media, as well as the current state of your website and Google profile.'],
+    ['Strategy and tracking',     'We define channels, budget and goals for the first month and set up tracking for calls, messages and forms. No campaign is launched without a defined measurement system.'],
+    ['Launching campaigns',       'We prepare ad copy and visuals and set up the target audience. During the first weeks we monitor results continuously and adjust campaigns according to their performance.'],
+    ['Reporting and optimisation', 'At the end of every month we deliver a report with costs, number of enquiries and cost per contact, along with concrete recommendations for further campaign improvement.'],
+],
+
+'ind_h2'   => 'Who we do marketing for in Pančevo <em>-</em>',
+'ind_lead' => 'The fastest results come in industries where potential clients look for a service nearby and make decisions quickly. Below are the sectors in Pančevo and the surrounding area for which we most often run campaigns.',
+'ind' => [
+    'Tradespeople, plumbers and electricians',
+    'Dental and medical practices',
+    'Car services and tyre shops',
+    'Restaurants and food delivery',
+    'Beauty salons and cosmetic studios',
+    'Lawyers and accounting firms',
+    'Gyms and sports clubs',
+    'Property and construction companies',
+    'Schools, courses and training',
+    'Shops and online shops',
+    'Accommodation, apartments and tourism',
+    'Manufacturers and distributors',
+],
+
+'price_h2'   => 'How much marketing costs for a business in Pančevo <em>-</em>',
+'price_lead' => 'The cost of working together consists of our monthly fee and the ad budget, which you pay directly to Google and Meta from your own account. The following items determine both amounts.',
+'price' => [
+    ['Number of channels',  'The scope of work depends on whether campaigns run on Google alone or in combination with Meta advertising and SEO, as each channel requires its own setup, creative and tracking.'],
+    ['Ad budget',           'The amount depends entirely on the results you want to achieve and on the number of channels used for communication. We make a recommendation after a detailed analysis, so we can define the optimal investment that will deliver the expected results.'],
+    ['Creative production', 'Ad copy, graphics and short video formats. If you have your own photos and video material, we use them; otherwise, we take care of preparing all materials.'],
+    ['Initial setup',       'Opening accounts, setting up conversion tracking and optimising your Google profile are carried out once, at the start of the collaboration.'],
+    ['Reporting scope',     'A monthly report is always included, while weekly reviews and in-person meetings are arranged as needed.'],
+],
+'price_note' => 'We always show our fee and the ad budget separately, so you have full insight into how your investment is structured. After a short conversation we send a written quote with a proposed budget and goals for the first month - within 24 hours, free of charge and with no obligation.',
+
+'rev' => true,
+
+'faq_h2'   => 'Frequently asked questions about marketing in Pančevo <em>-</em>',
+'faq_lead' => 'Answers to the questions business owners in Pančevo most often ask before they start advertising.',
+'faq' => [
+    ['star-fill',  'Why hire an agency instead of running ads yourself?',
+                   'Launching an ad is technically simple, but without expert setup the budget is easily spent without results. We set up tracking, test several ad versions and optimise campaigns regularly, so the same investment brings <strong>more calls and enquiries</strong> and you can devote more time to your business.'],
+    ['briefcase',  'What ad budget is needed in Pančevo?',
+                   'The budget depends on the industry and the level of competition. The local market is smaller than Belgrade, so the cost per click is often lower. In the first month we launch campaigns with a moderate budget and increase it once we establish <strong>what one enquiry costs</strong>.'],
+    ['clock',      'When can I expect the first results?',
+                   'Google Ads and Meta campaigns bring the first enquiries within the first few weeks. Results from SEO and the Google profile come gradually - it is realistic to expect two to three months to reach <strong>stable search rankings</strong>.'],
+    ['geo-alt',    'Do you also optimise the Google Business Profile?',
+                   'Yes, and we recommend it as one of the first steps. For searches such as “hairdresser Pančevo” Google first shows a map with three businesses, and <strong>an optimised profile with reviews</strong> has a decisive influence on which businesses appear there.'],
+    ['chat-dots',  'Do you also manage social media?',
+                   'Yes, as a separate service - advertising, day-to-day content creation and communication with followers are different areas of work. Read more about what full <a href="{lp_social_pancevo}">social media management in Pančevo</a> involves on a separate page.'],
+    ['code-slash', 'Do I need a new website for the ads to succeed?',
+                   'Not necessarily. If your site is fast, mobile-friendly and has a clear call to action, ads can point to it straight away. Otherwise, the same team also handles <a href="{lp_web_pancevo}">website development in Pančevo</a>, so the campaign and the page form a functional whole.'],
+    ['person',     'Whose name are the advertising accounts opened in?',
+                   'Your company’s. Google Ads, the Meta account and the Google Business Profile are your property, and we access them as partners. <strong>If the collaboration ends, all campaigns and data remain yours.</strong>'],
+    ['graph-up',   'How can I track whether marketing pays off?',
+                   'Every month you receive a report with the key indicators: <strong>budget spent, number of calls and enquiries and the cost of one contact</strong>. Based on that data, we make decisions together about next steps and budget allocation.'],
+],
+'area_served' => ['Pančevo', 'Starčevo', 'Omoljica', 'Jabuka', 'Kačarevo', 'Dolovo', 'Opovo', 'Kovačica', 'Kovin', 'Alibunar', 'Vršac', 'South Banat District', 'Belgrade', 'Serbia'],
+],
+],
+
+/* ═══ BEOGRAD ═══ */
+'beograd' => [
+'sr' => [
+
+'serv_h2'   => 'Usluge digitalnog marketinga za firme u Beogradu <em>-</em>',
+'serv_lead' => 'Kanale komunikacije biramo u skladu sa ciljem kampanje - prodajom, upitima ili jačanjem prepoznatljivosti brenda - i nivoom konkurencije u Vašoj delatnosti. Svaki kanal ima jasno definisanu ulogu u okviru strategije.',
+'serv' => [
+    ['search',       'Google Ads i Performance Max', 'Kampanje na Google pretrazi, YouTube-u i prikazivačkoj mreži, usmerene na korisnike koji aktivno upoređuju ponude. Fokus je na upitima i prodaji, uz kontinuiranu kontrolu cene po kliku.'],
+    ['cash-coin',    'Meta i TikTok kampanje',       'Oglašavanje na Facebook-u, Instagramu i TikTok-u, uz testiranje više kreativnih rešenja na beogradskoj publici. Budžet usmeravamo ka oglasima koji ostvaruju najbolje rezultate.'],
+    ['arrow-repeat', 'Remarketing',                  'Ponovno obraćanje korisnicima koji su posetili Vaš sajt ili profil, a nisu ostvarili kontakt. Remarketing najčešće donosi upite po najnižoj ceni u okviru kampanje.'],
+    ['graph-up',     'SEO optimizacija',             'Tehnička optimizacija, struktura sadržaja i lokalni signali za konkurentne pretrage, na kojima je stabilnu vidljivost teško ostvariti samo putem oglasa.'],
+    ['bar-chart',    'Merenje i izveštavanje',       'Google Analytics 4, Google Tag Manager i praćenje konverzija - precizan uvid u vrednost svakog kanala i učinak svake poruke.'],
+    ['diagram-3',    'Strategija i medija plan',     'Raspodela budžeta po kanalima i periodima, uz jasno definisane i merljive ciljeve. Plan redovno prilagođavamo na osnovu ostvarenih rezultata.'],
+],
+
+'proc_h2'   => 'Proces saradnje na kampanjama <em>-</em>',
+'proc_lead' => 'Četiri faze, svaka sa jasno definisanim ciljem - od analize postojećeg stanja do kontinuirane optimizacije. Sastanke organizujemo uživo ili online, u skladu sa Vašim potrebama.',
+'proc' => [
+    ['Analiza naloga i tržišta',      'Analiziramo postojeće kampanje, sajt i analitiku, kao i način na koji se oglašavaju konkurenti u Beogradu. Dobijate pisani izveštaj sa prioritetnim preporukama.'],
+    ['Strategija i budžet',           'Definišemo ciljeve, ciljnu publiku i raspodelu budžeta po kanalima. Pre pokretanja kampanja postavljamo merenje konverzija, kako bi rezultati bili praćeni od prvog dana.'],
+    ['Kreativna rešenja i pokretanje','Pripremamo tekstove oglasa, vizuale i video materijale, a kampanje pokrećemo sa više varijanti poruke kako bismo brzo utvrdili koja ostvaruje najbolje rezultate.'],
+    ['Optimizacija i rast',           'Kampanje redovno prilagođavamo - ponude, ciljnu publiku i kreativna rešenja. Kada utvrdimo kombinaciju koja je isplativa, budžet postepeno povećavamo.'],
+],
+
+'ind_h2'   => 'Delatnosti sa kojima sarađujemo u Beogradu <em>-</em>',
+'ind_lead' => 'Kampanje realizujemo za firme koje posluju lokalno, kao i za one koje klijente pronalaze na teritoriji cele Srbije. U nastavku su oblasti u kojima najčešće sarađujemo sa beogradskim klijentima.',
+'ind' => [
+    'Pravne i konsultantske kancelarije',
+    'Privatne klinike i stomatologija',
+    'Online prodavnice i e-commerce',
+    'Nekretnine i investitori',
+    'IT firme i B2B usluge',
+    'Ugostiteljstvo i kafeterije',
+    'Fitnes i wellness centri',
+    'Edukacija i online kursevi',
+    'Auto-kuće i rent-a-car',
+    'Organizacija proslava i venčanja',
+    'Estetika, kozmetika i nega',
+    'Turističke agencije i hoteli',
+],
+
+'price_h2'   => 'Koliko košta marketing agencija u Beogradu <em>-</em>',
+'price_lead' => 'Ukupno ulaganje čine dve stavke: mesečna naknada agencije i medijski budžet koji se plaća direktno platformama za oglašavanje. Na visinu oba iznosa najviše utiču sledeći faktori.',
+'price' => [
+    ['Kanali i tržište',       'Obim posla zavisi od broja kanala i geografskog obuhvata - kampanja usmerena samo na Beograd razlikuje se od kampanje za celu Srbiju.'],
+    ['Medijski budžet',        'Zbog izražene konkurencije na beogradskom tržištu, budžet mora biti realno postavljen. Predlog definišemo na osnovu podataka o Vašoj delatnosti i postavljenim ciljevima.'],
+    ['Kreativna rešenja',      'Broj oglasa, banera i video formata koje pripremamo i redovno osvežavamo, kako bi komunikacija ostala relevantna za ciljnu publiku.'],
+    ['Merenje i integracije',  'Povezivanje sa CRM sistemom, online prodavnicom ili sistemom za rezervacije realizuje se jednokratno, ali značajno doprinosi tačnosti izveštaja.'],
+    ['SEO i sadržaj',          'Ukoliko uz kampanje radimo i SEO optimizaciju, cena obuhvata izradu sadržaja i tehnička unapređenja sajta koja se sprovode na mesečnom nivou.'],
+],
+'price_note' => 'Ponuda jasno razdvaja naknadu agencije od medijskog budžeta i precizno navodi aktivnosti koje se sprovode svakog meseca. Dostavljamo je u roku od 24 sata nakon razgovora, uz predlog budžeta usklađen sa ciljevima i mogućnostima Vašeg poslovanja.',
+
+'rev' => true,   // sekcija „Šta kažu klijenti“ (partials/testimonials.php) - zahtev korisnika 2026-10-22
+
+'faq_h2'   => 'Česta pitanja o digitalnom marketingu u Beogradu <em>-</em>',
+'faq_lead' => 'Odgovori na pitanja koja nam firme iz Beograda najčešće postavljaju pre pokretanja prve kampanje.',
+'faq' => [
+    ['star-fill',    'Zašto izabrati VUG za digitalni marketing u Beogradu?',
+                     'Svaki projekat vodi osoba koja poznaje Vaše poslovanje i sa kojom komunicirate direktno. Kampanje gradimo na osnovu merenja i <strong>cene po upitu</strong>, a ne na osnovu dosega i prikaza koji ne odražavaju stvarne poslovne rezultate.'],
+    ['briefcase',    'Koliko košta oglašavanje na Google-u u Beogradu?',
+                     'Cena po kliku zavisi od delatnosti - za pojedine pojmove je niska, dok kod konkurentnih usluga, poput pravnih ili medicinskih, može biti višestruko viša. Zato pre pokretanja kampanje procenjujemo <strong>koliko upita je realno ostvariti sa predviđenim budžetom</strong>, a zatim predlažemo optimalan iznos.'],
+    ['clock',        'Kada kampanje počinju da donose rezultate?',
+                     'Plaćene kampanje najčešće donose prve upite u prvih nekoliko nedelja, dok prvih mesec do dva služe za utvrđivanje najefikasnije kombinacije publike i poruke. SEO optimizacija je dugoročan proces, a značajniji rast vidljivosti očekuje se nakon <strong>tri do šest meseci</strong>.'],
+    ['arrow-repeat', 'Da li možete da preuzmete postojeće kampanje?',
+                     'Možemo. Najpre sprovodimo analizu postojećih kampanja i analitike, zadržavamo ono što ostvaruje rezultate i unapređujemo segmente koji ne opravdavaju ulaganje. <strong>Istorija naloga se zadržava</strong>, jer doprinosi efikasnosti algoritama za oglašavanje.'],
+    ['globe',        'Da li realizujete kampanje i za druge gradove u Srbiji?',
+                     'Da. Ciljanje podešavamo prema lokacijama na kojima se nalaze Vaši klijenti - jedan grad, više opština ili cela Srbija - i <strong>pratimo rezultate po lokaciji</strong>, kako bi budžet bio usmeren tamo gde ostvaruje najveći povraćaj.'],
+    ['person',       'Ko je vlasnik naloga i podataka?',
+                     'Vi. Nalozi za Google Ads, Meta i Google Analytics otvaraju se na Vašu firmu, a mi im pristupamo kao saradnici. U slučaju prestanka saradnje, <strong>svi nalozi i podaci ostaju u Vašem vlasništvu</strong>.'],
+    ['tag',          'Da li je potrebno potpisati dugoročan ugovor?',
+                     'Ne. Saradnja se ugovara na mesečnom nivou, uz preporuku da se kampanjama obezbedi period od najmanje tri meseca, koliko je potrebno da se <strong>prikupe relevantni podaci i stabilizuju rezultati</strong>.'],
+    ['graph-up',     'Šta sadrži mesečni izveštaj?',
+                     'Izveštaj je pregledan i fokusiran na poslovne rezultate: troškove po kanalu, broj poziva, upita i kupovina, cenu po kontaktu i poređenje sa prethodnim periodom. Uz rezultate dobijate i <strong>plan optimizacije za naredni mesec</strong>.'],
+],
+'area_served' => ['Beograd', 'Novi Beograd', 'Zemun', 'Vračar', 'Stari grad', 'Savski venac', 'Zvezdara', 'Voždovac', 'Palilula', 'Čukarica', 'Rakovica', 'Surčin', 'Srbija'],
+],
+
+'en' => [
+
+'serv_h2'   => 'Digital marketing services for Belgrade businesses <em>-</em>',
+'serv_lead' => 'We select communication channels according to the campaign goal - sales, enquiries or brand awareness - and the level of competition in your industry. Each channel has a clearly defined role within the strategy.',
+'serv' => [
+    ['search',       'Google Ads and Performance Max', 'Campaigns on Google Search, YouTube and the Display Network, aimed at users actively comparing offers. The focus is on enquiries and sales, with continuous control of cost per click.'],
+    ['cash-coin',    'Meta and TikTok campaigns',      'Advertising on Facebook, Instagram and TikTok, testing several creative approaches with a Belgrade audience. We direct the budget towards the ads that achieve the best results.'],
+    ['arrow-repeat', 'Remarketing',                    'Re-engaging users who visited your website or profile without getting in touch. Remarketing typically delivers the lowest cost per enquiry within a campaign.'],
+    ['graph-up',     'SEO optimisation',               'Technical optimisation, content structure and local signals for competitive searches, where stable visibility is difficult to achieve through ads alone.'],
+    ['bar-chart',    'Tracking and reporting',         'Google Analytics 4, Google Tag Manager and conversion tracking - precise insight into the value of each channel and the performance of each message.'],
+    ['diagram-3',    'Strategy and media plan',        'Budget allocation by channel and period, with clearly defined, measurable goals. We adjust the plan regularly based on the results achieved.'],
+],
+
+'proc_h2'   => 'Our campaign collaboration process <em>-</em>',
+'proc_lead' => 'Four phases, each with a clearly defined goal - from an analysis of the current situation to continuous optimisation. Meetings take place in person or online, according to your needs.',
+'proc' => [
+    ['Account and market analysis', 'We analyse existing campaigns, the website and analytics, as well as how competitors in Belgrade advertise. You receive a written report with prioritised recommendations.'],
+    ['Strategy and budget',         'We define goals, target audience and budget allocation across channels. Before campaigns launch we set up conversion tracking, so results are monitored from day one.'],
+    ['Creative and launch',         'We prepare ad copy, visuals and video, and launch campaigns with several message variants to quickly establish which one performs best.'],
+    ['Optimisation and growth',     'We adjust campaigns regularly - bids, target audience and creative. Once we identify a profitable combination, we increase the budget gradually.'],
+],
+
+'ind_h2'   => 'Industries we work with in Belgrade <em>-</em>',
+'ind_lead' => 'We run campaigns for companies that operate locally as well as those that find clients across Serbia. Below are the sectors in which we most often work with Belgrade clients.',
+'ind' => [
+    'Law and consulting firms',
+    'Private clinics and dentistry',
+    'Online shops and e-commerce',
+    'Property and investors',
+    'IT companies and B2B services',
+    'Hospitality and cafés',
+    'Fitness and wellness centres',
+    'Education and online courses',
+    'Car dealerships and rent-a-car',
+    'Party and wedding planning',
+    'Aesthetics, cosmetics and care',
+    'Travel agencies and hotels',
+],
+
+'price_h2'   => 'How much a marketing agency in Belgrade costs <em>-</em>',
+'price_lead' => 'The total investment consists of two items: the agency’s monthly fee and the media budget paid directly to the advertising platforms. The following factors have the greatest effect on both amounts.',
+'price' => [
+    ['Channels and market',       'The scope of work depends on the number of channels and the geographic reach - a campaign targeting Belgrade alone differs from one covering the whole of Serbia.'],
+    ['Media budget',              'Given the strong competition in the Belgrade market, the budget must be set realistically. We define our proposal based on data about your industry and your goals.'],
+    ['Creative',                  'The number of ads, banners and video formats we prepare and refresh regularly, so communication stays relevant to the target audience.'],
+    ['Tracking and integrations', 'Connecting to a CRM, online shop or booking system is a one-off task, but it contributes significantly to the accuracy of reporting.'],
+    ['SEO and content',           'If we also handle SEO alongside the campaigns, the price includes content creation and technical website improvements carried out every month.'],
+],
+'price_note' => 'The quote clearly separates the agency fee from the media budget and specifies the activities carried out each month. We send it within 24 hours of our conversation, with a budget proposal aligned with the goals and capacity of your business.',
+
+'rev' => true,
+
+'faq_h2'   => 'Frequently asked questions about digital marketing in Belgrade <em>-</em>',
+'faq_lead' => 'Answers to the questions Belgrade companies most often ask us before launching their first campaign.',
+'faq' => [
+    ['star-fill',    'Why choose VUG for digital marketing in Belgrade?',
+                     'Every project is managed by a person who knows your business and with whom you communicate directly. We build campaigns on tracking and <strong>cost per enquiry</strong>, rather than on reach and impressions that do not reflect real business results.'],
+    ['briefcase',    'How much does Google advertising cost in Belgrade?',
+                     'Cost per click depends on the industry - for some terms it is low, while for competitive services such as legal or medical ones it can be several times higher. That is why, before launching a campaign, we estimate <strong>how many enquiries can realistically be achieved with the planned budget</strong>, and then propose the optimal amount.'],
+    ['clock',        'When do campaigns start delivering results?',
+                     'Paid campaigns usually bring the first enquiries within the first few weeks, while the first month or two is used to establish the most effective combination of audience and message. SEO is a long-term process, and more significant growth in visibility is expected after <strong>three to six months</strong>.'],
+    ['arrow-repeat', 'Can you take over existing campaigns?',
+                     'Yes. We first analyse the existing campaigns and analytics, keep what is delivering results and improve the areas that do not justify the investment. <strong>Account history is retained</strong>, as it contributes to the efficiency of the advertising algorithms.'],
+    ['globe',        'Do you run campaigns for other cities in Serbia too?',
+                     'Yes. We set targeting according to where your clients are - one city, several municipalities or the whole of Serbia - and <strong>track results by location</strong>, so the budget is directed where it achieves the greatest return.'],
+    ['person',       'Who owns the accounts and data?',
+                     'You do. Google Ads, Meta and Google Analytics accounts are opened in your company’s name, and we access them as partners. If the collaboration ends, <strong>all accounts and data remain your property</strong>.'],
+    ['tag',          'Is a long-term contract required?',
+                     'No. The collaboration is agreed on a monthly basis, with a recommendation to allow campaigns at least three months, which is the time needed to <strong>gather relevant data and stabilise results</strong>.'],
+    ['graph-up',     'What does the monthly report contain?',
+                     'The report is clear and focused on business results: costs by channel, number of calls, enquiries and purchases, cost per contact and a comparison with the previous period. Alongside the results you receive <strong>an optimisation plan for the following month</strong>.'],
+],
+'area_served' => ['Belgrade', 'New Belgrade', 'Zemun', 'Vračar', 'Stari grad', 'Savski venac', 'Zvezdara', 'Voždovac', 'Palilula', 'Čukarica', 'Rakovica', 'Surčin', 'Serbia'],
+],
+],
+
+], /* end marketing */
 
 ], /* end city */
 

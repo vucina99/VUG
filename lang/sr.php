@@ -27,6 +27,8 @@ return [
     'lp_web_pancevo' => 'Izrada web sajta Pančevo',
     'lp_social_beograd' => 'Vođenje društvenih mreža Beograd',
     'lp_social_pancevo' => 'Vođenje društvenih mreža Pančevo',
+    'lp_marketing_beograd' => 'Marketing agencija Beograd',
+    'lp_marketing_pancevo' => 'Marketing agencija Pančevo',
     'nav_cta' => 'Pošaljite upit',
 
     // Hero

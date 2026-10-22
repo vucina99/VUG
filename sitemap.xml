@@ -41,4 +41,18 @@
       <image:loc>https://vugagency.com/img/social-mockup.svg</image:loc>
     </image:image>
   </url>
+  <url>
+    <loc>https://vugagency.com/marketing-agencija-pancevo</loc>
+    <lastmod>2026-10-22</lastmod>
+    <image:image>
+      <image:loc>https://vugagency.com/img/marketing-mockup.svg</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://vugagency.com/marketing-agencija-beograd</loc>
+    <lastmod>2026-10-22</lastmod>
+    <image:image>
+      <image:loc>https://vugagency.com/img/marketing-mockup.svg</image:loc>
+    </image:image>
+  </url>
 </urlset>

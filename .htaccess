@@ -46,7 +46,7 @@ ErrorDocument 404 /404.php
     #    (lokal) i u rootu; query string (npr. utm_*) Apache prenosi sam.
     #    /en/ -> /en rešava index.php, zato nije ovde.
     RewriteCond %{REQUEST_URI} ^(.+)/$
-    RewriteRule ^((en/)?(izrada-web-sajta|vodjenje-drustvenih-mreza)-(pancevo|beograd)|politika-privatnosti|uslovi-koriscenja|politika-kolacica)/$ %1 [R=301,L]
+    RewriteRule ^((en/)?(izrada-web-sajta|vodjenje-drustvenih-mreza|marketing-agencija)-(pancevo|beograd)|politika-privatnosti|uslovi-koriscenja|politika-kolacica)/$ %1 [R=301,L]
 
     # 4) /index.php -> / (301), da početna ima samo jednu adresu.
     #    THE_REQUEST je originalni zahtev klijenta, pa interni prepisi (DirectoryIndex,
@@ -94,6 +94,12 @@ ErrorDocument 404 /404.php
     RewriteRule ^en/vodjenje-drustvenih-mreza-beograd/?$ landing.php?svc=social&loc=beograd&lang=en [L,QSA]
     RewriteRule ^vodjenje-drustvenih-mreza-pancevo/?$     landing.php?svc=social&loc=pancevo [L,QSA]
     RewriteRule ^vodjenje-drustvenih-mreza-beograd/?$     landing.php?svc=social&loc=beograd [L,QSA]
+
+    # Marketing agencija po gradovima -> landing.php (svc=marketing)
+    RewriteRule ^en/marketing-agencija-pancevo/?$ landing.php?svc=marketing&loc=pancevo&lang=en [L,QSA]
+    RewriteRule ^en/marketing-agencija-beograd/?$ landing.php?svc=marketing&loc=beograd&lang=en [L,QSA]
+    RewriteRule ^marketing-agencija-pancevo/?$     landing.php?svc=marketing&loc=pancevo [L,QSA]
+    RewriteRule ^marketing-agencija-beograd/?$     landing.php?svc=marketing&loc=beograd [L,QSA]
 
     # Pravne stranice (cisti URL-ovi) -> legal.php
     RewriteRule ^politika-privatnosti/?$ legal.php?doc=privacy [L,QSA]

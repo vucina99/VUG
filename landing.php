@@ -8,13 +8,18 @@
  *   /izrada-web-sajta-beograd        -> landing.php?loc=beograd
  *   /en/izrada-web-sajta-pancevo     -> landing.php?loc=pancevo&lang=en
  *   /en/izrada-web-sajta-beograd     -> landing.php?loc=beograd&lang=en
+ *   /vodjenje-drustvenih-mreza-<grad> -> landing.php?svc=social&loc=<grad>
+ *   /marketing-agencija-<grad>        -> landing.php?svc=marketing&loc=<grad>
+ *   (EN varijante pod /en/ sa istim srpskim slug-om)
  */
 
 $loc = $_GET['loc'] ?? 'pancevo';
 if (!in_array($loc, ['pancevo', 'beograd'], true)) $loc = 'pancevo';
 
-// Tip usluge: 'web' (izrada sajta) ili 'social' (vođenje društvenih mreža).
-$svc = (($_GET['svc'] ?? 'web') === 'social') ? 'social' : 'web';
+// Tip usluge: 'web' (izrada sajta), 'social' (vođenje društvenih mreža) ili
+// 'marketing' (marketing agencija - oglašavanje, Google profil, SEO, strategija).
+$svc = $_GET['svc'] ?? 'web';
+if (!in_array($svc, ['web', 'social', 'marketing'], true)) $svc = 'web';
 
 $req  = $_SERVER['REQUEST_URI'] ?? '';
 $lang = (preg_match('#/en(/|$|\?)#', $req) || (($_GET['lang'] ?? '') === 'en')) ? 'en' : 'sr';
@@ -203,7 +208,98 @@ $CITY_SOCIAL = [
         ],
     ],
 ];
-if ($svc === 'social') $CITY = $CITY_SOCIAL;
+
+/* ── Sadržaj za MARKETING AGENCIJU (jedinstven po gradu) ──
+   Razgraničenje (bez kanibalizacije): marketing = plaćeni oglasi (Google Ads,
+   Meta, TikTok), Google poslovni profil, SEO, merenje i strategija. Svakodnevni
+   sadržaj i komunikacija sa pratiocima pripadaju stranici za društvene mreže,
+   a „digitalna agencija“ početnoj. */
+$CITY_MARKETING = [
+    'pancevo' => [
+        'other' => 'beograd', 'region' => 'RS-14',
+        'sr' => [
+            'name' => 'Pančevo', 'loc' => 'Pančevu', 'gen' => 'Pančeva',
+            'intro' => 'VUG Digital Agency je agencija za digitalni marketing koja pomaže kompanijama iz Pančeva i okoline da povećaju vidljivost, privuku nove klijente i unaprede poslovne rezultate. Kroz strateško planiranje i vođenje Google Ads i Meta kampanja, SEO optimizaciju i optimizaciju Google poslovnog profila, razvijamo marketinška rešenja prilagođena ciljevima Vašeg poslovanja.',
+            'sec_h2' => 'Zašto je digitalni marketing važan za poslovanje u Pančevu?',
+            'p1' => 'Većina potencijalnih klijenata danas pronalazi proizvode i usluge putem Google pretrage, Google mapa i društvenih mreža. Odluke se često donose brzo, a prednost imaju kompanije koje su vidljive, imaju pozitivne recenzije i jasno predstavljenu ponudu.',
+            'p2' => '<strong>Digitalni marketing i oglašavanje predstavljaju jednu od naših ključnih delatnosti.</strong> Kampanje usmeravamo ka potencijalnim klijentima iz Pančeva i okoline, uz kontinuirano praćenje ostvarenih poziva, poruka i upita.',
+            'p3' => 'Kombinujemo Google Ads kampanje za korisnike koji aktivno pretražuju Vaše usluge, Meta oglašavanje za povećanje prepoznatljivosti brenda i optimizaciju Google poslovnog profila za bolju lokalnu vidljivost. Sve aktivnosti usmeravamo ka ostvarivanju konkretnih poslovnih rezultata.',
+            'p4' => 'Pre pokretanja kampanja analiziramo Vaše poslovanje, ciljnu grupu i konkurenciju, a zatim definišemo strategiju i budžet. Kroz redovne mesečne izveštaje pružamo Vam transparentan uvid u rezultate i predloge za dalje unapređenje, kako bi digitalni marketing postao <strong>merljiva i isplativa investicija</strong> u razvoj Vašeg poslovanja.',
+            'meta_title' => 'Marketing agencija Pančevo | VUG Digital Agency',
+            'meta_desc'  => 'Marketing agencija u Pančevu - Google Ads, Meta oglašavanje, SEO i optimizacija Google profila za više poziva i upita. Besplatne konsultacije i ponuda za 24h.',
+            'checks' => [
+                ['search', 'Google Ads kampanje', 'Vidljivost kod korisnika koji aktivno pretražuju Vaše usluge'],
+                ['cash-coin', 'Meta oglašavanje', 'Kampanje na Facebook-u i Instagramu za Pančevo i okolinu'],
+                ['geo-alt', 'Google poslovni profil', 'Optimizovan profil, recenzije i bolja lokalna vidljivost'],
+                ['graph-up', 'SEO optimizacija', 'Bolje pozicije sajta na lokalnim pretragama'],
+                ['bar-chart', 'Mesečni izveštaji', 'Transparentan uvid u pozive, upite i cenu po kontaktu'],
+            ],
+        ],
+        'en' => [
+            'name' => 'Pančevo', 'loc' => 'Pančevo', 'gen' => 'Pančevo',
+            'intro' => 'VUG Digital Agency is a digital marketing agency that helps companies in Pančevo and the surrounding area increase their visibility, attract new clients and improve business results. Through strategic planning and management of Google Ads and Meta campaigns, SEO and Google Business Profile optimisation, we develop marketing solutions tailored to the goals of your business.',
+            'sec_h2' => 'Why digital marketing matters for businesses in Pančevo',
+            'p1' => 'Most potential clients today find products and services through Google Search, Google Maps and social media. Decisions are often made quickly, and the advantage goes to companies that are visible, have positive reviews and a clearly presented offer.',
+            'p2' => '<strong>Digital marketing and advertising are among our core activities.</strong> We direct campaigns at potential clients in Pančevo and the surrounding area, with continuous tracking of the calls, messages and enquiries they generate.',
+            'p3' => 'We combine Google Ads campaigns for users actively searching for your services, Meta advertising to increase brand awareness, and Google Business Profile optimisation for better local visibility. Every activity is directed towards achieving concrete business results.',
+            'p4' => 'Before launching campaigns we analyse your business, target audience and competitors, and then define the strategy and budget. Through regular monthly reports we give you transparent insight into results and recommendations for further improvement, so that digital marketing becomes <strong>a measurable and profitable investment</strong> in the growth of your business.',
+            'meta_title' => 'Marketing agency Pančevo | VUG Digital Agency',
+            'meta_desc'  => 'Marketing agency in Pančevo - Google Ads, Meta advertising, SEO and Google profile optimisation for more enquiries. Free consultation, quote in 24h.',
+            'checks' => [
+                ['search', 'Google Ads campaigns', 'Visibility with users actively searching for your services'],
+                ['cash-coin', 'Meta advertising', 'Facebook and Instagram campaigns for Pančevo and the area'],
+                ['geo-alt', 'Google Business Profile', 'An optimised profile, reviews and better local visibility'],
+                ['graph-up', 'SEO optimisation', 'Better website rankings in local search'],
+                ['bar-chart', 'Monthly reports', 'Transparent insight into calls, enquiries and cost per contact'],
+            ],
+        ],
+    ],
+    'beograd' => [
+        'other' => 'pancevo', 'region' => 'RS-00',
+        'sr' => [
+            'name' => 'Beograd', 'loc' => 'Beogradu', 'gen' => 'Beograda',
+            'intro' => 'Digitalni marketing za firme u Beogradu zasnovan na podacima, jasnoj strategiji i merljivim rezultatima. VUG Digital Agency pruža usluge planiranja i vođenja Google Ads kampanja, oglašavanja na društvenim mrežama i SEO optimizacije. Kroz kontinuirano praćenje i optimizaciju budžeta, pomažemo Vam da povećate vidljivost, privučete potencijalne klijente i ostvarite maksimalan povraćaj ulaganja.',
+            'sec_h2' => 'Kako ulaganje u oglašavanje pretvoriti u rezultate na beogradskom tržištu?',
+            'p1' => 'Beogradsko tržište je jedno od najkonkurentnijih u Srbiji: za iste pretrage nadmeću se desetine firmi, a cena klika na Google-u i društvenim mrežama iz godine u godinu raste. U takvom okruženju kampanje koje nisu zasnovane na podacima brzo troše budžet na neodgovarajuću publiku, bez merljivog povraćaja ulaganja.',
+            'p2' => '<strong>Zato svaku kampanju započinjemo analizom podataka, a ne kreativnim rešenjem.</strong> Najpre postavljamo merenje: utvrđujemo šta za Vaše poslovanje predstavlja konverziju, kolika je vrednost jednog upita i iz kojih kanala trenutno dolaze klijenti. Na osnovu dobijenih podataka definišemo najefikasnije kanale komunikacije, ciljnu publiku i poruke prilagođene potrebama i ciljevima Vašeg poslovanja.',
+            'p3' => 'Vodimo Google Ads, Meta i TikTok kampanje, remarketing usmeren ka korisnicima koji su već posetili Vaš sajt, kao i SEO optimizaciju za pretrage na kojima želite stabilnu, dugoročnu vidljivost. Svi kanali funkcionišu kao deo jedinstvene strategije, pa se uvidi iz jedne kampanje odmah primenjuju i na ostale.',
+            'p4' => 'Sarađujemo sa firmama svih veličina u Beogradu, uživo ili online, uz direktnu komunikaciju sa osobom zaduženom za Vaš projekat. Kroz mesečne izveštaje pružamo jasan uvid u budžet, broj upita i cenu po kontaktu, uz konkretne predloge za optimizaciju kampanja i povećanje isplativosti Vašeg ulaganja.',
+            'meta_title' => 'Marketing agencija Beograd | VUG Digital Agency',
+            'meta_desc'  => 'Digitalni marketing za firme u Beogradu - Google Ads, oglašavanje na društvenim mrežama, SEO i mesečni izveštaji. Besplatne konsultacije i ponuda za 24h.',
+            // „za“, ne „u“: nemamo kancelariju u Beogradu (adresa na stranici je pančevačka).
+            'badge'      => 'Digitalna agencija za Beograd',
+            'checks' => [
+                ['bar-chart', 'Merenje od prvog dana', 'Praćenje poziva, upita i kupovina pre pokretanja kampanje'],
+                ['search', 'Google Ads i remarketing', 'Vidljivost na pretrazi i ponovno obraćanje posetiocima sajta'],
+                ['cash-coin', 'Oglašavanje na društvenim mrežama', 'Meta i TikTok kampanje usmerene na relevantnu publiku'],
+                ['graph-up', 'SEO optimizacija', 'Dugoročna vidljivost na konkurentnim pretragama'],
+                ['diagram-3', 'Integrisana strategija', 'Google, društvene mreže i sajt usklađeni u jedinstven plan'],
+            ],
+        ],
+        'en' => [
+            'name' => 'Belgrade', 'loc' => 'Belgrade', 'gen' => 'Belgrade',
+            'intro' => 'Digital marketing for Belgrade businesses, based on data, a clear strategy and measurable results. VUG Digital Agency plans and manages Google Ads campaigns, social media advertising and SEO. Through continuous monitoring and budget optimisation, we help you increase visibility, attract potential clients and achieve the maximum return on your investment.',
+            'sec_h2' => 'How to turn advertising spend into results in the Belgrade market',
+            'p1' => 'Belgrade is one of the most competitive markets in Serbia: dozens of companies compete for the same searches, and the cost per click on Google and social media rises year after year. In such an environment, campaigns that are not based on data quickly spend the budget on the wrong audience, with no measurable return on investment.',
+            'p2' => '<strong>That is why every campaign begins with data analysis rather than a creative idea.</strong> First we set up measurement: we establish what a conversion means for your business, what one enquiry is worth and which channels your clients currently come from. Based on that data, we define the most effective communication channels, target audience and messages tailored to the needs and goals of your business.',
+            'p3' => 'We run Google Ads, Meta and TikTok campaigns, remarketing aimed at users who have already visited your website, and SEO for the searches where you want stable, long-term visibility. All channels operate as part of a single strategy, so insights from one campaign are immediately applied to the others.',
+            'p4' => 'We work with companies of all sizes in Belgrade, in person or online, with direct communication with the person responsible for your project. Through monthly reports we provide clear insight into budget, number of enquiries and cost per contact, along with concrete recommendations for optimising campaigns and increasing the return on your investment.',
+            'meta_title' => 'Marketing agency Belgrade | VUG Digital Agency',
+            'meta_desc'  => 'Digital marketing for Belgrade businesses - Google Ads, social media advertising, SEO and monthly performance reports. Free consultation, quote in 24h.',
+            'badge'      => 'Digital agency for Belgrade',
+            'checks' => [
+                ['bar-chart', 'Tracking from day one', 'Calls, enquiries and purchases measured before campaigns launch'],
+                ['search', 'Google Ads and remarketing', 'Visibility on search and re-engaging website visitors'],
+                ['cash-coin', 'Social media advertising', 'Meta and TikTok campaigns aimed at a relevant audience'],
+                ['graph-up', 'SEO optimisation', 'Long-term visibility for competitive searches'],
+                ['diagram-3', 'Integrated strategy', 'Google, social media and your website aligned in one plan'],
+            ],
+        ],
+    ],
+];
+
+if ($svc === 'social')    $CITY = $CITY_SOCIAL;
+if ($svc === 'marketing') $CITY = $CITY_MARKETING;
 
 $cc   = $CITY[$loc];
 $c    = $cc[$lang];
@@ -270,7 +366,35 @@ $COPY_SOCIAL = [
         'svc_name' => 'Social media management {name}',
     ],
 ];
-if ($svc === 'social') $COPY = $COPY_SOCIAL;
+/* ── Chrome za MARKETING AGENCIJU ── */
+$COPY_MARKETING = [
+    'sr' => [
+        'crumb_home' => 'Početna',
+        'badge'      => 'Digitalna agencija u {loc}',
+        'h1'         => 'Marketing agencija {name}',
+        'cta_contact_full' => 'Kontaktirajte nas',
+        'cta_home'   => 'Početna',
+        'sec_eyebrow'=> 'Zašto VUG',
+        'side_h' => 'Naš marketing <em>uključuje</em>',
+        'img_alt'  => 'Digitalni marketing i oglašavanje u {loc} - VUG',
+        'svc_type' => 'Digitalni marketing i oglašavanje',
+        'svc_name' => 'Marketing agencija {name}',
+    ],
+    'en' => [
+        'crumb_home' => 'Home',
+        'badge'      => 'Digital agency in {loc}',
+        'h1'         => 'Marketing agency {name}',
+        'cta_contact_full' => 'Contact us',
+        'cta_home'   => 'Home',
+        'sec_eyebrow'=> 'Why VUG',
+        'side_h' => 'Our marketing <em>includes</em>',
+        'img_alt'  => 'Digital marketing and advertising in {loc} - VUG',
+        'svc_type' => 'Digital marketing and advertising',
+        'svc_name' => 'Marketing agency {name}',
+    ],
+];
+if ($svc === 'social')    $COPY = $COPY_SOCIAL;
+if ($svc === 'marketing') $COPY = $COPY_MARKETING;
 
 $P = $COPY[$lang];
 
@@ -294,8 +418,8 @@ array_walk_recursive($X, function (&$v) use ($lp_tokens) {
 });
 
 /* ── URL-ovi / jezik ── */
-$slug_base   = $svc === 'social' ? 'vodjenje-drustvenih-mreza-' : 'izrada-web-sajta-';
-$hero_img    = $svc === 'social' ? 'social-mockup.svg' : 'web-mockup.svg';
+$slug_base   = ['web' => 'izrada-web-sajta-', 'social' => 'vodjenje-drustvenih-mreza-', 'marketing' => 'marketing-agencija-'][$svc];
+$hero_img    = ['web' => 'web-mockup.svg', 'social' => 'social-mockup.svg', 'marketing' => 'marketing-mockup.svg'][$svc];
 $slug        = $slug_base . $loc;
 $url_sr_page = ($base === '' ? '' : $base) . '/' . $slug;              // base-aware (za linkove)
 $url_en_page = $base . '/en/' . $slug;

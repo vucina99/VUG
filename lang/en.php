@@ -22,6 +22,8 @@ return [
     'lp_web_pancevo' => 'Website development Pančevo',
     'lp_social_beograd' => 'Social media management Belgrade',
     'lp_social_pancevo' => 'Social media management Pančevo',
+    'lp_marketing_beograd' => 'Marketing agency Belgrade',
+    'lp_marketing_pancevo' => 'Marketing agency Pančevo',
     'nav_cta' => 'Send an enquiry',
 
     // Hero

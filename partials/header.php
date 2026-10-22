@@ -36,6 +36,8 @@ $nav_lp = [
     'izrada-web-sajta-pancevo'          => $t['lp_web_pancevo'],
     'vodjenje-drustvenih-mreza-beograd' => $t['lp_social_beograd'],
     'vodjenje-drustvenih-mreza-pancevo' => $t['lp_social_pancevo'],
+    'marketing-agencija-beograd'        => $t['lp_marketing_beograd'],
+    'marketing-agencija-pancevo'        => $t['lp_marketing_pancevo'],
 ];
 $nav_lp_attr = fn($slug) => $slug === $nav_current_lp ? ' aria-current="page"' : '';
 ?>
