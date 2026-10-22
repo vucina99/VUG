@@ -838,6 +838,19 @@
     max-width: 80ch;
     animation: fade-up .4s var(--ease);
 }
+/* Link u odgovoru (interni link ka landing stranici) - globalni `a` nema ni boju
+   ni podvlačenje, pa bi se link inače stopio sa tekstom. */
+.faq-card-a a {
+    color: var(--mint);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+}
+.faq-card-a a:hover { color: var(--txt); }
+.section--light .faq-card-a a,
+.section--cream .faq-card-a a { color: var(--violet); }
+.section--light .faq-card-a a:hover,
+.section--cream .faq-card-a a:hover { color: var(--deep); }
 
 .faq-bottom {
     margin-top: clamp(48px, 6vw, 72px);

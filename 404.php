@@ -53,7 +53,9 @@ $links = [
 /* ── Zajednički layout ── */
 $meta_title       = $copy['title'];
 $meta_description = $copy['lead'];
-$canonical        = $SITE_URL . '/';
+// Bez canonical-a: 404 nije duplikat početne (canonical ka „/“ je bio pogrešan
+// signal); head.php izostavlja canonical i og:url kad je $canonical prazan.
+$canonical        = '';
 $robots           = 'noindex, follow';
 $href_other       = $lang === 'sr' ? $base . '/en' : ($base === '' ? '/' : $base . '/');
 

@@ -20,6 +20,7 @@ $req  = $_SERVER['REQUEST_URI'] ?? '';
 $lang = (preg_match('#/en(/|$|\?)#', $req) || (($_GET['lang'] ?? '') === 'en')) ? 'en' : 'sr';
 $t = require __DIR__ . '/lang/' . $lang . '.php';
 require __DIR__ . '/php/icons.php';
+require __DIR__ . '/php/org.php';
 
 $SITE_URL = 'https://vugagency.com';
 $base = rtrim(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? '')), '/');
@@ -86,6 +87,8 @@ $CITY = [
             'p4' => 'Sarađujemo sa firmama različitih veličina i delatnosti širom Beograda. Komunikaciju vodimo brzo i profesionalno, uživo ili online, uz jasno definisane rokove i transparentne cene bez skrivenih troškova. Naš cilj nije da napravimo još jedan sajt koji će se izgubiti među konkurencijom, već <strong>digitalno rešenje koje će Vam donositi konkretne upite i nove klijente</strong>.',
             'meta_title' => 'Izrada web sajta Beograd | VUG Digital Agency',
             'meta_desc'  => 'Profesionalna izrada web sajtova u Beogradu, prilagođena Vašem poslovanju. Moderan dizajn, brzina i SEO optimizacija. Besplatne konsultacije i ponuda za 24h.',
+            // „za“, ne „u“: nemamo kancelariju u Beogradu (adresa na stranici je pančevačka).
+            'badge'      => 'Digitalna agencija za Beograd',
             'checks' => [
                 ['palette2', 'Vizuelni identitet bez šablona', 'Izgled koji se ne meša sa stotinama sličnih sajtova'],
                 ['phone', 'Besprekoran na svakom ekranu', 'Većina posetilaca dolazi sa telefona - njih planiramo prve'],
@@ -104,6 +107,7 @@ $CITY = [
             'p4' => 'We work with companies of different sizes and industries across Belgrade. We communicate quickly and professionally, in person or online, with clearly defined deadlines and transparent pricing with no hidden costs. Our goal isn’t to build just another site that gets lost among the competition, but a <strong>digital solution that brings you real enquiries and new clients</strong>.',
             'meta_title' => 'Website development Belgrade | VUG Digital Agency',
             'meta_desc'  => 'Professional website development in Belgrade, tailored to your business. Modern design, speed and SEO optimisation. Free consultation and a quote within 24h.',
+            'badge'      => 'Digital agency for Belgrade',
             'checks' => [
                 ['palette2', 'A visual identity with no templates', 'A look that doesn’t blend in with hundreds of similar sites'],
                 ['phone', 'Flawless on every screen', 'Most visitors arrive on a phone - we plan for them first'],
@@ -168,6 +172,8 @@ $CITY_SOCIAL = [
             'p4' => 'Sarađujemo sa brendovima različitih veličina i delatnosti širom Beograda, uz jasno definisane rokove, transparentne cene i redovne mesečne izveštaje. Kao rezultat, dobijate društvene mreže koje ne služe samo za lep utisak, već <strong>donose merljive upite i prodaju</strong>.',
             'meta_title' => 'Vođenje društvenih mreža Beograd | VUG Digital Agency',
             'meta_desc'  => 'Profesionalno vođenje društvenih mreža u Beogradu - strategija, sadržaj, reels i kampanje koje donose upite i prodaju. Besplatne konsultacije i ponuda za 24h.',
+            // „za“, ne „u“: nemamo kancelariju u Beogradu (adresa na stranici je pančevačka).
+            'badge'      => 'Digitalna agencija za Beograd',
             'checks' => [
                 ['tag', 'Strategija i raspored objava', 'Sadržaj usklađen sa ciljevima i navikama Vaše publike'],
                 ['palette2', 'Prepoznatljiv vizuelni stil', 'Dosledan izgled feed-a, priča i reels-a koji zaustavlja skrol'],
@@ -186,6 +192,7 @@ $CITY_SOCIAL = [
             'p4' => 'We work with brands of different sizes and industries across Belgrade, with clearly defined deadlines, transparent pricing and regular monthly reports. As a result, you get social channels that aren’t just for a good impression but <strong>deliver measurable enquiries and sales</strong>.',
             'meta_title' => 'Social media management Belgrade | VUG Digital Agency',
             'meta_desc'  => 'Professional social media management in Belgrade - strategy, content, reels and campaigns that drive enquiries and sales. Free consultation and a quote in 24h.',
+            'badge'      => 'Digital agency for Belgrade',
             'checks' => [
                 ['tag', 'Strategy and posting schedule', 'Content aligned with your goals and your audience’s habits'],
                 ['palette2', 'A recognisable visual style', 'A consistent look across feed, stories and reels that stops the scroll'],
@@ -215,10 +222,8 @@ $COPY = [
         'crumb_home' => 'Početna',
         'badge'      => 'Digitalna agencija u {loc}',
         'h1'         => 'Izrada web sajta {name}',
-        'cta_contact'=> 'Kontakt',
         'cta_contact_full' => 'Kontaktirajte nas',
         'cta_home'   => 'Početna',
-        'cta_read'   => 'Pročitajte više',
         'sec_eyebrow'=> 'Zašto VUG',
         'side_h' => 'Naš web sajt <em>uključuje</em>',
         'img_alt'  => 'Izrada modernog web sajta u {loc} - VUG',
@@ -229,10 +234,8 @@ $COPY = [
         'crumb_home' => 'Home',
         'badge'      => 'Digital agency in {loc}',
         'h1'         => 'Website development {name}',
-        'cta_contact'=> 'Contact',
         'cta_contact_full' => 'Contact us',
         'cta_home'   => 'Home',
-        'cta_read'   => 'Read more',
         'sec_eyebrow'=> 'Why VUG',
         'side_h' => 'Our website <em>includes</em>',
         'img_alt'  => 'Modern website development in {loc} - VUG',
@@ -246,10 +249,8 @@ $COPY_SOCIAL = [
         'crumb_home' => 'Početna',
         'badge'      => 'Digitalna agencija u {loc}',
         'h1'         => 'Vođenje društvenih mreža {name}',
-        'cta_contact'=> 'Kontakt',
         'cta_contact_full' => 'Kontaktirajte nas',
         'cta_home'   => 'Početna',
-        'cta_read'   => 'Pročitajte više',
         'sec_eyebrow'=> 'Zašto VUG',
         'side_h' => 'Vođenje mreža <em>uključuje</em>',
         'img_alt'  => 'Vođenje društvenih mreža u {loc} - VUG',
@@ -260,10 +261,8 @@ $COPY_SOCIAL = [
         'crumb_home' => 'Home',
         'badge'      => 'Digital agency in {loc}',
         'h1'         => 'Social media management {name}',
-        'cta_contact'=> 'Contact',
         'cta_contact_full' => 'Contact us',
         'cta_home'   => 'Home',
-        'cta_read'   => 'Read more',
         'sec_eyebrow'=> 'Why VUG',
         'side_h' => 'Social media management <em>includes</em>',
         'img_alt'  => 'Social media management in {loc} - VUG',
@@ -282,6 +281,17 @@ $P = $COPY[$lang];
 $LC = require __DIR__ . '/php/landing-content.php';
 $U  = $LC['ui'][$svc][$lang];
 $X  = $LC['city'][$svc][$loc][$lang] ?? [];
+
+// Interni linkovi u sadržaju (tokeni {lp_web_pancevo} / {lp_social_pancevo}, isti
+// kao u lang/*.php na početnoj): base-aware putanja, EN vodi na /en/<slug>.
+// FAQ JSON-LD ionako skida tagove (strip_tags), pa u markup ide samo tekst.
+$lp_tokens = [
+    '{lp_web_pancevo}'    => $base . ($lang === 'en' ? '/en' : '') . '/izrada-web-sajta-pancevo',
+    '{lp_social_pancevo}' => $base . ($lang === 'en' ? '/en' : '') . '/vodjenje-drustvenih-mreza-pancevo',
+];
+array_walk_recursive($X, function (&$v) use ($lp_tokens) {
+    if (is_string($v)) $v = strtr($v, $lp_tokens);
+});
 
 /* ── URL-ovi / jezik ── */
 $slug_base   = $svc === 'social' ? 'vodjenje-drustvenih-mreza-' : 'izrada-web-sajta-';
@@ -318,36 +328,9 @@ $json_ld = [
             'name' => $fill($P['svc_name']),
             'description' => $meta_description,
             'url' => $canonical,
-            // Isti @id kao na početnoj - Google spaja čvorove u jedan entitet.
-            // Pun lokalni profil (geo/mapa/radno vreme/sameAs) jer su ovo stranice
-            // koje ciljaju lokalnu pretragu i Google poslovni profil.
-            // BEZ 'email': u <script> bloku HTML entiteti se ne dekodiraju, pa bi
-            // adresa stajala kao čist tekst u izvoru (vidi pravilo u CLAUDE.md).
-            'provider' => [
-                '@type' => ['Organization', 'ProfessionalService'],
-                '@id' => $org_id, 'name' => 'VUG Digital Agency', 'alternateName' => ['VUG', 'VUG Agency', 'VUG agencija'],
-                'url' => $SITE_URL . '/',
-                'logo' => ['@type' => 'ImageObject', 'url' => $SITE_URL . '/img/icon-512.png', 'width' => 512, 'height' => 512],
-                'image' => $og_image,
-                'telephone' => $phone_intl,
-                'priceRange' => '$$',
-                'address' => ['@type' => 'PostalAddress', 'streetAddress' => 'Vojvođanska 12b',
-                    'addressLocality' => 'Pančevo', 'postalCode' => '26000',
-                    'addressRegion' => 'Vojvodina', 'addressCountry' => 'RS'],
-                'geo' => ['@type' => 'GeoCoordinates', 'latitude' => '44.8804099', 'longitude' => '20.6663928'],
-                'hasMap' => 'https://www.google.com/maps/search/?api=1&query=44.8804099,20.6663928',
-                'openingHoursSpecification' => [[
-                    '@type' => 'OpeningHoursSpecification',
-                    'dayOfWeek' => ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],
-                    'opens' => '00:00', 'closes' => '23:59',
-                ]],
-                'knowsLanguage' => ['sr', 'en'],
-                'sameAs' => [
-                    'https://www.instagram.com/vugagency',
-                    'https://www.facebook.com/profile.php?id=61592111037904',
-                    'https://www.linkedin.com/company/vug-digital-agency/',
-                ],
-            ],
+            // Pun lokalni profil firme iz php/org.php - isti @id i isti podaci kao
+            // na početnoj, pa Google spaja čvorove u jedan entitet.
+            'provider' => vug_org_schema($SITE_URL, $lang, $phone_intl),
             'areaServed' => ['@type' => 'City', 'name' => $NAME],
             'inLanguage' => $lang === 'sr' ? 'sr-RS' : 'en',
         ],
@@ -357,8 +340,8 @@ $json_ld = [
             '@type' => 'WebSite',
             '@id' => $SITE_URL . '/#website',
             'url' => $SITE_URL . '/',
-            'name' => 'VUG Digital Agency',
-            'alternateName' => ['VUG', 'VUG Agency', 'VUG agencija'],
+            'name' => VUG_BRAND_NAME,
+            'alternateName' => VUG_BRAND_ALT,
             'inLanguage' => $lang === 'sr' ? 'sr-RS' : 'en',
             'publisher' => ['@id' => $org_id],
         ],
@@ -635,12 +618,15 @@ require __DIR__ . '/partials/header.php';
                     <a href="<?= $home ?>"><?= htmlspecialchars($P['crumb_home']) ?></a><span>/</span>
                     <span><?= htmlspecialchars($fill($P['h1'])) ?></span>
                 </nav>
-                <div class="lp-badge"><span class="dot"></span> <?= htmlspecialchars($fill($P['badge'])) ?></div>
+                <div class="lp-badge"><span class="dot"></span> <?= htmlspecialchars($fill($c['badge'] ?? $P['badge'])) ?></div>
                 <h1 class="lp-h1"><?= strtr(htmlspecialchars($P['h1']), ['{name}' => '<em>' . htmlspecialchars($NAME) . '</em>']) ?></h1>
                 <p class="lp-lead"><?= htmlspecialchars($c['intro']) ?></p>
                 <div class="lp-actions">
-                    <a href="#contact" class="btn btn--violet is-magnetic"><?= vug_icon('chat-left-text') ?> <?= htmlspecialchars($P['cta_contact']) ?></a>
-                    <a href="#tekst" class="btn btn--blue is-magnetic"><?= vug_icon('arrow-down') ?> <?= htmlspecialchars($P['cta_read']) ?></a>
+                    <?php /* Konkretan poziv na akciju (2026-10-22) umesto „Kontakt“ / „Pročitajte više“.
+                             Tekstovi su KRATKI namerno: na telefonu dugmad stoje jedno pored drugog
+                             (~150px), pa duži tekst („Zatražite besplatnu ponudu“) ne bi stao. */ ?>
+                    <a href="#contact" class="btn btn--violet is-magnetic"><?= vug_icon('chat-left-text') ?> <?= htmlspecialchars($t['nav_cta']) ?></a>
+                    <a href="tel:<?= $phone_clean ?>" class="btn btn--blue is-magnetic"><?= vug_icon('telephone') ?> <?= htmlspecialchars($U['cta_phone']) ?></a>
                 </div>
             </div>
             <div class="lp-figure">
@@ -800,10 +786,22 @@ if (!empty($X)):
 </section>
 <?php endif; ?>
 
+<?php if (!empty($X['rev'])):
+    // ŠTA KAŽU KLIJENTI - ista sekcija kao na početnoj (partials/testimonials.php):
+    // traka sa svim recenzijama. Tamna pozadina zbog ritma (cena cream → ovde
+    // tamno → FAQ cream); .t-card ima i tamnu i svetlu varijantu.
+    $tst_num   = $num();
+    $tst_class = 'section';
+    require __DIR__ . '/partials/testimonials.php';
+endif; ?>
+
 <?php if (!empty($X['faq'])): ?>
 <!-- ČESTA PITANJA - isti markup kao #faq na početnoj; sadržaj je i u FAQPage
-     markup-u (JSON-LD iznad), pa Google vidi tačno ono što i korisnik. -->
-<section class="section" id="pitanja" aria-labelledby="pitanja-title">
+     markup-u (JSON-LD iznad), pa Google vidi tačno ono što i korisnik.
+     Kad iznad stoji tamna sekcija „Šta kažu klijenti“, FAQ prelazi na cream
+     da se dve tamne sekcije ne spoje (ritam: cena cream → recenzije tamno →
+     FAQ cream → kontakt svetlo). -->
+<section class="section<?= !empty($X['rev']) ? ' section--cream' : '' ?>" id="pitanja" aria-labelledby="pitanja-title">
     <div class="container">
         <div class="s-head s-head--center reveal">
             <div class="s-index" style="justify-content:center;"><strong><?= $num() ?></strong><span class="line"></span><span><?= htmlspecialchars($U['faq_eyebrow']) ?></span></div>
@@ -821,7 +819,7 @@ if (!empty($X)):
                     <h3 class="faq-card-q"><?= htmlspecialchars($f[1]) ?></h3>
                     <span class="faq-card-toggle" aria-hidden="true"></span>
                 </summary>
-                <div class="faq-card-a"><?= $f[2] ?></div>
+                <p class="faq-card-a"><?= $f[2] ?></p>
             </details>
             <?php endforeach; ?>
         </div>

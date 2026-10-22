@@ -9,7 +9,7 @@
  *   $base              — bazna putanja bez / na kraju
  *   $meta_title        — <title> + og:title
  *   $meta_description  — meta description + og:description
- *   $canonical         — apsolutni canonical URL
+ *   $canonical         — apsolutni canonical URL ('' = bez canonical-a i og:url, npr. 404)
  *
  * Opciono:
  *   $SITE_URL          [default 'https://vugagency.com']
@@ -83,8 +83,10 @@ $critical_css = str_replace('../fonts/', $base . '/fonts/', $critical_css);
     <meta name="geo.placename" content="<?= htmlspecialchars($geo_placename) ?>">
 <?php endif; ?>
 
+<?php if (!empty($canonical)): ?>
     <!-- Canonical (bez hreflang - indeksira se samo srpska verzija, vidi gore) -->
     <link rel="canonical" href="<?= htmlspecialchars($canonical) ?>">
+<?php endif; ?>
 
     <!-- Open Graph -->
     <meta property="og:type" content="<?= htmlspecialchars($og_type) ?>">
@@ -94,7 +96,9 @@ $critical_css = str_replace('../fonts/', $base . '/fonts/', $critical_css);
     <meta property="og:site_name" content="VUG Digital Agency">
     <meta property="og:title" content="<?= htmlspecialchars($meta_title) ?>">
     <meta property="og:description" content="<?= htmlspecialchars($meta_description) ?>">
+<?php if (!empty($canonical)): ?>
     <meta property="og:url" content="<?= htmlspecialchars($canonical) ?>">
+<?php endif; ?>
     <meta property="og:image" content="<?= htmlspecialchars($og_image) ?>">
     <meta property="og:image:secure_url" content="<?= htmlspecialchars($og_image) ?>">
     <meta property="og:image:type" content="image/png">

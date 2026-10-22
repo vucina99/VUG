@@ -19,7 +19,8 @@
  *
  * KOJE SEKCIJE SE PRIKAZUJU: landing.php renderuje sekciju samo ako za taj
  * grad/uslugu postoji odgovarajući ključ (npr. 'serv', 'proc', 'ind', 'price',
- * 'faq', 'local'). Zato 'social' trenutno ima samo FAQ + lokalni blok, a 'web'
+ * 'rev', 'faq', 'local'). 'rev' => true uključuje sekciju „Šta kažu klijenti“ -
+ * istu traku sa svim recenzijama kao na početnoj (partials/testimonials.php). Zato 'social' trenutno ima samo FAQ + lokalni blok, a 'web'
  * pun set - dodavanjem ključa sekcija se pojavi sama, bez izmene prikaza.
  *
  * Ključevi u 'sr' i 'en' MORAJU biti identični (isti princip kao lang/*.php).
@@ -142,11 +143,13 @@ return [
 ],
 'price_note' => 'Ne naplaćujemo „po satu, videćemo koliko ispadne“. Posle kratkog razgovora - telefonom ili uživo - dobijate pisanu ponudu sa fiksnom cenom, rokom i tačnim spiskom onoga što ulazi u posao. Ponuda stiže u roku od 24 sata, besplatna je i ne stvara nikakve obaveze prema nama.',
 
+'rev' => true,   // sekcija „Šta kažu klijenti“ (partials/testimonials.php)
+
 'faq_h2'   => 'Česta pitanja o izradi sajta u Pančevu <em>-</em>',
 'faq_lead' => 'Pitanja koja nam klijenti iz Pančeva postavljaju na prvom sastanku. Ako Vaše nije na spisku, javite se - odgovaramo istog dana.',
 'faq' => [
     ['star-fill',      'Zašto izabrati VUG za izradu web sajta u Pančevu?',
-                       'VUG Digital Agency nudi profesionalnu izradu web sajtova u Pančevu, uz individualan pristup, direktnu komunikaciju i transparentne uslove saradnje. Svaki sajt je namenski kodiran, optimizovan za brzinu i Google pretragu, uz mogućnost nadogradnje novim funkcionalnostima u skladu sa rastom i potrebama Vašeg poslovanja.'],
+                       'VUG Digital Agency nudi profesionalnu izradu web sajtova u Pančevu, uz individualan pristup, direktnu komunikaciju i transparentne uslove saradnje. Svaki sajt je namenski kodiran, optimizovan za brzinu i Google pretragu, uz mogućnost nadogradnje novim funkcionalnostima u skladu sa rastom i potrebama Vašeg poslovanja. Ako uz sajt želite i aktivne profile, isti tim radi i <a href="{lp_social_pancevo}">vođenje društvenih mreža u Pančevu</a> - pa sajt i mreže govore istim jezikom.'],
     ['briefcase',      'Koliko košta izrada web sajta u Pančevu?',
                        'Cena zavisi od obima: broja stranica, da li je dizajn po meri ili prilagođen, i da li sajt ima prodavnicu, rezervacije ili druge funkcionalnosti. Zato ne objavljujemo cenovnik „od“ - posle kratkog razgovora dobijate <strong>pisanu ponudu sa fiksnom cenom i rokom</strong>, bez skrivenih troškova. Procena stiže u roku od 24 sata i ne obavezuje Vas.'],
     ['clock',          'Koliko traje izrada sajta?',
@@ -216,11 +219,13 @@ return [
 ],
 'price_note' => 'We don’t charge “by the hour, we’ll see how it turns out”. After a short conversation - by phone or in person - you receive a written quote with a fixed price, a deadline and an exact list of what the job includes. The quote arrives within 24 hours, is free of charge and creates no obligation towards us.',
 
+'rev' => true,
+
 'faq_h2'   => 'Frequently asked questions about websites in Pančevo <em>-</em>',
 'faq_lead' => 'The questions clients from Pančevo ask us at the first meeting. If yours isn’t on the list, get in touch - we reply the same day.',
 'faq' => [
     ['star-fill',      'Why choose VUG for website development in Pančevo?',
-                       'VUG Digital Agency offers professional website development in Pančevo, with an individual approach, direct communication and transparent terms of cooperation. Every site is purpose-built in code, optimised for speed and Google Search, with the option to add new functionality as your business grows and its needs change.'],
+                       'VUG Digital Agency offers professional website development in Pančevo, with an individual approach, direct communication and transparent terms of cooperation. Every site is purpose-built in code, optimised for speed and Google Search, with the option to add new functionality as your business grows and its needs change. If you want active social profiles alongside the site, the same team also handles <a href="{lp_social_pancevo}">social media management in Pančevo</a> - so your website and channels speak with one voice.'],
     ['briefcase',      'How much does a website in Pančevo cost?',
                        'The price depends on the scope: the number of pages, whether the design is custom or adapted, and whether the site has a store, booking or other functionality. That is why we don’t publish a “starting from” price list - after a short conversation you receive a <strong>written quote with a fixed price and deadline</strong>, with no hidden costs. The estimate arrives within 24 hours and commits you to nothing.'],
     ['clock',          'How long does it take to build a website?',
@@ -456,6 +461,8 @@ return [
 ],
 'price_note' => 'Ne radimo „paket“ u koji se ne vidi šta ulazi. Posle kratkog razgovora dobijate pisanu ponudu sa tačnim brojem objava, priča i reels-a, jasnom mesečnom cenom i spiskom onoga što se plaća odvojeno. Ponudu šaljemo u roku od 24 sata, bez naknade i bez obaveze da nastavite dalje.',
 
+'rev' => true,   // sekcija „Šta kažu klijenti“ (partials/testimonials.php)
+
 'faq_h2'   => 'Česta pitanja o vođenju društvenih mreža u Pančevu <em>-</em>',
 'faq_lead' => 'Pitanja koja nam klijenti iz Pančeva najčešće postavljaju pre početka saradnje.',
 'faq' => [
@@ -474,7 +481,7 @@ return [
     ['clock',     'Da li moram da potpišem dugoročan ugovor?',
                   'Ne. Saradnja ide iz meseca u mesec i možete je prekinuti kad god želite, uz najavu do kraja tekućeg meseca. <strong>Nalozi, objavljeni materijali i pristupni podaci ostaju Vaši</strong> - ne držimo klijente ugovorom nego rezultatom.'],
     ['graph-up',  'Kako znam da li se isplati?',
-                  'Svakog meseca dobijate izveštaj sa brojevima koji nešto znače: <strong>doseg, novi pratioci, poruke, klikovi ka sajtu i pozivi</strong>, uz kratak zaključak šta je radilo, a šta menjamo sledeći mesec. Bez „lajkova“ kao jedinog pokazatelja.'],
+                  'Svakog meseca dobijate izveštaj sa brojevima koji nešto znače: <strong>doseg, novi pratioci, poruke, klikovi ka sajtu i pozivi</strong>, uz kratak zaključak šta je radilo, a šta menjamo sledeći mesec. Bez „lajkova“ kao jedinog pokazatelja. Ako još nemate sajt na koji bi ti klikovi vodili, pogledajte kako radimo <a href="{lp_web_pancevo}">izradu web sajta u Pančevu</a>.'],
 ],
 'area_served' => ['Pančevo', 'Starčevo', 'Omoljica', 'Jabuka', 'Kačarevo', 'Dolovo', 'Opovo', 'Kovačica', 'Kovin', 'Alibunar', 'Vršac', 'Južnobanatski okrug', 'Beograd', 'Srbija'],
 ],
@@ -529,6 +536,8 @@ return [
 ],
 'price_note' => 'We don’t sell a “package” you cannot see into. After a short conversation you receive a written quote with the exact number of posts, stories and reels, a clear monthly price and a list of what is paid separately. We send the quote within 24 hours, free of charge and with no obligation to go further.',
 
+'rev' => true,
+
 'faq_h2'   => 'Frequently asked questions about social media management in Pančevo <em>-</em>',
 'faq_lead' => 'The questions clients from Pančevo ask us most often before we start.',
 'faq' => [
@@ -547,7 +556,7 @@ return [
     ['clock',     'Do I have to sign a long-term contract?',
                   'No. The collaboration runs month to month and you can end it whenever you like, with notice by the end of the current month. <strong>The accounts, the published material and the access details stay yours</strong> - we keep clients through results, not contracts.'],
     ['graph-up',  'How do I know it’s worth it?',
-                  'Every month you receive a report with numbers that mean something: <strong>reach, new followers, messages, clicks to your website and calls</strong>, plus a short conclusion on what worked and what we change next month. No “likes” as the only metric.'],
+                  'Every month you receive a report with numbers that mean something: <strong>reach, new followers, messages, clicks to your website and calls</strong>, plus a short conclusion on what worked and what we change next month. No “likes” as the only metric. If you don’t yet have a website for those clicks to land on, see how we approach <a href="{lp_web_pancevo}">website development in Pančevo</a>.'],
 ],
 'area_served' => ['Pančevo', 'Starčevo', 'Omoljica', 'Jabuka', 'Kačarevo', 'Dolovo', 'Opovo', 'Kovačica', 'Kovin', 'Alibunar', 'Vršac', 'South Banat District', 'Belgrade', 'Serbia'],
 ],

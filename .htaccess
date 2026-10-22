@@ -48,6 +48,14 @@ ErrorDocument 404 /404.php
     RewriteCond %{REQUEST_URI} ^(.+)/$
     RewriteRule ^((en/)?(izrada-web-sajta|vodjenje-drustvenih-mreza)-(pancevo|beograd)|politika-privatnosti|uslovi-koriscenja|politika-kolacica)/$ %1 [R=301,L]
 
+    # 4) /index.php -> / (301), da početna ima samo jednu adresu.
+    #    THE_REQUEST je originalni zahtev klijenta, pa interni prepisi (DirectoryIndex,
+    #    /en -> index.php?lang=en) ne okidaju pravilo i nema petlje. %1 iz REQUEST_URI
+    #    čuva putanju foldera (radi i u podfolderu na lokalu), query string ide sam.
+    RewriteCond %{THE_REQUEST} \s[^?\s]*/index\.php[?\s] [NC]
+    RewriteCond %{REQUEST_URI} ^(.*/)index\.php$ [NC]
+    RewriteRule ^index\.php$ %1 [R=301,L]
+
     # ------------------------------------------------------
     # Cist URL za jezik: /en -> index.php?lang=en (srpski ostaje na /)
     # Radi i u podfolderu (lokal) i u rootu (produkcija).

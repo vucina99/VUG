@@ -242,6 +242,14 @@
     const tMarquee = document.querySelector('.t-marquee');
     const tTrack = tMarquee ? tMarquee.querySelector('.t-marquee-track') : null;
     if (tMarquee && tTrack && !reduced) {
+        // Kartice su u HTML-u samo jednom (bez duplog teksta u izvoru stranice);
+        // drugi primerak za beskonačnu petlju pravi se ovde, skriven od čitača ekrana.
+        Array.from(tTrack.children).forEach(card => {
+            const clone = card.cloneNode(true);
+            clone.setAttribute('aria-hidden', 'true');
+            tTrack.appendChild(clone);
+        });
+
         const SPEED = 50;          // px / sec auto-scroll
         const RESUME_AFTER = 4500; // ms pauze posle korisnicke interakcije
         let paused = false;

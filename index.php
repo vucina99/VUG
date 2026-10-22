@@ -51,13 +51,9 @@ $nav_prefix       = '';
 $contact_href     = '#contact';
 $show_lang_toggle = true;
 
-// Profili na društvenim mrežama za JSON-LD "sameAs".
-// Popuni pravim URL-ovima kad budu poznati (prazan niz = izostavlja se iz scheme).
-$social_links = [
-    'https://www.instagram.com/vugagency',
-    'https://www.facebook.com/profile.php?id=61592111037904',
-    'https://www.linkedin.com/company/vug-digital-agency/',
-];
+// Podaci o firmi za JSON-LD (naziv, adresa, geo, radno vreme, sameAs) - jedan
+// izvor za početnu i landing stranice.
+require __DIR__ . '/php/org.php';
 
 // Structured data (schema.org @graph) — priprema se ispod i prosleđuje u partials/head.php.
 $org_id  = $SITE_URL . '/#organization';
@@ -75,12 +71,24 @@ foreach ([1, 3, 4, 5, 6] as $k) {
     ];
 }
 
+// Interni linkovi u odgovorima FAQ-a (tokeni {lp_web_pancevo} / {lp_social_pancevo}
+// u lang/*.php). U JSON-LD idu apsolutni URL-ovi, na stranici base-aware putanje
+// (rade i u podfolderu na lokalu). EN vodi na /en/<slug> - EN posetilac ne sme
+// da padne na srpsku stranicu.
+$faq_lp = function ($prefix) use ($lang) {
+    $p = $prefix . ($lang === 'sr' ? '' : '/en');
+    return [
+        '{lp_web_pancevo}'    => $p . '/izrada-web-sajta-pancevo',
+        '{lp_social_pancevo}' => $p . '/vodjenje-drustvenih-mreza-pancevo',
+    ];
+};
+
 $faq_entities = [];
 for ($i = 1; $i <= 10; $i++) {
     $faq_entities[] = [
         '@type' => 'Question',
         'name' => $t["faq_{$i}_q"],
-        'acceptedAnswer' => ['@type' => 'Answer', 'text' => $t["faq_{$i}_a"]],
+        'acceptedAnswer' => ['@type' => 'Answer', 'text' => strtr($t["faq_{$i}_a"], $faq_lp($SITE_URL))],
     ];
 }
 
@@ -96,58 +104,26 @@ for ($i = 1; $i <= 10; $i++) {
 // pun naziv je `name`, kraći oblici su `alternateName`. Isti naziv stoji i u
 // og:site_name, <title> i H1 početne - Google ih poredi kad bira naziv sajta.
 // MORA da se poklapa sa nazivom u Google poslovnom profilu.
-$brand_name = 'VUG Digital Agency';
-$brand_alt  = ['VUG', 'VUG Agency', 'VUG agencija'];
+// Naziv i zajednički podaci su u php/org.php (VUG_BRAND_NAME / VUG_BRAND_ALT,
+// vug_org_schema()); početna dodaje samo ono što je njeno: opis, kontakt i katalog usluga.
+$brand_name = VUG_BRAND_NAME;
+$brand_alt  = VUG_BRAND_ALT;
 
-$org = [
-    '@type' => ['Organization', 'ProfessionalService'],
-    '@id' => $org_id,
-    'name' => $brand_name,
-    'alternateName' => $brand_alt,
-    'url' => $SITE_URL . '/',
-    'logo' => ['@type' => 'ImageObject', 'url' => $SITE_URL . '/img/icon-512.png', 'width' => 512, 'height' => 512],
-    'image' => $og_image,
+$org = vug_org_schema($SITE_URL, $lang, $phone_intl) + [
     'description' => $t['meta_description'],
-    'telephone' => $phone_intl,
     'contactPoint' => [
         '@type' => 'ContactPoint',
         'contactType' => $lang === 'sr' ? 'Prodaja i podrška' : 'Sales & support',
         'telephone' => $phone_intl,
         'availableLanguage' => ['Serbian', 'English'],
-        'areaServed' => 'Worldwide',
+        'areaServed' => 'RS',
     ],
-    'priceRange' => '$$',
-    'address' => [
-        '@type' => 'PostalAddress',
-        'streetAddress' => 'Vojvođanska 12b',
-        'addressLocality' => 'Pančevo',
-        'postalCode' => '26000',
-        'addressRegion' => 'Vojvodina',
-        'addressCountry' => 'RS',
-    ],
-    // Tačne koordinate sedišta (Vojvođanska 12b, Pančevo).
-    'geo' => [
-        '@type' => 'GeoCoordinates',
-        'latitude' => '44.8804099',
-        'longitude' => '20.6663928',
-    ],
-    'areaServed' => ['@type' => 'Place', 'name' => 'Worldwide'],
-    'openingHoursSpecification' => [
-        '@type' => 'OpeningHoursSpecification',
-        'dayOfWeek' => ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-        'opens' => '00:00',
-        'closes' => '23:59',
-    ],
-    'knowsLanguage' => ['sr', 'en'],
     'hasOfferCatalog' => [
         '@type' => 'OfferCatalog',
         'name' => $lang === 'sr' ? 'Digitalne usluge' : 'Digital services',
         'itemListElement' => $offers,
     ],
 ];
-if (!empty($social_links)) {
-    $org['sameAs'] = array_values($social_links);
-}
 
 $schema = [
     '@context' => 'https://schema.org',
@@ -227,11 +203,11 @@ require __DIR__ . '/partials/head.php';
 
         <div class="hero-meta">
             <div class="hero-meta-item">
-                <div class="num"><span class="counter" data-target="54" data-suffix="+">0</span></div>
+                <div class="num"><span class="counter" data-target="54" data-suffix="+">54+</span></div>
                 <div class="label"><?= $t['hero_stat_1_label'] ?></div>
             </div>
             <div class="hero-meta-item">
-                <div class="num"><span class="counter" data-target="11" data-suffix="+">0</span></div>
+                <div class="num"><span class="counter" data-target="11" data-suffix="+">11+</span></div>
                 <div class="label"><?= $t['hero_stat_2_label'] ?></div>
             </div>
             <div class="hero-meta-item">
@@ -409,53 +385,12 @@ require __DIR__ . '/partials/head.php';
 </section>
 
 <!-- 04 TESTIMONIALS -->
-<section class="section section--cream" id="testimonials" aria-labelledby="testimonials-title">
-    <div class="container">
-        <div class="s-head reveal">
-            <div class="s-index"><strong>04</strong><span class="line"></span><span><?= $t['testimonials_eyebrow'] ?></span></div>
-            <h2 class="s-title" id="testimonials-title"><?= $t['testimonials_title'] ?></h2>
-            <p class="s-lead"><?= $t['testimonials_subtitle'] ?></p>
-        </div>
-
-        <div class="t-marquee reveal">
-            <div class="t-marquee-track">
-                <?php
-                $testimonials = [
-                    ['quote' => $t['testimonial_1_quote'], 'name' => $t['testimonial_1_name'], 'role' => $t['testimonial_1_role']],
-                    ['quote' => $t['testimonial_2_quote'], 'name' => $t['testimonial_2_name'], 'role' => $t['testimonial_2_role']],
-                    ['quote' => $t['testimonial_3_quote'], 'name' => $t['testimonial_3_name'], 'role' => $t['testimonial_3_role']],
-                    ['quote' => $t['testimonial_7_quote'], 'name' => $t['testimonial_7_name'], 'role' => $t['testimonial_7_role']],
-                    ['quote' => $t['testimonial_5_quote'], 'name' => $t['testimonial_5_name'], 'role' => $t['testimonial_5_role']],
-                    ['quote' => $t['testimonial_6_quote'], 'name' => $t['testimonial_6_name'], 'role' => $t['testimonial_6_role']],
-                    ['quote' => $t['testimonial_4_quote'], 'name' => $t['testimonial_4_name'], 'role' => $t['testimonial_4_role']],
-                    ['quote' => $t['testimonial_8_quote'], 'name' => $t['testimonial_8_name'], 'role' => $t['testimonial_8_role']],
-                ];
-                // Render twice za seamless loop
-                for ($pass = 0; $pass < 2; $pass++):
-                    foreach ($testimonials as $tst):
-                        $initials = '';
-                        foreach (explode(' ', $tst['name']) as $w) { $initials .= mb_substr($w, 0, 1); }
-                        $initials = mb_strtoupper(mb_substr($initials, 0, 2));
-                ?>
-                <article class="t-card" <?= $pass === 1 ? 'aria-hidden="true"' : '' ?>>
-                    <div class="t-mark">"</div>
-                    <p class="t-quote"><?= $tst['quote'] ?></p>
-                    <div class="t-stars" role="img" aria-label="5/5">
-                        <?= vug_icon('star-fill') ?><?= vug_icon('star-fill') ?><?= vug_icon('star-fill') ?><?= vug_icon('star-fill') ?><?= vug_icon('star-fill') ?>
-                    </div>
-                    <div class="t-author">
-                        <div class="t-avatar"><?= $initials ?></div>
-                        <div>
-                            <div class="t-author-name"><?= $tst['name'] ?></div>
-                            <div class="t-author-role"><?= $tst['role'] ?></div>
-                        </div>
-                    </div>
-                </article>
-                <?php endforeach; endfor; ?>
-            </div>
-        </div>
-    </div>
-</section>
+<?php
+// Sekcija je u partials/testimonials.php (isti markup koriste i landing stranice).
+$tst_num   = '04';
+$tst_class = 'section section--cream';
+require __DIR__ . '/partials/testimonials.php';
+?>
 
 <!-- 05 FAQ — card grid -->
 <section class="section section--light" id="faq" aria-labelledby="faq-title">
@@ -492,7 +427,7 @@ require __DIR__ . '/partials/head.php';
                     <h3 class="faq-card-q"><?= $f['q'] ?></h3>
                     <span class="faq-card-toggle" aria-hidden="true"></span>
                 </summary>
-                <div class="faq-card-a"><?= $f['a'] ?></div>
+                <p class="faq-card-a"><?= strtr($f['a'], $faq_lp($base)) ?></p>
             </details>
             <?php endforeach; ?>
         </div>
