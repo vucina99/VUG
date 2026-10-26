@@ -1,0 +1,964 @@
+<?php
+/**
+ * VUG - lokalne landing stranice za izradu web sajtova po gradovima.
+ * Dvojezično (SR/EN), koristi zajednički layout: partials/head + header + footer.
+ *
+ * Čisti URL-ovi (.htaccess):
+ *   /izrada-web-sajta-pancevo        -> landing.php?loc=pancevo
+ *   /izrada-web-sajta-beograd        -> landing.php?loc=beograd
+ *   /en/izrada-web-sajta-pancevo     -> landing.php?loc=pancevo&lang=en
+ *   /en/izrada-web-sajta-beograd     -> landing.php?loc=beograd&lang=en
+ *   /vodjenje-drustvenih-mreza-<grad> -> landing.php?svc=social&loc=<grad>
+ *   /marketing-agencija-<grad>        -> landing.php?svc=marketing&loc=<grad>
+ *   (EN varijante pod /en/ sa istim srpskim slug-om)
+ */
+
+$loc = $_GET['loc'] ?? 'pancevo';
+if (!in_array($loc, ['pancevo', 'beograd'], true)) $loc = 'pancevo';
+
+// Tip usluge: 'web' (izrada sajta), 'social' (vođenje društvenih mreža) ili
+// 'marketing' (marketing agencija - oglašavanje, Google profil, SEO, strategija).
+$svc = $_GET['svc'] ?? 'web';
+if (!in_array($svc, ['web', 'social', 'marketing'], true)) $svc = 'web';
+
+$req  = $_SERVER['REQUEST_URI'] ?? '';
+$lang = (preg_match('#/en(/|$|\?)#', $req) || (($_GET['lang'] ?? '') === 'en')) ? 'en' : 'sr';
+$t = require __DIR__ . '/lang/' . $lang . '.php';
+require __DIR__ . '/php/icons.php';
+require __DIR__ . '/php/org.php';
+
+$SITE_URL = 'https://vugagency.com';
+$base = rtrim(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? '')), '/');
+
+$phone_clean = preg_replace('/\s+/', '', $t['contact_info_phone']);
+$phone_intl  = '+381' . ltrim($phone_clean, '0');
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Podaci po gradu (name = nominativ, loc = lokativ „u …”, gen = genitiv).
+   VAŽNO ZA SEO: tekst (intro, naslov sekcije, pasusi, meta, lista „uključuje“
+   u herou) je NAMERNO jedinstven za svaki grad - Pančevo i Beograd nemaju isti
+   sadržaj. `checks` je do 2026-10-06 bio zajednički u $COPY, pa je pet stavki
+   bilo identično na obe stranice iste usluge - ne vraćati ga u $COPY.
+   ────────────────────────────────────────────────────────────────────────── */
+$CITY = [
+    'pancevo' => [
+        'other' => 'beograd', 'region' => 'RS-14',
+        'sr' => [
+            'name' => 'Pančevo', 'loc' => 'Pančevu', 'gen' => 'Pančeva',
+            'intro' => 'Potreban Vam je moderan, brz i profesionalan web sajt? VUG Digital Agency pruža uslugu izrade web sajtova u Pančevu, uz individualan pristup, unikatan dizajn i SEO optimizaciju. Kreiramo sajtove koji predstavljaju Vaš biznis, privlače potencijalne klijente i doprinose rastu poslovanja.',
+            'sec_h2' => 'Zašto Vašem biznisu u Pančevu treba profesionalan sajt?',
+            'p1' => 'Pančevo je grad u kojem posao i dalje najviše ide od preporuke i poznanstva - ali sve više kupaca prvo „proveri“ firmu na internetu pre nego što pozove. Ako Vas u tom trenutku ne pronađu ili naiđu na zastareo sajt, poverenje tiho odlazi konkurenciji koja je uložila u svoje online prisustvo.',
+            'p2' => '<strong>Mi smo domaća agencija - sedište nam je u Pančevu.</strong> Za dogovor Vam ne treba više od kratke šetnje ili poziva, a sve možemo rešiti i online. Izrada web sajtova i web aplikacija je jedna od naših ključnih delatnosti: svaki projekat radimo posvećeno i po meri Vašeg posla, bez šablonskih rešenja koja se ne izdvajaju od drugih.',
+            'p3' => 'Za lokalni biznis presudno je da se pojavi baš kad neko iz okoline traži uslugu. Zato Vaš sajt gradimo da bude <span class="lp-mark">brz</span>, pregledan i prilagođen svim mobilnim telefonima, te povezan sa Google profilom i mapama - da Vas podjednako lako nađu klijenti iz Pančeva, Srbije pa i celog sveta.',
+            'p4' => 'Radimo sa klijentima iz svih delatnosti. Pre nego što napravimo prvi korak ka realizaciji projekta, dobro se upoznamo sa Vašim biznisom: čime se bavite, ko su Vaši klijenti i šta želite da postignete. Tek onda gradimo sajt po meri - uz direktan razgovor, jasne rokove i cene bez skrivenih troškova - tako da rezultat nije samo još jedan web sajt na internetu, već web sajt koji će Vam donositi <strong>konkretne pozive i upite</strong>.',
+            'meta_title' => 'Izrada web sajta Pančevo | VUG Digital Agency',
+            'meta_desc'  => 'Izrada sajtova u Pančevu sa fokusom na kvalitet, funkcionalnost i rezultate. Predstavite svoj biznis na pravi način. Besplatne konsultacije i ponuda za 24h.',
+            'checks' => [
+                ['palette2', 'Dizajn po meri Vašeg brenda', 'Unikatan dizajn koji gradimo za Vas'],
+                ['phone', 'Prilagođen mobilnim uređajima', 'Savršen prikaz na telefonu, tabletu i računaru'],
+                ['graph-up', 'Brz i lako se pronalazi', 'Brzo učitavanje i spremnost za Google pretragu'],
+                ['cash-coin', 'Napravljen da donosi upite', 'Jasni pozivi na akciju koji pretvaraju posetioce u klijente'],
+                ['tools', 'Podrška nakon lansiranja', 'Tu smo za izmene, savete i održavanje'],
+            ],
+        ],
+        'en' => [
+            'name' => 'Pančevo', 'loc' => 'Pančevo', 'gen' => 'Pančevo',
+            'intro' => 'Do you need a modern, fast and professional website? VUG Digital Agency provides website development in Pančevo, with an individual approach, unique design and SEO optimisation. We create websites that represent your business, attract potential clients and contribute to your growth.',
+            'sec_h2' => 'Why your Pančevo business needs a professional website',
+            'p1' => 'In Pančevo, business still grows mostly through word of mouth and personal contacts - but more and more customers now “check” a company online before they ever call. If they can’t find you at that moment, or land on an outdated site, trust quietly moves to a competitor who invested in their online presence.',
+            'p2' => '<strong>We are a local agency based in Pančevo.</strong> Arranging a meeting is as easy as a short walk or a call, and we can handle everything online too. Building websites and web applications is one of our core activities: we treat every project with care and tailor it to your business, never using cookie-cutter templates that don’t stand out from the rest.',
+            'p3' => 'For a local business it’s crucial to show up the very moment someone nearby searches for a service. That’s why we build your site to be <span class="lp-mark">fast</span>, clear and optimised for all mobile phones, and connected to your Google profile and maps - so clients from Pančevo, across Serbia and around the world can find you with equal ease.',
+            'p4' => 'We work with clients from every industry. Before we take the first step towards your project, we get to know your business properly: what your business is about, who your clients are and what you want to achieve. Only then do we build a tailored site - through direct conversation, clear deadlines and pricing with no hidden costs - so the result isn’t just another website on the internet, but a website that will bring you <strong>real calls and enquiries</strong>.',
+            'meta_title' => 'Website development Pančevo | VUG Digital Agency',
+            'meta_desc'  => 'Website development in Pančevo focused on quality, functionality and results. Present your business the right way. Free consultation and a quote within 24h.',
+            'checks' => [
+                ['palette2', 'Design tailored to your brand', 'A unique design we build just for you'],
+                ['phone', 'Optimised for mobile devices', 'Perfect on phones, tablets and desktops'],
+                ['graph-up', 'Fast and easy to find', 'Fast loading and search-ready'],
+                ['cash-coin', 'Built to bring enquiries', 'Clear calls to action that turn visitors into clients'],
+                ['tools', 'Support after launch', 'We’re here for changes, advice and maintenance'],
+            ],
+        ],
+    ],
+    'beograd' => [
+        'other' => 'pancevo', 'region' => 'RS-00',
+        'sr' => [
+            'name' => 'Beograd', 'loc' => 'Beogradu', 'gen' => 'Beograda',
+            'intro' => 'Na tržištu na kojem je konkurencija velika, Vaš web sajt mora da bude više od digitalne prezentacije. U VUG Digital Agency razvijamo profesionalne web sajtove za kompanije i preduzetnike u Beogradu, sa fokusom na dizajn, funkcionalnost i korisničko iskustvo.',
+            'sec_h2' => 'Kako se izdvojiti sajtom na beogradskom tržištu?',
+            'p1' => 'Beograd je najveće i najzahtevnije tržište u Srbiji - za pažnju istih kupaca svakodnevno se bori na hiljade firmi. Ovde nije dovoljno samo „imati sajt“. Ako se sporo učitava, izgleda zastarelo ili se ne pojavljuje u rezultatima pretrage, korisnik će za svega nekoliko sekundi preći na konkurenciju. Da biste zadržali njegovu pažnju, Vaše online prisustvo mora od prvog trenutka da <strong>uliva poverenje</strong>.',
+            'p2' => '<strong>Tu VUG pravi razliku.</strong> Izrada web sajtova i web aplikacija jedna je od naših ključnih delatnosti, a svakom projektu pristupamo strateški. Analiziramo kome se obraćate, kako nastupa Vaša konkurencija i šta je potrebno da Vaša ponuda bude predstavljena jasnije, brže i ubedljivije. Rezultat je sajt po meri Vašeg poslovanja, osmišljen da Vas izdvoji na tržištu.',
+            'p3' => 'Svaki sajt izrađujemo tako da bude <span class="lp-mark">brz</span>, pregledan i potpuno prilagođen svim uređajima. Jasna struktura vodi posetioca od prvog kontakta sa Vašim brendom do poziva, poruke ili slanja upita. Pre početka projekta detaljno se upoznajemo sa Vašim poslovanjem, ciljevima i konkurencijom, kako konačno rešenje ne bi bilo samo vizuelno privlačno, već i usmereno ka konkretnim rezultatima.',
+            'p4' => 'Sarađujemo sa firmama različitih veličina i delatnosti širom Beograda. Komunikaciju vodimo brzo i profesionalno, uživo ili online, uz jasno definisane rokove i transparentne cene bez skrivenih troškova. Naš cilj nije da napravimo još jedan sajt koji će se izgubiti među konkurencijom, već <strong>digitalno rešenje koje će Vam donositi konkretne upite i nove klijente</strong>.',
+            'meta_title' => 'Izrada web sajta Beograd | VUG Digital Agency',
+            'meta_desc'  => 'Profesionalna izrada web sajtova u Beogradu, prilagođena Vašem poslovanju. Moderan dizajn, brzina i SEO optimizacija. Besplatne konsultacije i ponuda za 24h.',
+            // „za“, ne „u“: nemamo kancelariju u Beogradu (adresa na stranici je pančevačka).
+            'badge'      => 'Digitalna agencija za Beograd',
+            'checks' => [
+                ['palette2', 'Vizuelni identitet bez šablona', 'Izgled koji se ne meša sa stotinama sličnih sajtova'],
+                ['phone', 'Besprekoran na svakom ekranu', 'Većina posetilaca dolazi sa telefona - njih planiramo prve'],
+                ['graph-up', 'Vidljiv na Google pretrazi', 'Tehnička SEO osnova i optimizovana brzina od prvog dana'],
+                ['cash-coin', 'Fokus na upite i prodaju', 'Svaka stranica vodi posetioca ka pozivu ili poruci'],
+                ['tools', 'Održavanje i dorade', 'Posle lansiranja ostajemo uz Vas za izmene i nove funkcije'],
+            ],
+        ],
+        'en' => [
+            'name' => 'Belgrade', 'loc' => 'Belgrade', 'gen' => 'Belgrade',
+            'intro' => 'In a market where competition is fierce, your website has to be more than a digital brochure. At VUG Digital Agency we build professional websites for companies and entrepreneurs in Belgrade, with a focus on design, functionality and user experience.',
+            'sec_h2' => 'How to stand out with a website in the Belgrade market',
+            'p1' => 'Belgrade is the largest and most demanding market in Serbia - thousands of companies compete for the same customers every single day. Here it isn’t enough to simply “have a website”. If it loads slowly, looks dated or doesn’t appear in search results, the user will move on to a competitor within seconds. To hold their attention, your online presence has to <strong>inspire trust</strong> from the very first moment.',
+            'p2' => '<strong>This is where VUG makes the difference.</strong> Building websites and web applications is one of our core activities, and we approach every project strategically. We analyse who you’re addressing, how your competitors present themselves and what it takes for your offer to come across more clearly, faster and more convincingly. The result is a site tailored to your business, designed to set you apart in the market.',
+            'p3' => 'We build every website to be <span class="lp-mark">fast</span>, clear and fully responsive on all devices. A clear structure guides visitors from their first contact with your brand to a call, a message or an enquiry. Before the project begins we get to know your business, goals and competitors in detail, so the final solution isn’t just visually appealing but geared towards real results.',
+            'p4' => 'We work with companies of different sizes and industries across Belgrade. We communicate quickly and professionally, in person or online, with clearly defined deadlines and transparent pricing with no hidden costs. Our goal isn’t to build just another site that gets lost among the competition, but a <strong>digital solution that brings you real enquiries and new clients</strong>.',
+            'meta_title' => 'Website development Belgrade | VUG Digital Agency',
+            'meta_desc'  => 'Professional website development in Belgrade, tailored to your business. Modern design, speed and SEO optimisation. Free consultation and a quote within 24h.',
+            'badge'      => 'Digital agency for Belgrade',
+            'checks' => [
+                ['palette2', 'A visual identity with no templates', 'A look that doesn’t blend in with hundreds of similar sites'],
+                ['phone', 'Flawless on every screen', 'Most visitors arrive on a phone - we plan for them first'],
+                ['graph-up', 'Visible in Google Search', 'A technical SEO foundation and optimised speed from day one'],
+                ['cash-coin', 'Focused on enquiries and sales', 'Every page guides the visitor towards a call or a message'],
+                ['tools', 'Maintenance and upgrades', 'After launch we stay with you for changes and new features'],
+            ],
+        ],
+    ],
+];
+
+/* ── Sadržaj za VOĐENJE DRUŠTVENIH MREŽA (jedinstven po gradu) ── */
+$CITY_SOCIAL = [
+    'pancevo' => [
+        'other' => 'beograd', 'region' => 'RS-14',
+        'sr' => [
+            'name' => 'Pančevo', 'loc' => 'Pančevu', 'gen' => 'Pančeva',
+            'intro' => 'Potrebno Vam je profesionalno vođenje društvenih mreža u Pančevu? VUG kreira sadržaj, dizajn i kampanje koje Vaš brend čine prepoznatljivim i dovode nove kupce - dok se Vi bavite svojim poslom.',
+            'sec_h2' => 'Zašto Vašem biznisu u Pančevu treba prisustvo na mrežama?',
+            'p1' => 'Vaši kupci u Pančevu svakodnevno provode sate na Instagramu, Facebook-u i TikTok-u. Ako Vas tamo nema - ili objavljujete neredovno i bez plana - konkurencija preuzima pažnju koja je mogla biti Vaša. Aktivan i osmišljen profil gradi poverenje i drži Vaš brend ispred pravih ljudi.',
+            'p2' => '<strong>Vođenje društvenih mreža je jedna od naših ključnih delatnosti.</strong> Ne objavljujemo nasumično - pravimo strategiju: kome se obraćate, šta objavljujemo, kada i sa kojim ciljem. Vi se fokusirate na biznis, a mreže rade za Vas.',
+            'p3' => 'Za svaki profil pravimo <span class="lp-mark">mesečni plan sadržaja</span>, dizajniramo vizuale, snimamo i montiramo reels, pišemo tekstove i odgovaramo na poruke i komentare. Sve na jednom mestu, sa jasnim tonom Vašeg brenda.',
+            'p4' => 'Pre nego što krenemo, upoznamo se sa Vašim poslovanjem i ciljevima. Radimo sa firmama, radnjama i lokalima iz Pančeva i okoline - uz jasne rokove, transparentne cene i mesečne izveštaje, tako da tačno vidite šta dobijate za svoj novac.',
+            'meta_title' => 'Vođenje društvenih mreža Pančevo | VUG Digital Agency',
+            'meta_desc'  => 'Vođenje društvenih mreža u Pančevu - plan sadržaja, dizajn vizuala, reels i oglasi koji dovode nove kupce. Besplatne konsultacije i ponuda za 24h.',
+            'checks' => [
+                ['tag', 'Kalendar objava', 'Mesečni plan sadržaja i redovno objavljivanje'],
+                ['palette2', 'Dizajn vizuala', 'Grafika, priče i reels koji privlače pažnju'],
+                ['chat-dots', 'Komunikacija sa pratiocima', 'Odgovaramo na poruke i komentare umesto Vas'],
+                ['cash-coin', 'Oglašavanje (Meta Ads)', 'Ciljane kampanje koje dovode kupce, ne samo lajkove'],
+                ['graph-up', 'Mesečni izveštaji', 'Jasni rezultati i preporuke za sledeći korak'],
+            ],
+        ],
+        'en' => [
+            'name' => 'Pančevo', 'loc' => 'Pančevo', 'gen' => 'Pančevo',
+            'intro' => 'Need professional social media management in Pančevo? VUG creates the content, design and campaigns that make your brand recognisable and bring in new customers - while you focus on running your business.',
+            'sec_h2' => 'Why your Pančevo business needs a social media presence',
+            'p1' => 'Your customers in Pančevo spend hours every day on Instagram, Facebook and TikTok. If you’re not there - or you post irregularly and without a plan - competitors take the attention that could have been yours. An active, well-planned profile builds trust and keeps your brand in front of the right people.',
+            'p2' => '<strong>Social media management is one of our core activities.</strong> We don’t post at random - we build a strategy: who you’re speaking to, what we post, when and with what goal. You focus on your business while your channels work for you.',
+            'p3' => 'For every profile we create a <span class="lp-mark">monthly content plan</span>, design the visuals, shoot and edit reels, write the captions and reply to messages and comments - all in one place, in your brand’s voice.',
+            'p4' => 'Before we start, we get to know your business and goals. We work with companies, shops and local venues in Pančevo and the surrounding area - with clear deadlines, transparent pricing and monthly reports, so you see exactly what you get for your money.',
+            'meta_title' => 'Social media management Pančevo | VUG Digital Agency',
+            'meta_desc'  => 'Social media management in Pančevo - content planning, visual design, reels and ads that bring in new customers. Free consultation and a quote within 24h.',
+            'checks' => [
+                ['tag', 'Content plan & posting', 'A monthly content plan and consistent posting'],
+                ['palette2', 'Visual design', 'Graphics, stories and reels that grab attention'],
+                ['chat-dots', 'Community management', 'We reply to messages and comments for you'],
+                ['cash-coin', 'Advertising (Meta Ads)', 'Targeted campaigns that bring customers, not just likes'],
+                ['graph-up', 'Monthly reports', 'Clear results and recommendations for the next step'],
+            ],
+        ],
+    ],
+    'beograd' => [
+        'other' => 'pancevo', 'region' => 'RS-00',
+        'sr' => [
+            'name' => 'Beograd', 'loc' => 'Beogradu', 'gen' => 'Beograda',
+            'intro' => 'Profesionalno vođenje društvenih mreža u Beogradu, osmišljeno da Vaš brend izdvoji na prezasićenom tržištu. VUG spaja strategiju, kvalitetan sadržaj i ciljane kampanje kako bi doneo više pratilaca, upita i prodaje.',
+            'sec_h2' => 'Kako da Vaš brend postane prepoznatljiv na beogradskom tržištu?',
+            'p1' => 'Beograd je najkonkurentnije tržište u Srbiji, na kojem se pažnja korisnika osvaja u prvih nekoliko sekundi. Prezasićen feed i visoka očekivanja publike znače da nasumične objave više ne donose rezultat. Za ozbiljan rast potrebni su jasna strategija, dosledan vizuelni identitet i sadržaj prilagođen pravoj publici.',
+            'p2' => '<strong>Upravo tu VUG pravi razliku.</strong> Vođenje društvenih mreža jedna je od naših ključnih delatnosti, pa svakom profilu pristupamo planski - analiziramo Vašu publiku, konkurenciju i aktuelne trendove, a zatim kreiramo sadržaj koji zaustavlja skrol i gradi zajednicu oko Vašeg brenda.',
+            'p3' => 'Vodimo Instagram, Facebook, TikTok i LinkedIn u celosti - od <span class="lp-mark">mesečnog kalendara objava</span> i dizajna vizuala, preko reels-a i priča, do oglašavanja i komunikacije sa publikom. Svaka aktivnost usmerena je ka jednom cilju: da pratioce pretvorimo u kupce.',
+            'p4' => 'Sarađujemo sa brendovima različitih veličina i delatnosti širom Beograda, uz jasno definisane rokove, transparentne cene i redovne mesečne izveštaje. Kao rezultat, dobijate društvene mreže koje ne služe samo za lep utisak, već <strong>donose merljive upite i prodaju</strong>.',
+            'meta_title' => 'Vođenje društvenih mreža Beograd | VUG Digital Agency',
+            'meta_desc'  => 'Profesionalno vođenje društvenih mreža u Beogradu - strategija, sadržaj, reels i kampanje koje donose upite i prodaju. Besplatne konsultacije i ponuda za 24h.',
+            // „za“, ne „u“: nemamo kancelariju u Beogradu (adresa na stranici je pančevačka).
+            'badge'      => 'Digitalna agencija za Beograd',
+            'checks' => [
+                ['tag', 'Strategija i raspored objava', 'Sadržaj usklađen sa ciljevima i navikama Vaše publike'],
+                ['palette2', 'Prepoznatljiv vizuelni stil', 'Dosledan izgled feed-a, priča i reels-a koji zaustavlja skrol'],
+                ['chat-dots', 'Komunikacija sa pratiocima', 'Brzi odgovori na poruke i komentare u tonu Vašeg brenda'],
+                ['cash-coin', 'Meta i TikTok kampanje', 'Oglasi ciljani na publiku koja zaista kupuje'],
+                ['graph-up', 'Merljivi rezultati', 'Izveštaj svakog meseca - brojke i plan za naredni period'],
+            ],
+        ],
+        'en' => [
+            'name' => 'Belgrade', 'loc' => 'Belgrade', 'gen' => 'Belgrade',
+            'intro' => 'Professional social media management in Belgrade, designed to make your brand stand out in a saturated market. VUG combines strategy, high-quality content and targeted campaigns to bring you more followers, enquiries and sales.',
+            'sec_h2' => 'How to make your brand recognisable in the Belgrade market',
+            'p1' => 'Belgrade is the most competitive market in Serbia, where user attention is won in the first few seconds. A saturated feed and high audience expectations mean that random posts no longer deliver results. Serious growth requires a clear strategy, a consistent visual identity and content tailored to the right audience.',
+            'p2' => '<strong>This is exactly where VUG makes the difference.</strong> Social media management is one of our core activities, so we approach every profile with a plan - we analyse your audience, competitors and current trends, then create content that stops the scroll and builds a community around your brand.',
+            'p3' => 'We manage Instagram, Facebook, TikTok and LinkedIn end to end - from the <span class="lp-mark">monthly content plan</span> and visual design, through reels and stories, to advertising and audience communication. Every activity is aimed at a single goal: turning followers into customers.',
+            'p4' => 'We work with brands of different sizes and industries across Belgrade, with clearly defined deadlines, transparent pricing and regular monthly reports. As a result, you get social channels that aren’t just for a good impression but <strong>deliver measurable enquiries and sales</strong>.',
+            'meta_title' => 'Social media management Belgrade | VUG Digital Agency',
+            'meta_desc'  => 'Professional social media management in Belgrade - strategy, content, reels and campaigns that drive enquiries and sales. Free consultation and a quote in 24h.',
+            'badge'      => 'Digital agency for Belgrade',
+            'checks' => [
+                ['tag', 'Strategy and posting schedule', 'Content aligned with your goals and your audience’s habits'],
+                ['palette2', 'A recognisable visual style', 'A consistent look across feed, stories and reels that stops the scroll'],
+                ['chat-dots', 'Talking with your followers', 'Quick replies to messages and comments in your brand’s voice'],
+                ['cash-coin', 'Meta and TikTok campaigns', 'Ads targeted at the audience that actually buys'],
+                ['graph-up', 'Measurable results', 'A report every month - the numbers and a plan for what’s next'],
+            ],
+        ],
+    ],
+];
+
+/* ── Sadržaj za MARKETING AGENCIJU (jedinstven po gradu) ──
+   Razgraničenje (bez kanibalizacije): marketing = plaćeni oglasi (Google Ads,
+   Meta, TikTok), Google poslovni profil, SEO, merenje i strategija. Svakodnevni
+   sadržaj i komunikacija sa pratiocima pripadaju stranici za društvene mreže,
+   a „digitalna agencija“ početnoj. */
+$CITY_MARKETING = [
+    'pancevo' => [
+        'other' => 'beograd', 'region' => 'RS-14',
+        'sr' => [
+            'name' => 'Pančevo', 'loc' => 'Pančevu', 'gen' => 'Pančeva',
+            'intro' => 'VUG Digital Agency je agencija za digitalni marketing koja pomaže kompanijama iz Pančeva i okoline da povećaju vidljivost, privuku nove klijente i unaprede poslovne rezultate. Kroz strateško planiranje i vođenje Google Ads i Meta kampanja, SEO optimizaciju i optimizaciju Google poslovnog profila, razvijamo marketinška rešenja prilagođena ciljevima Vašeg poslovanja.',
+            'sec_h2' => 'Zašto je digitalni marketing važan za poslovanje u Pančevu?',
+            'p1' => 'Većina potencijalnih klijenata danas pronalazi proizvode i usluge putem Google pretrage, Google mapa i društvenih mreža. Odluke se često donose brzo, a prednost imaju kompanije koje su vidljive, imaju pozitivne recenzije i jasno predstavljenu ponudu.',
+            'p2' => '<strong>Digitalni marketing i oglašavanje predstavljaju jednu od naših ključnih delatnosti.</strong> Kampanje usmeravamo ka potencijalnim klijentima iz Pančeva i okoline, uz kontinuirano praćenje ostvarenih poziva, poruka i upita.',
+            'p3' => 'Kombinujemo Google Ads kampanje za korisnike koji aktivno pretražuju Vaše usluge, Meta oglašavanje za povećanje prepoznatljivosti brenda i optimizaciju Google poslovnog profila za bolju lokalnu vidljivost. Sve aktivnosti usmeravamo ka ostvarivanju konkretnih poslovnih rezultata.',
+            'p4' => 'Pre pokretanja kampanja analiziramo Vaše poslovanje, ciljnu grupu i konkurenciju, a zatim definišemo strategiju i budžet. Kroz redovne mesečne izveštaje pružamo Vam transparentan uvid u rezultate i predloge za dalje unapređenje, kako bi digitalni marketing postao <strong>merljiva i isplativa investicija</strong> u razvoj Vašeg poslovanja.',
+            'meta_title' => 'Marketing agencija Pančevo | VUG Digital Agency',
+            'meta_desc'  => 'Marketing agencija u Pančevu - Google Ads, Meta oglašavanje, SEO i optimizacija Google profila za više poziva i upita. Besplatne konsultacije i ponuda za 24h.',
+            'checks' => [
+                ['search', 'Google Ads kampanje', 'Vidljivost kod korisnika koji aktivno pretražuju Vaše usluge'],
+                ['cash-coin', 'Meta oglašavanje', 'Kampanje na Facebook-u i Instagramu za Pančevo i okolinu'],
+                ['geo-alt', 'Google poslovni profil', 'Optimizovan profil, recenzije i bolja lokalna vidljivost'],
+                ['graph-up', 'SEO optimizacija', 'Bolje pozicije sajta na lokalnim pretragama'],
+                ['bar-chart', 'Mesečni izveštaji', 'Transparentan uvid u pozive, upite i cenu po kontaktu'],
+            ],
+        ],
+        'en' => [
+            'name' => 'Pančevo', 'loc' => 'Pančevo', 'gen' => 'Pančevo',
+            'intro' => 'VUG Digital Agency is a digital marketing agency that helps companies in Pančevo and the surrounding area increase their visibility, attract new clients and improve business results. Through strategic planning and management of Google Ads and Meta campaigns, SEO and Google Business Profile optimisation, we develop marketing solutions tailored to the goals of your business.',
+            'sec_h2' => 'Why digital marketing matters for businesses in Pančevo',
+            'p1' => 'Most potential clients today find products and services through Google Search, Google Maps and social media. Decisions are often made quickly, and the advantage goes to companies that are visible, have positive reviews and a clearly presented offer.',
+            'p2' => '<strong>Digital marketing and advertising are among our core activities.</strong> We direct campaigns at potential clients in Pančevo and the surrounding area, with continuous tracking of the calls, messages and enquiries they generate.',
+            'p3' => 'We combine Google Ads campaigns for users actively searching for your services, Meta advertising to increase brand awareness, and Google Business Profile optimisation for better local visibility. Every activity is directed towards achieving concrete business results.',
+            'p4' => 'Before launching campaigns we analyse your business, target audience and competitors, and then define the strategy and budget. Through regular monthly reports we give you transparent insight into results and recommendations for further improvement, so that digital marketing becomes <strong>a measurable and profitable investment</strong> in the growth of your business.',
+            'meta_title' => 'Marketing agency Pančevo | VUG Digital Agency',
+            'meta_desc'  => 'Marketing agency in Pančevo - Google Ads, Meta advertising, SEO and Google profile optimisation for more enquiries. Free consultation, quote in 24h.',
+            'checks' => [
+                ['search', 'Google Ads campaigns', 'Visibility with users actively searching for your services'],
+                ['cash-coin', 'Meta advertising', 'Facebook and Instagram campaigns for Pančevo and the area'],
+                ['geo-alt', 'Google Business Profile', 'An optimised profile, reviews and better local visibility'],
+                ['graph-up', 'SEO optimisation', 'Better website rankings in local search'],
+                ['bar-chart', 'Monthly reports', 'Transparent insight into calls, enquiries and cost per contact'],
+            ],
+        ],
+    ],
+    'beograd' => [
+        'other' => 'pancevo', 'region' => 'RS-00',
+        'sr' => [
+            'name' => 'Beograd', 'loc' => 'Beogradu', 'gen' => 'Beograda',
+            'intro' => 'Digitalni marketing za firme u Beogradu zasnovan na podacima, jasnoj strategiji i merljivim rezultatima. VUG Digital Agency pruža usluge planiranja i vođenja Google Ads kampanja, oglašavanja na društvenim mrežama i SEO optimizacije. Kroz kontinuirano praćenje i optimizaciju budžeta, pomažemo Vam da povećate vidljivost, privučete potencijalne klijente i ostvarite maksimalan povraćaj ulaganja.',
+            'sec_h2' => 'Kako ulaganje u oglašavanje pretvoriti u rezultate na beogradskom tržištu?',
+            'p1' => 'Beogradsko tržište je jedno od najkonkurentnijih u Srbiji: za iste pretrage nadmeću se desetine firmi, a cena klika na Google-u i društvenim mrežama iz godine u godinu raste. U takvom okruženju kampanje koje nisu zasnovane na podacima brzo troše budžet na neodgovarajuću publiku, bez merljivog povraćaja ulaganja.',
+            'p2' => '<strong>Zato svaku kampanju započinjemo analizom podataka, a ne kreativnim rešenjem.</strong> Najpre postavljamo merenje: utvrđujemo šta za Vaše poslovanje predstavlja konverziju, kolika je vrednost jednog upita i iz kojih kanala trenutno dolaze klijenti. Na osnovu dobijenih podataka definišemo najefikasnije kanale komunikacije, ciljnu publiku i poruke prilagođene potrebama i ciljevima Vašeg poslovanja.',
+            'p3' => 'Vodimo Google Ads, Meta i TikTok kampanje, remarketing usmeren ka korisnicima koji su već posetili Vaš sajt, kao i SEO optimizaciju za pretrage na kojima želite stabilnu, dugoročnu vidljivost. Svi kanali funkcionišu kao deo jedinstvene strategije, pa se uvidi iz jedne kampanje odmah primenjuju i na ostale.',
+            'p4' => 'Sarađujemo sa firmama svih veličina u Beogradu, uživo ili online, uz direktnu komunikaciju sa osobom zaduženom za Vaš projekat. Kroz mesečne izveštaje pružamo jasan uvid u budžet, broj upita i cenu po kontaktu, uz konkretne predloge za optimizaciju kampanja i povećanje isplativosti Vašeg ulaganja.',
+            'meta_title' => 'Marketing agencija Beograd | VUG Digital Agency',
+            'meta_desc'  => 'Digitalni marketing za firme u Beogradu - Google Ads, oglašavanje na društvenim mrežama, SEO i mesečni izveštaji. Besplatne konsultacije i ponuda za 24h.',
+            // „za“, ne „u“: nemamo kancelariju u Beogradu (adresa na stranici je pančevačka).
+            'badge'      => 'Digitalna agencija za Beograd',
+            'checks' => [
+                ['bar-chart', 'Merenje od prvog dana', 'Praćenje poziva, upita i kupovina pre pokretanja kampanje'],
+                ['search', 'Google Ads i remarketing', 'Vidljivost na pretrazi i ponovno obraćanje posetiocima sajta'],
+                ['cash-coin', 'Oglašavanje na društvenim mrežama', 'Meta i TikTok kampanje usmerene na relevantnu publiku'],
+                ['graph-up', 'SEO optimizacija', 'Dugoročna vidljivost na konkurentnim pretragama'],
+                ['diagram-3', 'Integrisana strategija', 'Google, društvene mreže i sajt usklađeni u jedinstven plan'],
+            ],
+        ],
+        'en' => [
+            'name' => 'Belgrade', 'loc' => 'Belgrade', 'gen' => 'Belgrade',
+            'intro' => 'Digital marketing for Belgrade businesses, based on data, a clear strategy and measurable results. VUG Digital Agency plans and manages Google Ads campaigns, social media advertising and SEO. Through continuous monitoring and budget optimisation, we help you increase visibility, attract potential clients and achieve the maximum return on your investment.',
+            'sec_h2' => 'How to turn advertising spend into results in the Belgrade market',
+            'p1' => 'Belgrade is one of the most competitive markets in Serbia: dozens of companies compete for the same searches, and the cost per click on Google and social media rises year after year. In such an environment, campaigns that are not based on data quickly spend the budget on the wrong audience, with no measurable return on investment.',
+            'p2' => '<strong>That is why every campaign begins with data analysis rather than a creative idea.</strong> First we set up measurement: we establish what a conversion means for your business, what one enquiry is worth and which channels your clients currently come from. Based on that data, we define the most effective communication channels, target audience and messages tailored to the needs and goals of your business.',
+            'p3' => 'We run Google Ads, Meta and TikTok campaigns, remarketing aimed at users who have already visited your website, and SEO for the searches where you want stable, long-term visibility. All channels operate as part of a single strategy, so insights from one campaign are immediately applied to the others.',
+            'p4' => 'We work with companies of all sizes in Belgrade, in person or online, with direct communication with the person responsible for your project. Through monthly reports we provide clear insight into budget, number of enquiries and cost per contact, along with concrete recommendations for optimising campaigns and increasing the return on your investment.',
+            'meta_title' => 'Marketing agency Belgrade | VUG Digital Agency',
+            'meta_desc'  => 'Digital marketing for Belgrade businesses - Google Ads, social media advertising, SEO and monthly performance reports. Free consultation, quote in 24h.',
+            'badge'      => 'Digital agency for Belgrade',
+            'checks' => [
+                ['bar-chart', 'Tracking from day one', 'Calls, enquiries and purchases measured before campaigns launch'],
+                ['search', 'Google Ads and remarketing', 'Visibility on search and re-engaging website visitors'],
+                ['cash-coin', 'Social media advertising', 'Meta and TikTok campaigns aimed at a relevant audience'],
+                ['graph-up', 'SEO optimisation', 'Long-term visibility for competitive searches'],
+                ['diagram-3', 'Integrated strategy', 'Google, social media and your website aligned in one plan'],
+            ],
+        ],
+    ],
+];
+
+if ($svc === 'social')    $CITY = $CITY_SOCIAL;
+if ($svc === 'marketing') $CITY = $CITY_MARKETING;
+
+$cc   = $CITY[$loc];
+$c    = $cc[$lang];
+$NAME = $c['name'];
+$LOCW = $c['loc'];
+$GEN  = $c['gen'];
+
+// Zamena tokena {name}/{loc}/{gen} u zajedničkom (ne-gradskom) copy-ju.
+$fill = function ($s) use ($NAME, $LOCW, $GEN) {
+    return strtr($s, ['{name}' => $NAME, '{loc}' => $LOCW, '{gen}' => $GEN]);
+};
+
+/* ── Zajednički copy (isti okvir za sve gradove; jedinstven tekst je u $CITY) ── */
+$COPY = [
+    'sr' => [
+        'crumb_home' => 'Početna',
+        'badge'      => 'Digitalna agencija u {loc}',
+        'h1'         => 'Izrada web sajta {name}',
+        'cta_contact_full' => 'Kontaktirajte nas',
+        'cta_home'   => 'Početna',
+        'sec_eyebrow'=> 'Zašto VUG',
+        'side_h' => 'Naš web sajt <em>uključuje</em>',
+        'img_alt'  => 'Izrada modernog web sajta u {loc} - VUG',
+        'svc_type' => 'Izrada web sajtova',
+        'svc_name' => 'Izrada web sajta {name}',
+    ],
+    'en' => [
+        'crumb_home' => 'Home',
+        'badge'      => 'Digital agency in {loc}',
+        'h1'         => 'Website development {name}',
+        'cta_contact_full' => 'Contact us',
+        'cta_home'   => 'Home',
+        'sec_eyebrow'=> 'Why VUG',
+        'side_h' => 'Our website <em>includes</em>',
+        'img_alt'  => 'Modern website development in {loc} - VUG',
+        'svc_type' => 'Website development',
+        'svc_name' => 'Website development {name}',
+    ],
+];
+/* ── Chrome za VOĐENJE DRUŠTVENIH MREŽA ── */
+$COPY_SOCIAL = [
+    'sr' => [
+        'crumb_home' => 'Početna',
+        'badge'      => 'Digitalna agencija u {loc}',
+        'h1'         => 'Vođenje društvenih mreža {name}',
+        'cta_contact_full' => 'Kontaktirajte nas',
+        'cta_home'   => 'Početna',
+        'sec_eyebrow'=> 'Zašto VUG',
+        'side_h' => 'Vođenje mreža <em>uključuje</em>',
+        'img_alt'  => 'Vođenje društvenih mreža u {loc} - VUG',
+        'svc_type' => 'Vođenje društvenih mreža',
+        'svc_name' => 'Vođenje društvenih mreža {name}',
+    ],
+    'en' => [
+        'crumb_home' => 'Home',
+        'badge'      => 'Digital agency in {loc}',
+        'h1'         => 'Social media management {name}',
+        'cta_contact_full' => 'Contact us',
+        'cta_home'   => 'Home',
+        'sec_eyebrow'=> 'Why VUG',
+        'side_h' => 'Social media management <em>includes</em>',
+        'img_alt'  => 'Social media management in {loc} - VUG',
+        'svc_type' => 'Social media management',
+        'svc_name' => 'Social media management {name}',
+    ],
+];
+/* ── Chrome za MARKETING AGENCIJU ── */
+$COPY_MARKETING = [
+    'sr' => [
+        'crumb_home' => 'Početna',
+        'badge'      => 'Digitalna agencija u {loc}',
+        'h1'         => 'Marketing agencija {name}',
+        'cta_contact_full' => 'Kontaktirajte nas',
+        'cta_home'   => 'Početna',
+        'sec_eyebrow'=> 'Zašto VUG',
+        'side_h' => 'Naš marketing <em>uključuje</em>',
+        'img_alt'  => 'Digitalni marketing i oglašavanje u {loc} - VUG',
+        'svc_type' => 'Digitalni marketing i oglašavanje',
+        'svc_name' => 'Marketing agencija {name}',
+    ],
+    'en' => [
+        'crumb_home' => 'Home',
+        'badge'      => 'Digital agency in {loc}',
+        'h1'         => 'Marketing agency {name}',
+        'cta_contact_full' => 'Contact us',
+        'cta_home'   => 'Home',
+        'sec_eyebrow'=> 'Why VUG',
+        'side_h' => 'Our marketing <em>includes</em>',
+        'img_alt'  => 'Digital marketing and advertising in {loc} - VUG',
+        'svc_type' => 'Digital marketing and advertising',
+        'svc_name' => 'Marketing agency {name}',
+    ],
+];
+if ($svc === 'social')    $COPY = $COPY_SOCIAL;
+if ($svc === 'marketing') $COPY = $COPY_MARKETING;
+
+$P = $COPY[$lang];
+
+/* ── Prošireni sadržaj (usluge, proces, delatnosti, cena, FAQ, lokacija) ──
+   Živi u php/landing-content.php jer je strukturiran sadržaj, ne UI copy -
+   isti princip kao php/projects.php i legal.php. $X može biti prazan (grad
+   ili usluga bez proširenog sadržaja); tada se dodatne sekcije ne renderuju. */
+$LC = require __DIR__ . '/php/landing-content.php';
+$U  = $LC['ui'][$svc][$lang];
+$X  = $LC['city'][$svc][$loc][$lang] ?? [];
+
+// Interni linkovi u sadržaju (tokeni {lp_web_pancevo} / {lp_social_pancevo}, isti
+// kao u lang/*.php na početnoj): base-aware putanja, EN vodi na /en/<slug>.
+// FAQ JSON-LD ionako skida tagove (strip_tags), pa u markup ide samo tekst.
+$lp_tokens = [
+    '{lp_web_pancevo}'    => $base . ($lang === 'en' ? '/en' : '') . '/izrada-web-sajta-pancevo',
+    '{lp_social_pancevo}' => $base . ($lang === 'en' ? '/en' : '') . '/vodjenje-drustvenih-mreza-pancevo',
+];
+array_walk_recursive($X, function (&$v) use ($lp_tokens) {
+    if (is_string($v)) $v = strtr($v, $lp_tokens);
+});
+
+/* ── URL-ovi / jezik ── */
+$slug_base   = ['web' => 'izrada-web-sajta-', 'social' => 'vodjenje-drustvenih-mreza-', 'marketing' => 'marketing-agencija-'][$svc];
+$hero_img    = ['web' => 'web-mockup.svg', 'social' => 'social-mockup.svg', 'marketing' => 'marketing-mockup.svg'][$svc];
+$slug        = $slug_base . $loc;
+$url_sr_page = ($base === '' ? '' : $base) . '/' . $slug;              // base-aware (za linkove)
+$url_en_page = $base . '/en/' . $slug;
+$abs_sr      = $SITE_URL . '/' . $slug;                                 // apsolutni (canonical)
+$abs_en      = $SITE_URL . '/en/' . $slug;
+
+$canonical  = $lang === 'en' ? $abs_en : $abs_sr;
+$href_other = $lang === 'en' ? $url_sr_page : $url_en_page;
+$home       = $lang === 'en' ? $base . '/en' : ($base === '' ? '/' : $base . '/');
+$og_image   = $SITE_URL . '/img/og-image.png';
+
+// Bez hreflang-a: indeksira se samo srpska verzija, EN je noindex (partials/head.php).
+
+/* ── SEO varijable za deljeni head ── */
+$meta_title       = $c['meta_title'];
+$meta_description = $c['meta_desc'];
+$og_image_alt     = $fill($P['img_alt']);
+$geo_region       = $cc['region'];
+$geo_placename    = $NAME;
+
+/* ── JSON-LD: Service + WebPage + BreadcrumbList ── */
+$org_id  = $SITE_URL . '/#organization';
+$json_ld = [
+    '@context' => 'https://schema.org',
+    '@graph' => [
+        [
+            '@type' => 'Service',
+            '@id' => $canonical . '#service',
+            'serviceType' => $P['svc_type'],
+            'name' => $fill($P['svc_name']),
+            'description' => $meta_description,
+            'url' => $canonical,
+            // Pun lokalni profil firme iz php/org.php - isti @id i isti podaci kao
+            // na početnoj, pa Google spaja čvorove u jedan entitet.
+            'provider' => vug_org_schema($SITE_URL, $lang, $phone_intl),
+            'areaServed' => ['@type' => 'City', 'name' => $NAME],
+            'inLanguage' => $lang === 'sr' ? 'sr-RS' : 'en',
+        ],
+        [
+            // WebPage ispod pokazuje na ovaj čvor preko isPartOf - bez njega
+            // referenca visi u vazduhu na svakoj landing stranici.
+            '@type' => 'WebSite',
+            '@id' => $SITE_URL . '/#website',
+            'url' => $SITE_URL . '/',
+            'name' => VUG_BRAND_NAME,
+            'alternateName' => VUG_BRAND_ALT,
+            'inLanguage' => $lang === 'sr' ? 'sr-RS' : 'en',
+            'publisher' => ['@id' => $org_id],
+        ],
+        [
+            '@type' => 'WebPage', '@id' => $canonical . '#webpage', 'url' => $canonical,
+            'name' => $meta_title, 'description' => $meta_description,
+            'inLanguage' => $lang === 'sr' ? 'sr-RS' : 'en',
+            'isPartOf' => ['@id' => $SITE_URL . '/#website'], 'about' => ['@id' => $org_id],
+            'primaryImageOfPage' => ['@type' => 'ImageObject', 'url' => $og_image, 'width' => 1200, 'height' => 630],
+            'breadcrumb' => ['@id' => $canonical . '#breadcrumb'],
+            'dateModified' => date('Y-m-d', @filemtime(__DIR__ . '/php/landing-content.php') ?: time()),
+        ],
+        [
+            '@type' => 'BreadcrumbList',
+            '@id' => $canonical . '#breadcrumb',
+            'itemListElement' => [
+                ['@type' => 'ListItem', 'position' => 1, 'name' => $P['crumb_home'], 'item' => $lang === 'en' ? $SITE_URL . '/en' : $SITE_URL . '/'],
+                ['@type' => 'ListItem', 'position' => 2, 'name' => $fill($P['h1']), 'item' => $canonical],
+            ],
+        ],
+    ],
+];
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Prošireni structured data - dodaje se SAMO ako grad/usluga ima prošireni
+   sadržaj, i to nadogradnjom postojećih čvorova (ne diramo niz iznad).
+   Čvorove tražimo po '@type', ne po indeksu - redosled u @graph-u sme da se
+   menja, a markup mora da ostane ispravan.
+   ────────────────────────────────────────────────────────────────────────── */
+foreach ($json_ld['@graph'] as $i => $node) {
+
+    /* FAQPage - pitanja i odgovori koji su STVARNO prikazani na stranici.
+       (Google traži da se sadržaj iz markup-a vidi i u HTML-u; sekcija
+       "Česta pitanja" ispod renderuje tačno ovaj isti niz.) */
+    if (($node['@type'] ?? '') === 'WebPage' && !empty($X['faq'])) {
+        $qs = [];
+        foreach ($X['faq'] as $f) {
+            $qs[] = [
+                '@type' => 'Question',
+                'name' => $f[1],
+                'acceptedAnswer' => [
+                    '@type' => 'Answer',
+                    // <strong> iz prikaza ne ide u markup - schema traži čist tekst.
+                    'text' => trim(strip_tags($f[2])),
+                ],
+            ];
+        }
+        $json_ld['@graph'][$i]['@type'] = ['WebPage', 'FAQPage'];
+        $json_ld['@graph'][$i]['mainEntity'] = $qs;
+    }
+
+    /* Service - precizno područje rada (grad + okolina) i katalog podusluga.
+       areaServed sa listom mesta je najjači lokalni signal koji stranica može
+       da pošalje, jer pokriva i pretrage iz okolnih opština. */
+    if (($node['@type'] ?? '') === 'Service') {
+        if (!empty($X['area_served'])) {
+            $places = [];
+            foreach ($X['area_served'] as $pl) {
+                $places[] = ['@type' => 'Place', 'name' => $pl];
+            }
+            $json_ld['@graph'][$i]['areaServed'] = $places;
+        }
+        if (!empty($X['serv'])) {
+            $items = [];
+            foreach ($X['serv'] as $s) {
+                $items[] = [
+                    '@type' => 'Offer',
+                    'itemOffered' => ['@type' => 'Service', 'name' => $s[1], 'description' => $s[2]],
+                ];
+            }
+            $json_ld['@graph'][$i]['hasOfferCatalog'] = [
+                '@type' => 'OfferCatalog',
+                'name' => $fill($P['svc_name']),
+                'itemListElement' => $items,
+            ];
+        }
+        $json_ld['@graph'][$i]['availableChannel'] = [
+            '@type' => 'ServiceChannel',
+            'serviceUrl' => $canonical,
+            'servicePhone' => ['@type' => 'ContactPoint', 'telephone' => $phone_intl],
+            'availableLanguage' => ['Serbian', 'English'],
+        ];
+    }
+}
+
+/* ── Konfiguracija za header/footer partiale ── */
+$nav_prefix       = $home;      // sidra vode na sekcije početne (u tekućem jeziku)
+$nav_current_lp   = $slug;      // stavka ove stranice u padajućoj listi „Usluge“ dobija aria-current
+// Landing stranice SADA imaju kontakt formu (partials/contact.php na dnu), pa
+// "Kontakt" u meniju i CTA dugme vode na #contact NA OVOJ stranici - korisnik
+// ne mora da menja stranicu da bi poslao upit.
+$contact_href     = '#contact';
+$cta_href         = '#contact';
+$show_lang_toggle = true;
+
+/* ── Stil specifičan za stranicu ── */
+$extra_head = <<<'HTML'
+    <style>
+        .lp-hero{position:relative;padding:calc(var(--nav-h) + 60px) 0 60px;overflow:hidden;}
+        .lp-hero-glow{position:absolute;top:-15%;left:60%;width:min(760px,85vw);height:520px;
+            background:radial-gradient(closest-side,rgba(93,211,245,.18),rgba(79,70,152,.10) 55%,transparent 70%);
+            filter:blur(20px);pointer-events:none;z-index:0;}
+        .lp-hero .container{position:relative;z-index:1;}
+        .lp-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,5vw,64px);align-items:center;}
+        @media(max-width:860px){.lp-grid{grid-template-columns:1fr;}}
+        .lp-crumb{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:13px;color:var(--txt-muted);
+            font-family:var(--ff-mono);margin-bottom:20px;}
+        .lp-crumb a{color:var(--txt-muted);} .lp-crumb a:hover{color:var(--mint);} .lp-crumb span{opacity:.6;}
+        .lp-badge{display:inline-flex;align-items:center;gap:9px;padding:7px 15px;border:1px solid var(--line-strong);
+            border-radius:100px;font-size:13px;font-weight:600;color:var(--txt-soft);margin-bottom:22px;}
+        .lp-badge .dot{width:8px;height:8px;border-radius:50%;background:var(--mint);box-shadow:0 0 12px var(--mint);}
+        .lp-h1{font-size:clamp(34px,5.4vw,64px);line-height:1.03;letter-spacing:-.035em;font-weight:800;color:var(--txt);}
+        .lp-h1 em{font-style:normal;
+            background:linear-gradient(120deg,var(--mint),var(--cyan) 55%,var(--soft));
+            -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
+            padding-bottom:.1em;}
+        .lp-lead{font-size:clamp(16px,1.5vw,19px);line-height:1.65;color:var(--txt-soft);max-width:56ch;margin:22px 0 30px;}
+        .lp-actions{display:flex;flex-wrap:wrap;gap:14px;align-items:center;}
+        /* Hero slika je LCP: BEZ .reveal (opacity:0 dok main.js ne doda .in-view - LCP je
+           tako čekao JS, 2026-10-06). Ulazak je samo translate (hero-rise iz critical.css),
+           opacity ostaje 1, pa je slika vidljiva od prvog frejma. */
+        .lp-figure{animation:hero-rise .8s .1s var(--ease) both;}
+        @media(prefers-reduced-motion:reduce){.lp-figure{animation:none;}}
+        .lp-figure img{width:100%;height:auto;display:block;}
+        .lp-cols{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(28px,5vw,64px);align-items:start;}
+        @media(max-width:860px){.lp-cols{grid-template-columns:1fr;}}
+        .lp-prose p{color:var(--txt-soft);line-height:1.85;font-size:clamp(16px,1.4vw,18px);margin-top:20px;}
+        .lp-prose p:first-child{margin-top:0;}
+        .lp-prose strong{color:var(--txt);font-weight:700;}
+        .lp-mark{color:var(--violet);font-weight:800;white-space:nowrap;}
+        /* Dva brend dugmeta (nav, hero, tekst) */
+        .btn--violet{background:var(--violet);color:#fff;}
+        .btn--violet .vi{color:#fff;}
+        .btn--violet:hover{background:var(--violet-2);transform:translateY(-2px);}
+        .btn--violet:hover .vi{transform:translateX(4px);}
+        .btn--cyan{background:linear-gradient(135deg,var(--cyan),var(--mint));color:var(--deep);}
+        .btn--cyan .vi{color:var(--deep);}
+        .btn--cyan:hover{transform:translateY(-2px);filter:brightness(1.05);}
+        /* #3275b4 umesto --blue (#3b82c4): beli tekst na --blue ima kontrast 4.06:1, ispod WCAG AA 4.5:1 */
+        .btn--blue{background:#3275b4;color:#fff;}
+        .btn--blue .vi{color:#fff;}
+        .btn--blue:hover{transform:translateY(-2px);filter:brightness(1.08);}
+        .btn--blue:hover .vi{transform:translateX(4px);}
+        .nav-back{display:inline-flex;align-items:center;}
+        .lp-cta-line{margin-top:34px;display:flex;flex-wrap:wrap;gap:14px;align-items:center;}
+        /* Mobilni: dva dugmeta po 50% širine, jedan pored drugog */
+        @media(max-width:575.98px){
+            .lp-actions,.lp-cta-line{gap:10px;flex-wrap:nowrap;}
+            .lp-actions .btn,.lp-cta-line .btn{flex:1 1 0;min-width:0;justify-content:center;padding:13px 10px;font-size:14px;}
+            .lp-cta-line{margin-top:38px;margin-bottom:12px;}
+        }
+        .lp-side{background:#fff;border:1px solid var(--line);border-radius:22px;overflow:hidden;
+            box-shadow:0 24px 60px rgba(42,28,74,.10);}
+        .lp-side-h{text-align:center;padding:18px 20px;
+            background:linear-gradient(135deg,var(--bg-2) 0%,var(--deep) 55%,var(--violet) 100%);}
+        .lp-side-t{font-family:var(--ff);font-weight:800;font-size:19px;letter-spacing:-.02em;color:#fff;}
+        .lp-side-t em{font-style:normal;color:#fff;}
+        .lp-check{list-style:none;margin:0;padding:4px 26px 20px;}
+        .lp-check li{display:flex;gap:15px;align-items:center;padding:17px 0;border-top:1px solid var(--line);}
+        .lp-check li:first-child{border-top:0;}
+        .lp-check .lp-ic{width:44px;height:44px;flex-shrink:0;border-radius:13px;display:grid;place-items:center;
+            background:linear-gradient(135deg,rgba(79,70,152,.12),rgba(93,211,245,.16));
+            border:1px solid rgba(79,70,152,.16);color:var(--violet);}
+        .lp-check .lp-ic .vi{width:21px;height:21px;}
+        .lp-check .lp-ct{display:flex;flex-direction:column;gap:3px;}
+        .lp-check .lp-ct strong{font-weight:700;color:var(--txt);font-size:16px;line-height:1.3;letter-spacing:-.01em;}
+        .lp-check .lp-ct small{font-weight:500;color:var(--txt-soft);font-size:13px;line-height:1.45;}
+    </style>
+HTML;
+
+/* ── Stil proširenih sekcija (usluge / proces / delatnosti / cena / lokacija) ──
+   Stoji u $extra_head, a ne u css/style.css, jer se koristi SAMO na landing
+   stranicama - ostale stranice ne treba da plaćaju ove kilobajte. Svaka
+   komponenta ima i svetlu varijantu (.section--light / .section--cream), jer
+   se sekcije smenjuju tamno → svetlo kao na početnoj; na svetlom se akcent
+   --mint/--cyan menja u --violet/--blue, isto kao kod .svc i .step. */
+$extra_head .= <<<'HTML'
+    <style>
+        /* Kartice usluga */
+        .lp-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,2vw,26px);}
+        @media(max-width:1024px){.lp-cards{grid-template-columns:repeat(2,minmax(0,1fr));}}
+        @media(max-width:640px){.lp-cards{grid-template-columns:1fr;}}
+        .lp-card{padding:clamp(24px,2.4vw,34px);border:1px solid var(--line);border-radius:20px;
+            background:rgba(255,255,255,.03);
+            transition:transform .45s var(--ease),border-color .35s,background .35s,box-shadow .35s,opacity .6s;}
+        .lp-card:hover{transform:translateY(-4px);border-color:var(--line-strong);}
+        .lp-card-ic{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;margin-bottom:18px;
+            background:linear-gradient(135deg,rgba(93,211,245,.16),rgba(79,70,152,.20));
+            border:1px solid var(--line-strong);color:var(--mint);}
+        .lp-card-ic .vi{width:21px;height:21px;}
+        .lp-card h3{font-size:clamp(17px,1.5vw,19px);font-weight:700;letter-spacing:-.018em;color:var(--txt);margin-bottom:10px;}
+        .lp-card p{font-size:15px;line-height:1.7;color:var(--txt-soft);}
+        .section--light .lp-card,.section--cream .lp-card{background:#fff;box-shadow:0 1px 2px rgba(42,28,74,.04);}
+        .section--light .lp-card:hover,.section--cream .lp-card:hover{box-shadow:0 18px 44px rgba(42,28,74,.09);}
+        .section--light .lp-card-ic,.section--cream .lp-card-ic{
+            background:rgba(79,70,152,.08);border-color:rgba(79,70,152,.18);color:var(--violet);}
+
+        /* Koraci (proces i faktori cene) - vertikalna linija sa tačkama.
+           Krug sa brojem i njegov hover su NAMERNO isti kao .step-dot na početnoj
+           (bg swap + scale + glow + isprekidan prsten), samo manji. Brojevi idu
+           1,2,3 - bez vodeće nule, jer ih ovde ima najviše pet. */
+        .lp-steps{list-style:none;margin:0;padding:0;max-width:900px;}
+        .lp-step{position:relative;display:grid;grid-template-columns:62px 1fr;gap:24px;padding-bottom:34px;
+            align-items:center;transition:transform .6s var(--ease),opacity .6s;}
+        .lp-step:last-child{padding-bottom:0;}
+        .lp-step-rail{position:relative;align-self:stretch;display:flex;align-items:center;justify-content:center;}
+        .lp-step-rail::before{content:'';position:absolute;left:50%;transform:translateX(-50%);
+            top:0;bottom:-34px;width:1px;background:var(--line-strong);}
+        .lp-step:first-child .lp-step-rail::before{top:50%;}
+        .lp-step:last-child .lp-step-rail::before{bottom:50%;}
+        .lp-step-n{position:relative;z-index:1;width:62px;height:62px;border-radius:50%;
+            display:flex;align-items:center;justify-content:center;
+            font-family:var(--ff-mono);font-size:20px;font-weight:700;color:var(--mint);
+            background:var(--bg-2);border:1px solid var(--line-strong);
+            transition:background .35s,border-color .35s,color .35s,transform .5s var(--ease),box-shadow .35s;}
+        .lp-step-n::before{content:'';position:absolute;inset:-4px;border-radius:50%;
+            border:1px dashed rgba(207,251,246,.18);opacity:0;transition:opacity .35s;}
+        .lp-step:hover .lp-step-n{background:var(--mint);color:var(--deep);border-color:var(--mint);
+            transform:scale(1.08);box-shadow:0 0 40px rgba(207,251,246,.35);}
+        .lp-step:hover .lp-step-n::before{opacity:1;}
+        .lp-step h3{font-size:clamp(17px,1.5vw,19px);font-weight:700;letter-spacing:-.018em;color:var(--txt);margin:0 0 8px;}
+        .lp-step p{font-size:15.5px;line-height:1.75;color:var(--txt-soft);}
+        .section--light .lp-step-n,.section--cream .lp-step-n{background:var(--deep);color:var(--mint);}
+        .section--light .lp-step:hover .lp-step-n,.section--cream .lp-step:hover .lp-step-n{
+            background:var(--mint);color:var(--deep);border-color:var(--deep);box-shadow:0 0 40px rgba(79,70,152,.35);}
+        .section--light .lp-step:hover .lp-step-n::before,.section--cream .lp-step:hover .lp-step-n::before{
+            border-color:rgba(79,70,152,.3);}
+
+        /* Delatnosti - chip-ovi. Hover je isti jezik kao krug sa brojem
+           (.lp-step-n): akcentna pozadina, taman tekst, blago podizanje i glow. */
+        .lp-chips{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:10px;}
+        .lp-chips li{display:inline-flex;align-items:center;gap:9px;padding:11px 18px;border-radius:100px;
+            border:1px solid var(--line-strong);background:rgba(255,255,255,.03);
+            font-size:14.5px;font-weight:600;color:var(--txt-soft);cursor:default;
+            transition:background .35s,border-color .35s,color .35s,transform .5s var(--ease),box-shadow .35s,opacity .6s;}
+        .lp-chips li::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--mint);flex-shrink:0;
+            transition:background .35s,transform .35s var(--ease);}
+        .lp-chips li:hover{background:var(--mint);border-color:var(--mint);color:var(--deep);
+            transform:translateY(-2px);box-shadow:0 0 30px rgba(207,251,246,.30);}
+        .lp-chips li:hover::before{background:var(--deep);transform:scale(1.25);}
+        .section--light .lp-chips li,.section--cream .lp-chips li{background:rgba(79,70,152,.05);border-color:rgba(79,70,152,.18);}
+        .section--light .lp-chips li::before,.section--cream .lp-chips li::before{background:var(--violet);}
+        .section--light .lp-chips li:hover,.section--cream .lp-chips li:hover{
+            background:var(--mint);border-color:var(--deep);color:var(--deep);box-shadow:0 0 30px rgba(79,70,152,.30);}
+        .section--light .lp-chips li:hover::before,.section--cream .lp-chips li:hover::before{background:var(--deep);}
+
+        /* Cena - koraci + izdvojena napomena */
+        .lp-split{display:grid;grid-template-columns:1.2fr .8fr;gap:clamp(28px,4vw,56px);align-items:start;}
+        @media(max-width:900px){.lp-split{grid-template-columns:1fr;}}
+        /* Ne koristi position:sticky - kartica stoji na mestu dok se skroluje. */
+        .lp-note{padding:clamp(26px,2.6vw,36px);border:1px solid var(--line);border-radius:22px;
+            background:rgba(255,255,255,.03);}
+        .lp-note h3{font-size:clamp(18px,1.6vw,21px);font-weight:700;letter-spacing:-.02em;color:var(--txt);margin-bottom:14px;}
+        .lp-note p{font-size:15.5px;line-height:1.75;color:var(--txt-soft);margin-bottom:24px;}
+        .section--light .lp-note,.section--cream .lp-note{background:#fff;box-shadow:0 20px 50px rgba(42,28,74,.09);}
+        .lp-btns{display:flex;flex-wrap:wrap;gap:12px;}
+        .lp-btns .btn{flex:1 1 auto;}
+        .section--light .btn--ghost:hover,.section--cream .btn--ghost:hover{border-color:var(--violet);color:var(--violet);}
+
+    </style>
+HTML;
+
+require __DIR__ . '/partials/head.php';
+require __DIR__ . '/partials/header.php';
+?>
+
+<!-- HERO: tekst + slika -->
+<header class="lp-hero">
+    <div class="lp-hero-glow" aria-hidden="true"></div>
+    <div class="container">
+        <div class="lp-grid">
+            <div>
+                <nav class="lp-crumb" aria-label="<?= $lang === 'sr' ? 'Putanja' : 'Breadcrumb' ?>">
+                    <a href="<?= $home ?>"><?= htmlspecialchars($P['crumb_home']) ?></a><span>/</span>
+                    <span><?= htmlspecialchars($fill($P['h1'])) ?></span>
+                </nav>
+                <div class="lp-badge"><span class="dot"></span> <?= htmlspecialchars($fill($c['badge'] ?? $P['badge'])) ?></div>
+                <h1 class="lp-h1"><?= strtr(htmlspecialchars($P['h1']), ['{name}' => '<em>' . htmlspecialchars($NAME) . '</em>']) ?></h1>
+                <p class="lp-lead"><?= htmlspecialchars($c['intro']) ?></p>
+                <div class="lp-actions">
+                    <?php /* Konkretan poziv na akciju (2026-10-22) umesto „Kontakt“ / „Pročitajte više“.
+                             Tekstovi su KRATKI namerno: na telefonu dugmad stoje jedno pored drugog
+                             (~150px), pa duži tekst („Zatražite besplatnu ponudu“) ne bi stao. */ ?>
+                    <a href="#contact" class="btn btn--violet is-magnetic"><?= vug_icon('chat-left-text') ?> <?= htmlspecialchars($t['nav_cta']) ?></a>
+                    <a href="tel:<?= $phone_clean ?>" class="btn btn--blue is-magnetic"><?= vug_icon('telephone') ?> <?= htmlspecialchars($U['cta_phone']) ?></a>
+                </div>
+            </div>
+            <div class="lp-figure">
+                <!-- LCP element prvog ekrana: NE sme loading="lazy"; fetchpriority ga diže na vrh reda. -->
+                <img src="<?= $base ?>/img/<?= $hero_img ?>" width="640" height="480" alt="<?= htmlspecialchars($og_image_alt) ?>" fetchpriority="high" decoding="async">
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- TEKST (svetla pozadina za kontrast sa hero-om) -->
+<!-- id="tekst" (ne "kontakt") - cilj je dugmeta "Pročitajte više", ne kontakt. -->
+<section class="section section--cream" id="tekst" aria-labelledby="tekst-title">
+    <div class="container">
+        <div class="s-head reveal">
+            <div class="s-index"><strong>01</strong><span class="line"></span><span><?= htmlspecialchars($P['sec_eyebrow']) ?></span></div>
+            <h2 class="s-title" id="tekst-title"><?= htmlspecialchars($c['sec_h2']) ?> <em>-</em></h2>
+        </div>
+
+        <div class="lp-cols reveal">
+            <div class="lp-prose">
+                <p><?= $c['p1'] ?></p>
+                <p><?= $c['p2'] ?></p>
+                <p><?= $c['p3'] ?></p>
+                <p><?= $c['p4'] ?></p>
+            </div>
+
+            <aside class="lp-side">
+                <div class="lp-side-h"><span class="lp-side-t"><?= $P['side_h'] ?></span></div>
+                <ul class="lp-check">
+                    <?php foreach ($c['checks'] as $ch): ?>
+                    <li>
+                        <span class="lp-ic"><?= vug_icon($ch[0]) ?></span>
+                        <span class="lp-ct"><strong><?= htmlspecialchars($ch[1]) ?></strong><small><?= htmlspecialchars($ch[2]) ?></small></span>
+                    </li>
+                    <?php endforeach; ?>
+                </ul>
+            </aside>
+        </div>
+    </div>
+</section>
+
+<?php
+/* ══════════════════════════════════════════════════════════════════════════
+   PROŠIRENE SEKCIJE (SEO sadržaj po gradu) - renderuju se samo ako u
+   php/landing-content.php postoji sadržaj za ovaj grad i uslugu. Svaka
+   sekcija se pojavljuje nezavisno, po prisustvu svog ključa, pa novi grad
+   ili usluga ne traže izmenu prikaza - samo dopunu sadržaja.
+
+   Ritam pozadina prati početnu (tamno → svetlo → tamno), a POSLEDNJA sekcija
+   je uvek svetla, jer je futer već taman.
+   ══════════════════════════════════════════════════════════════════════════ */
+// Numeracija se nastavlja na sekciju "01" iznad i broji SAMO renderovane sekcije.
+// Stoji IZNAD `if`-a jer kontakt sekcija na dnu ide i kad nema $X.
+$sn  = 1;
+$num = function () use (&$sn) { return str_pad((string)(++$sn), 2, '0', STR_PAD_LEFT); };
+
+if (!empty($X)):
+
+?>
+
+<?php if (!empty($X['serv'])): ?>
+<!-- USLUGE -->
+<section class="section" id="usluge" aria-labelledby="usluge-title">
+    <div class="container">
+        <div class="s-head reveal">
+            <div class="s-index"><strong><?= $num() ?></strong><span class="line"></span><span><?= htmlspecialchars($U['serv_eyebrow']) ?></span></div>
+            <h2 class="s-title" id="usluge-title"><?= $X['serv_h2'] ?></h2>
+            <p class="s-lead"><?= $X['serv_lead'] ?></p>
+        </div>
+        <div class="lp-cards stagger">
+            <?php foreach ($X['serv'] as $s): ?>
+            <article class="lp-card">
+                <span class="lp-card-ic"><?= vug_icon($s[0]) ?></span>
+                <h3><?= htmlspecialchars($s[1]) ?></h3>
+                <p><?= $s[2] ?></p>
+            </article>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</section>
+<?php endif; ?>
+
+<?php if (!empty($X['proc'])): ?>
+<!-- PROCES -->
+<section class="section section--light" id="proces" aria-labelledby="proces-title">
+    <div class="container">
+        <div class="s-head reveal">
+            <div class="s-index"><strong><?= $num() ?></strong><span class="line"></span><span><?= htmlspecialchars($U['proc_eyebrow']) ?></span></div>
+            <h2 class="s-title" id="proces-title"><?= $X['proc_h2'] ?></h2>
+            <p class="s-lead"><?= $X['proc_lead'] ?></p>
+        </div>
+        <ol class="lp-steps stagger">
+            <?php foreach ($X['proc'] as $pi => $st): ?>
+            <li class="lp-step">
+                <span class="lp-step-rail"><span class="lp-step-n"><?= $pi + 1 ?></span></span>
+                <div>
+                    <h3><?= htmlspecialchars($st[0]) ?></h3>
+                    <p><?= $st[1] ?></p>
+                </div>
+            </li>
+            <?php endforeach; ?>
+        </ol>
+    </div>
+</section>
+<?php endif; ?>
+
+<?php if (!empty($X['ind'])): ?>
+<!-- DELATNOSTI + POKRIVENA PODRUČJA -->
+<section class="section" id="delatnosti" aria-labelledby="delatnosti-title">
+    <div class="container">
+        <div class="s-head reveal">
+            <div class="s-index"><strong><?= $num() ?></strong><span class="line"></span><span><?= htmlspecialchars($U['ind_eyebrow']) ?></span></div>
+            <h2 class="s-title" id="delatnosti-title"><?= $X['ind_h2'] ?></h2>
+            <p class="s-lead"><?= $X['ind_lead'] ?></p>
+        </div>
+        <ul class="lp-chips stagger">
+            <?php foreach ($X['ind'] as $in): ?>
+            <li><?= htmlspecialchars($in) ?></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+</section>
+<?php endif; ?>
+
+<?php if (!empty($X['price'])): ?>
+<!-- CENA -->
+<section class="section section--cream" id="cena" aria-labelledby="cena-title">
+    <div class="container">
+        <div class="s-head reveal">
+            <div class="s-index"><strong><?= $num() ?></strong><span class="line"></span><span><?= htmlspecialchars($U['price_eyebrow']) ?></span></div>
+            <h2 class="s-title" id="cena-title"><?= $X['price_h2'] ?></h2>
+            <p class="s-lead"><?= $X['price_lead'] ?></p>
+        </div>
+        <div class="lp-split">
+            <ol class="lp-steps stagger">
+                <?php foreach ($X['price'] as $ci => $pf): ?>
+                <li class="lp-step">
+                    <span class="lp-step-rail"><span class="lp-step-n"><?= $ci + 1 ?></span></span>
+                    <div>
+                        <h3><?= htmlspecialchars($pf[0]) ?></h3>
+                        <p><?= $pf[1] ?></p>
+                    </div>
+                </li>
+                <?php endforeach; ?>
+            </ol>
+            <aside class="lp-note reveal">
+                <h3><?= htmlspecialchars($U['price_note_h']) ?></h3>
+                <p><?= $X['price_note'] ?></p>
+                <div class="lp-btns">
+                    <a href="#contact" class="btn btn--violet is-magnetic"><?= vug_icon('send-fill') ?> <?= htmlspecialchars($U['cta_primary']) ?></a>
+                    <a href="tel:<?= $phone_clean ?>" class="btn btn--ghost"><?= vug_icon('telephone') ?> <?= htmlspecialchars($U['cta_phone']) ?></a>
+                </div>
+            </aside>
+        </div>
+    </div>
+</section>
+<?php endif; ?>
+
+<?php if (!empty($X['rev'])):
+    // ŠTA KAŽU KLIJENTI - ista sekcija kao na početnoj (partials/testimonials.php):
+    // traka sa svim recenzijama. Tamna pozadina zbog ritma (cena cream → ovde
+    // tamno → FAQ cream); .t-card ima i tamnu i svetlu varijantu.
+    $tst_num   = $num();
+    $tst_class = 'section';
+    require __DIR__ . '/partials/testimonials.php';
+endif; ?>
+
+<?php if (!empty($X['faq'])): ?>
+<!-- ČESTA PITANJA - isti markup kao #faq na početnoj; sadržaj je i u FAQPage
+     markup-u (JSON-LD iznad), pa Google vidi tačno ono što i korisnik.
+     Kad iznad stoji tamna sekcija „Šta kažu klijenti“, FAQ prelazi na cream
+     da se dve tamne sekcije ne spoje (ritam: cena cream → recenzije tamno →
+     FAQ cream → kontakt svetlo). -->
+<section class="section<?= !empty($X['rev']) ? ' section--cream' : '' ?>" id="pitanja" aria-labelledby="pitanja-title">
+    <div class="container">
+        <div class="s-head s-head--center reveal">
+            <div class="s-index" style="justify-content:center;"><strong><?= $num() ?></strong><span class="line"></span><span><?= htmlspecialchars($U['faq_eyebrow']) ?></span></div>
+            <h2 class="s-title" id="pitanja-title"><?= $X['faq_h2'] ?></h2>
+            <p class="s-lead"><?= $X['faq_lead'] ?></p>
+        </div>
+        <div class="faq-cards stagger">
+            <?php foreach ($X['faq'] as $fi => $f): ?>
+            <details class="faq-card"<?= $fi === 0 ? ' open' : '' ?>>
+                <summary class="faq-card-summary">
+                    <div class="faq-card-head">
+                        <span class="faq-card-num"><?= str_pad((string)($fi + 1), 2, '0', STR_PAD_LEFT) ?></span>
+                        <span class="faq-card-ic"><?= vug_icon($f[0]) ?></span>
+                    </div>
+                    <h3 class="faq-card-q"><?= htmlspecialchars($f[1]) ?></h3>
+                    <span class="faq-card-toggle" aria-hidden="true"></span>
+                </summary>
+                <p class="faq-card-a"><?= $f[2] ?></p>
+            </details>
+            <?php endforeach; ?>
+        </div>
+
+    </div>
+</section>
+<?php endif; ?>
+
+<?php endif; /* !empty($X) */ ?>
+
+<?php
+/* KONTAKT - isti markup kao na početnoj, iz partials/contact.php. Forma postoji
+   u JEDNOM fajlu; ovde se samo uključuje i dobije sledeći broj sekcije. */
+$contact_num = $num();
+require __DIR__ . '/partials/contact.php';
+?>
+
+<?php require __DIR__ . '/partials/footer.php'; ?>
