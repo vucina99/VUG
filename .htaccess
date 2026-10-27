@@ -84,12 +84,9 @@ ErrorDocument 404 /404.php
 
     # Lokalne landing stranice (izrada web sajta po gradovima) -> landing.php
     # EN varijante prvo (specifičnije rute), pa SR.
-    # Pančevo (2026-10-26): jednostavna verzija (hero + tekst) u landing-web-pancevo.php.
-    # Proširena verzija je u landing.php i u _arhiva/izrada-web-sajta-pancevo-2026-10-26/ -
-    # za vraćanje ova dva pravila prebaciti na landing.php?loc=pancevo(&lang=en).
-    RewriteRule ^en/izrada-web-sajta-pancevo/?$ landing-web-pancevo.php?lang=en [L,QSA]
+    RewriteRule ^en/izrada-web-sajta-pancevo/?$ landing.php?loc=pancevo&lang=en [L,QSA]
     RewriteRule ^en/izrada-web-sajta-beograd/?$ landing.php?loc=beograd&lang=en [L,QSA]
-    RewriteRule ^izrada-web-sajta-pancevo/?$    landing-web-pancevo.php [L,QSA]
+    RewriteRule ^izrada-web-sajta-pancevo/?$    landing.php?loc=pancevo [L,QSA]
     RewriteRule ^izrada-web-sajta-beograd/?$    landing.php?loc=beograd [L,QSA]
 
     # Vođenje društvenih mreža po gradovima -> landing.php (svc=social)

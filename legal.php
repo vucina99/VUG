@@ -144,7 +144,7 @@ $phone_clean = preg_replace('/\s+/', '', $t['contact_info_phone']);
 $doc_slugs   = ['privacy' => 'politika-privatnosti', 'terms' => 'uslovi-koriscenja', 'cookies' => 'politika-kolacica'];
 $slug        = $doc_slugs[$doc];
 
-$meta_title       = $page['title'] . ' - VUG';
+$meta_title       = $page['title'] . ' | VUG Digital Agency';
 // Meta description ne sme da sadrži %EMAIL% token (ni samu adresu) — izbacujemo
 // celu rečenicu u kojoj se nalazi; opis i tako treba da bude kratak.
 $meta_description = trim(preg_replace('/\s*[^.]*%EMAIL%[^.]*\.\s*/u', ' ', $page['intro']));

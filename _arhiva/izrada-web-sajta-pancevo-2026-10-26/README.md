@@ -8,6 +8,10 @@ Sadržaj sačuvane verzije: hero (dugmad „Pošaljite upit“ + „Pozovite odm
 `01` Zašto VUG → `02` usluge → `03` proces → `04` delatnosti → `05` cena →
 `06` recenzije (traka) → `07` česta pitanja (+ FAQPage JSON-LD) → `08` kontakt forma.
 
+> **2026-10-27: proširena verzija je VRAĆENA** (rute ponovo idu na `landing.php`,
+> `landing-web-pancevo.php` obrisan - jednostavna verzija je u commit-u `ef90fae`).
+> Ova arhiva ostaje kao rezervna kopija.
+
 ## Fajlovi
 
 - `landing.php` - kontroler kakav je bio (opslužuje svih 12 landing stranica).

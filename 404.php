@@ -18,7 +18,7 @@ if ($lang === 'en') $home = $base . '/en';
 $phone_clean = preg_replace('/\s+/', '', $t['contact_info_phone']);
 
 $copy = $lang === 'sr' ? [
-    'title'    => 'Stranica nije pronađena - VUG',
+    'title'    => 'Stranica nije pronađena | VUG Digital Agency',
     'eyebrow'  => 'Greška 404 · Stranica ne postoji',
     'h1'       => 'Ova stranica se izgubila u digitalnom svemiru',
     'lead'     => 'Link koji ste pratili je možda zastareo, preimenovan ili nikada nije ni postojao. Bez brige - vratimo Vas na pravi put.',
@@ -30,7 +30,7 @@ $copy = $lang === 'sr' ? [
     'faq'      => 'Česta pitanja',
     'contact2' => 'Kontakt',
 ] : [
-    'title'    => 'Page not found - VUG',
+    'title'    => 'Page not found | VUG Digital Agency',
     'eyebrow'  => 'Error 404 · Page not found',
     'h1'       => 'This page got lost in the digital universe',
     'lead'     => 'The link you followed may be outdated, renamed, or never existed. No worries - let’s get you back on track.',
