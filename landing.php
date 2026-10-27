@@ -142,7 +142,7 @@ $CITY_SOCIAL = [
                 ['tag', 'Kalendar objava', 'Mesečni plan sadržaja i redovno objavljivanje'],
                 ['palette2', 'Dizajn vizuala', 'Grafika, priče i reels koji privlače pažnju'],
                 ['chat-dots', 'Komunikacija sa pratiocima', 'Odgovaramo na poruke i komentare umesto Vas'],
-                ['cash-coin', 'Oglašavanje (Meta Ads)', 'Ciljane kampanje koje dovode kupce, ne samo lajkove'],
+                ['cash-coin', 'Oglašavanje (Meta Ads)', 'Ciljane kampanje usmerene na nove kupce i upite'],
                 ['graph-up', 'Mesečni izveštaji', 'Jasni rezultati i preporuke za sledeći korak'],
             ],
         ],
@@ -160,7 +160,7 @@ $CITY_SOCIAL = [
                 ['tag', 'Content plan & posting', 'A monthly content plan and consistent posting'],
                 ['palette2', 'Visual design', 'Graphics, stories and reels that grab attention'],
                 ['chat-dots', 'Community management', 'We reply to messages and comments for you'],
-                ['cash-coin', 'Advertising (Meta Ads)', 'Targeted campaigns that bring customers, not just likes'],
+                ['cash-coin', 'Advertising (Meta Ads)', 'Targeted campaigns focused on new customers and enquiries'],
                 ['graph-up', 'Monthly reports', 'Clear results and recommendations for the next step'],
             ],
         ],
@@ -428,6 +428,16 @@ $abs_en      = $SITE_URL . '/en/' . $slug;
 
 $canonical  = $lang === 'en' ? $abs_en : $abs_sr;
 $href_other = $lang === 'en' ? $url_sr_page : $url_en_page;
+
+// Direktan pristup /landing.php?... -> 301 na čist URL (2026-10-27). Canonical je
+// to već pokrivao, ali je /landing.php vraćao 200 za bilo koji (i nepostojeći) loc/svc,
+// pa je Google imao dodatne adrese iste stranice. Ostali parametri (utm_*) se prenose.
+if (preg_match('#/landing\.php$#i', parse_url($req, PHP_URL_PATH) ?? '')) {
+    $qs = $_GET;
+    unset($qs['loc'], $qs['svc'], $qs['lang']);
+    header('Location: ' . ($lang === 'en' ? $url_en_page : $url_sr_page) . ($qs ? '?' . http_build_query($qs) : ''), true, 301);
+    exit;
+}
 $home       = $lang === 'en' ? $base . '/en' : ($base === '' ? '/' : $base . '/');
 $og_image   = $SITE_URL . '/img/og-image.png';
 

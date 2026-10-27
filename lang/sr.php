@@ -99,7 +99,7 @@ return [
 
     // Process
     'process_eyebrow' => 'Naš proces',
-    'process_title' => 'Od prvog razgovora do live projekta',
+    'process_title' => 'Od prvog razgovora do lansiranja projekta',
     'process_subtitle' => 'Strukturiran put koji čini saradnju predvidljivom i bez stresa.',
     'process_1_title' => 'Razgovor',
     'process_1_desc' => 'Slušamo. Razumemo Vaš biznis, ciljeve, publiku i konkurenciju.',

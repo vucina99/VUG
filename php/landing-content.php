@@ -156,7 +156,7 @@ return [
 ],
 
 'price_h2'   => 'Koliko košta izrada web sajta u Pančevu <em>-</em>',
-'price_lead' => 'Pošten odgovor je: zavisi od toga šta sajt treba da radi. Umesto cifre „od oka“, evo pet stvari koje najviše utiču na cenu - da znate na čemu se gradi ponuda koju dobijate.',
+'price_lead' => 'Cena izrade zavisi od toga šta sajt treba da omogući Vašem poslovanju. Umesto paušalne cifre, navodimo pet stavki koje na nju najviše utiču - kako biste unapred znali na čemu se zasniva ponuda koju dobijate.',
 'price' => [
     ['Obim sajta',              'Jednostrana prezentacija i sajt sa dvadeset podstranica nisu isti posao. Broj stranica, jezika i tipova sadržaja je prva stavka u svakoj ponudi.'],
     ['Dizajn po meri',          'Cena zavisi od kompleksnosti dizajna i elemenata koji se izrađuju posebno za Vaš brend. Što je dizajn detaljniji i individualniji, potrebno je više vremena za njegovu izradu i implementaciju.'],
@@ -164,7 +164,7 @@ return [
     ['Sadržaj',                 'Ako imate spremne tekstove i fotografije, idemo brže. Ako nemate, pišemo tekstove i pripremamo vizuale, pa se to obračunava posebno.'],
     ['Šta ide posle lansiranja','Hosting, domen i budžet za oglašavanje ne ulaze u našu naknadu - plaćate ih direktno provajderu kod kog ih uzimate. Okvirne iznose za te stavke dobijate unapred, uz ponudu.'],
 ],
-'price_note' => 'Ne naplaćujemo „po satu, videćemo koliko ispadne“. Posle kratkog razgovora - telefonom ili uživo - dobijate pisanu ponudu sa fiksnom cenom, rokom i tačnim spiskom onoga što ulazi u posao. Ponuda stiže u roku od 24 sata, besplatna je i ne stvara nikakve obaveze prema nama.',
+'price_note' => 'Ne radimo po principu otvorene satnice. Posle kratkog razgovora - telefonom ili uživo - dobijate pisanu ponudu sa fiksnom cenom, rokom i tačnim spiskom onoga što ulazi u posao. Ponuda stiže u roku od 24 sata, besplatna je i ne obavezuje Vas na dalju saradnju.',
 
 'rev' => true,   // sekcija „Šta kažu klijenti“ (partials/testimonials.php)
 
@@ -184,7 +184,7 @@ return [
     ['arrow-repeat',   'Da li radite redizajn postojećeg sajta?',
                        'Radimo, i to je čest posao. Kod redizajna pazimo da <strong>ne izgubite pozicije koje već imate</strong>: prenosimo sadržaj, zadržavamo adrese stranica ili postavljamo preusmerenja, i tek onda menjamo dizajn, brzinu i strukturu. Pre početka Vam kažemo šta na sadašnjem sajtu vredi zadržati, a šta ne.'],
     ['person',         'Ko je vlasnik sajta, domena i hostinga?',
-                       'Vi. Domen i hosting se registruju <strong>na Vaše ime i Vašu firmu</strong>, a pristupne podatke dobijate po lansiranju. Sajt je Vaše vlasništvo i u svakom trenutku možete da ga prenesete kome želite - ne držimo klijente „zaključane“ kod sebe.'],
+                       'Vi. Domen i hosting se registruju <strong>na Vaše ime i Vašu firmu</strong>, a pristupne podatke dobijate po lansiranju. Sajt je Vaše vlasništvo i u svakom trenutku možete da ga prenesete kome želite, bez ikakvih ograničenja sa naše strane.'],
     ['phone',          'Da li sajt radi na mobilnom telefonu?',
                        'Radi, i to je prioritet, a ne dodatak. Veći deo posetilaca lokalnim sajtovima dolazi sa telefona, pa <strong>svaku stranicu prvo proveravamo na telefonu</strong>, pa onda na tabletu i računaru. Broj telefona je na dodir, mape se otvaraju u jednom kliku, a kontakt forma se popunjava lako i prilagođena je posetiocima sajta.'],
 ],
@@ -232,7 +232,7 @@ return [
 ],
 
 'price_h2'   => 'How much does a website in Pančevo cost <em>-</em>',
-'price_lead' => 'The honest answer is: it depends on what the site has to do. Instead of a number pulled out of thin air, here are the five things that affect the price most - so you know what the quote you receive is built on.',
+'price_lead' => 'The cost depends on what the website needs to do for your business. Rather than quoting a flat figure, we set out the five factors that influence it most - so you know in advance what your quote is based on.',
 'price' => [
     ['Scope of the site',   'A one-page presentation and a site with twenty subpages are not the same job. The number of pages, languages and content types is the first item in every quote.'],
     ['Custom design',       'The price depends on the complexity of the design and on the elements built specifically for your brand. The more detailed and individual the design, the more time it takes to create and implement.'],
@@ -240,7 +240,7 @@ return [
     ['Content',             'If your texts and photos are ready, we move faster. If they aren’t, we write the copy and prepare the visuals, and that is quoted separately.'],
     ['What comes after launch', 'Hosting, the domain and the advertising budget are not included in our fee - you pay them directly to the provider you get them from. You receive the approximate amounts for those items in advance, with the quote.'],
 ],
-'price_note' => 'We don’t charge “by the hour, we’ll see how it turns out”. After a short conversation - by phone or in person - you receive a written quote with a fixed price, a deadline and an exact list of what the job includes. The quote arrives within 24 hours, is free of charge and creates no obligation towards us.',
+'price_note' => 'We don’t work on an open-ended hourly rate. After a short conversation - by phone or in person - you receive a written quote with a fixed price, a deadline and an exact list of what the job includes. The quote arrives within 24 hours, is free of charge and does not commit you to anything further.',
 
 'rev' => true,
 
@@ -260,7 +260,7 @@ return [
     ['arrow-repeat',   'Do you redesign existing websites?',
                        'We do, and it is a common job. With a redesign we make sure you <strong>don’t lose the positions you already have</strong>: we migrate the content, keep the page addresses or set up redirects, and only then change the design, the speed and the structure. Before we start we tell you what on your current site is worth keeping and what isn’t.'],
     ['person',         'Who owns the site, the domain and the hosting?',
-                       'You do. The domain and hosting are registered <strong>in your name and your company’s name</strong>, and you receive the access details at launch. The site is your property and you can move it to anyone you like at any time - we don’t keep clients locked in.'],
+                       'You do. The domain and hosting are registered <strong>in your name and your company’s name</strong>, and you receive the access details at launch. The site is your property and you can move it to anyone you like at any time, with no restrictions on our side.'],
     ['phone',          'Does the site work on mobile phones?',
                        'It does, and that is a priority rather than an add-on. Most visitors to local websites arrive from a phone, so <strong>we check every page on a phone first</strong>, then on tablet and desktop. The phone number is tap-to-call, maps open in one click, and the contact form is easy to fill in and adapted to your visitors.'],
 ],
@@ -329,7 +329,7 @@ return [
     ['briefcase',      'Koliko košta izrada web sajta u Beogradu?',
                        'Cena zavisi od obima, složenosti funkcionalnosti i toga da li je dizajn po meri. Zato ne objavljujemo cenovnik „od“ - on na beogradskom tržištu ionako ne znači ništa dok se ne zna šta sajt treba da radi. Posle kratkog razgovora dobijate <strong>pisanu ponudu sa fiksnom cenom, rokovima po fazama i spiskom svega što ulazi u posao</strong>, u roku od 24 sata.'],
     ['clock',          'Koliko traje izrada sajta?',
-                       'Prezentacioni sajt srednjeg obima najčešće je gotov za <strong>8 do 12 dana</strong>, a korporativni sajtovi, online prodavnice i web aplikacije mogu i duže, zavisno od obima i integracija. Rok delimo na faze sa tačnim datumima, pa u svakom trenutku znate dokle se stiglo i šta se čeka od Vas.'],
+                       'Za prezentacioni sajt srednjeg obima rok je obično <strong>8 do 12 dana</strong>, dok korporativni sajtovi, online prodavnice i web aplikacije mogu i duže, zavisno od obima i integracija. Rok delimo na faze sa tačnim datumima, pa u svakom trenutku znate dokle se stiglo i šta se čeka od Vas.'],
     ['star-fill',      'Po čemu se Vaš sajt razlikuje od jeftinih šablonskih rešenja?',
                        'Šablon je isti kod Vas i kod još nekoliko hiljada firmi koje su ga kupile, nosi kod koji Vam ne treba i zato se sporo učitava. Mi pišemo <strong>dizajn i kod po meri Vašeg posla</strong>: sajt je lakši, brži, prilagođen tome kako Vaši kupci zaista donose odluku i, što je najvažnije na beogradskom tržištu, ne liči ni na jedan drugi.'],
     ['code-slash',     'Da li radite i web aplikacije, ne samo prezentacione sajtove?',
@@ -405,7 +405,7 @@ return [
     ['briefcase',      'How much does a website in Belgrade cost?',
                        'The price depends on the scope, the complexity of the functionality and whether the design is custom. That is why we don’t publish a “starting from” price list - in the Belgrade market it means nothing until it is clear what the site has to do. After a short conversation you receive a <strong>written quote with a fixed price, deadlines per phase and a list of everything the job includes</strong>, within 24 hours.'],
     ['clock',          'How long does it take to build a website?',
-                       'A mid-sized brochure site is usually finished in <strong>8 to 12 days</strong>, while corporate sites, online stores and web applications can take longer, depending on the scope and the integrations. We split the timeline into phases with exact dates, so at any moment you know where things stand and what is waiting on you.'],
+                       'For a mid-sized brochure site the usual timeline is <strong>8 to 12 days</strong>, while corporate sites, online stores and web applications can take longer, depending on the scope and the integrations. We split the timeline into phases with exact dates, so at any moment you know where things stand and what is waiting on you.'],
     ['star-fill',      'How is your website different from cheap template solutions?',
                        'A template is identical for you and for the several thousand other companies that bought it, it carries code you don’t need and that is why it loads slowly. We write <strong>the design and the code to fit your business</strong>: the site is lighter, faster, built around how your customers actually decide and - most important in the Belgrade market - it looks like nothing else out there.'],
     ['code-slash',     'Do you build web applications too, not just brochure sites?',
@@ -443,7 +443,7 @@ return [
     ['palette2',       'Dizajn vizuala',               'Grafike, priče i korice u bojama Vašeg brenda. Profil posle par nedelja izgleda kao celina, a ne kao skup nepovezanih objava.'],
     ['play-fill',      'Snimanje i montaža',           'Dolazimo kod Vas i snimamo u radnji, salonu ili na terenu. Montažu, tekst i muziku radimo mi.'],
     ['chat-dots',      'Komunikacija sa pratiocima',         'Odgovaramo na komentare i poruke u radno vreme, tonom koji smo prethodno usaglasili. Sve što traži Vašu odluku prosleđujemo odmah.'],
-    ['cash-coin',      'Oglašavanje (Meta Ads)',       'Ciljane kampanje prema ljudima iz Pančeva i okoline - za posete radnji, poruke ili pozive, a ne za prazne lajkove.'],
+    ['cash-coin',      'Oglašavanje (Meta Ads)',       'Ciljane kampanje prema ljudima iz Pančeva i okoline, usmerene na posete radnji, poruke i pozive kao merljive rezultate.'],
     ['graph-up',       'Izveštaji i analitika',        'Svakog meseca dobijate brojeve koji nešto znače: doseg, nove pratioce, poruke i klikove, uz zaključak šta je dobro, a šta moramo da popravimo za sledeći mesec.'],
 ],
 
@@ -504,7 +504,7 @@ return [
     ['clock',     'Da li moram da potpišem dugoročan ugovor?',
                   'Ne. Saradnja ide iz meseca u mesec i možete je prekinuti kad god želite, uz najavu do kraja tekućeg meseca. <strong>Nalozi, objavljeni materijali i pristupni podaci ostaju Vaši</strong> - ne držimo klijente ugovorom nego rezultatom.'],
     ['graph-up',  'Kako znam da li se isplati?',
-                  'Svakog meseca dobijate izveštaj sa brojevima koji nešto znače: <strong>doseg, novi pratioci, poruke, klikovi ka sajtu i pozivi</strong>, uz kratak zaključak šta je radilo, a šta menjamo sledeći mesec. Bez „lajkova“ kao jedinog pokazatelja. Ako još nemate sajt na koji bi ti klikovi vodili, pogledajte kako radimo <a href="{lp_web_pancevo}">izradu web sajta u Pančevu</a>.'],
+                  'Svakog meseca dobijate izveštaj sa brojevima koji nešto znače: <strong>doseg, novi pratioci, poruke, klikovi ka sajtu i pozivi</strong>, uz kratak zaključak o tome šta je dalo rezultate i šta unapređujemo naredni mesec. Ako još nemate sajt na koji bi ti klikovi vodili, pogledajte kako radimo <a href="{lp_web_pancevo}">izradu web sajta u Pančevu</a>.'],
 ],
 'area_served' => ['Pančevo', 'Starčevo', 'Omoljica', 'Jabuka', 'Kačarevo', 'Dolovo', 'Opovo', 'Kovačica', 'Kovin', 'Alibunar', 'Vršac', 'Južnobanatski okrug', 'Beograd', 'Srbija'],
 ],
@@ -518,7 +518,7 @@ return [
     ['palette2',       'Visual design',            'Graphics, stories and covers in your brand colours. After a couple of weeks the profile looks like one piece, not a pile of unrelated posts.'],
     ['play-fill',      'Filming and editing',      'We come to you and film in your shop, salon or on site. Editing, captions and music are on us.'],
     ['chat-dots',      'Community management',     'We answer comments and messages during working hours, in the tone we agreed beforehand. Anything needing your decision is forwarded immediately.'],
-    ['cash-coin',      'Advertising (Meta Ads)',   'Targeted campaigns aimed at people in Pančevo and the surrounding area - for shop visits, messages or calls, not for empty likes.'],
+    ['cash-coin',      'Advertising (Meta Ads)',   'Targeted campaigns aimed at people in Pančevo and the surrounding area, focused on shop visits, messages and calls as measurable results.'],
     ['graph-up',       'Reports and analytics',    'Every month you get numbers that mean something: reach, new followers, messages and clicks, plus a conclusion on what is working and what we need to fix for next month.'],
 ],
 
@@ -579,7 +579,7 @@ return [
     ['clock',     'Do I have to sign a long-term contract?',
                   'No. The collaboration runs month to month and you can end it whenever you like, with notice by the end of the current month. <strong>The accounts, the published material and the access details stay yours</strong> - we keep clients through results, not contracts.'],
     ['graph-up',  'How do I know it’s worth it?',
-                  'Every month you receive a report with numbers that mean something: <strong>reach, new followers, messages, clicks to your website and calls</strong>, plus a short conclusion on what worked and what we change next month. No “likes” as the only metric. If you don’t yet have a website for those clicks to land on, see how we approach <a href="{lp_web_pancevo}">website development in Pančevo</a>.'],
+                  'Every month you receive a report with numbers that mean something: <strong>reach, new followers, messages, clicks to your website and calls</strong>, plus a short conclusion on what delivered results and what we will improve next month. If you don’t yet have a website for those clicks to land on, see how we approach <a href="{lp_web_pancevo}">website development in Pančevo</a>.'],
 ],
 'area_served' => ['Pančevo', 'Starčevo', 'Omoljica', 'Jabuka', 'Kačarevo', 'Dolovo', 'Opovo', 'Kovačica', 'Kovin', 'Alibunar', 'Vršac', 'South Banat District', 'Belgrade', 'Serbia'],
 ],

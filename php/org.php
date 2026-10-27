@@ -19,12 +19,15 @@
 const VUG_BRAND_NAME = 'VUG Digital Agency';
 const VUG_BRAND_ALT  = ['VUG', 'VUG Agency', 'VUG agencija'];
 
-// Profili na društvenim mrežama (sameAs). Link ka Google poslovnom profilu
-// (google.com/maps/place/... ili ?cid=) dodati ovde i u 'hasMap' kad bude poznat.
+// Profili na društvenim mrežama + Google poslovni profil (sameAs).
+// Poslovni profil je Knowledge Graph entitet /g/11nr8fvrkb - dobijen 2026-10-27
+// razrešavanjem linka contact_info_maps_url (share.google/...). kgmid URL je
+// stabilan; share.google je kratak link koji vodi na isti entitet.
 const VUG_SAME_AS = [
     'https://www.instagram.com/vugagency',
     'https://www.facebook.com/profile.php?id=61592111037904',
     'https://www.linkedin.com/company/vug-digital-agency/',
+    'https://www.google.com/search?kgmid=/g/11nr8fvrkb',
 ];
 
 function vug_org_schema(string $site_url, string $lang, string $phone_intl): array
@@ -49,7 +52,9 @@ function vug_org_schema(string $site_url, string $lang, string $phone_intl): arr
         ],
         // Tačne koordinate sedišta - brojevi, ne stringovi.
         'geo' => ['@type' => 'GeoCoordinates', 'latitude' => 44.8804099, 'longitude' => 20.6663928],
-        'hasMap' => 'https://www.google.com/maps/search/?api=1&query=44.8804099,20.6663928',
+        // Naziv + adresa, ne koordinate: sa koordinatama mapa pokaže samo pin, a
+        // sa nazivom Google otvori poslovni profil (isto pravilo kao ugrađena mapa).
+        'hasMap' => 'https://www.google.com/maps/search/?api=1&query=' . rawurlencode('VUG Digital Agency, Vojvođanska 12b, 26000 Pančevo'),
         // Agencija radi za celu Srbiju (Beograd i Pančevo su samo blaga ciljna
         // grupa) - zato Srbija, a ne „Worldwide“ ni jedan grad. Gradovi i okolna
         // mesta idu u areaServed na Service čvoru landing stranica.
