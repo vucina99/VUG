@@ -318,7 +318,7 @@ return [
     'form_err_recaptcha' => 'We could not verify that you are not a robot. Please refresh the page and try again.',
 
     // Footer
-    'footer_tagline' => 'VUG Digital Agency - a digital agency from Pančevo, dedicated to strategy, quality and measurable results.',
+    'footer_tagline' => 'VUG Digital Agency - a digital agency dedicated to strategy, quality and measurable results.',
     'footer_nav' => 'Navigation',
     'footer_services' => 'Useful links',
     'footer_company' => 'Agency',
