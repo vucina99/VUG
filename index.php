@@ -84,7 +84,7 @@ $faq_lp = function ($prefix) use ($lang) {
 };
 
 $faq_entities = [];
-for ($i = 1; $i <= 10; $i++) {
+for ($i = 1; $i <= 9; $i++) {
     $faq_entities[] = [
         '@type' => 'Question',
         'name' => $t["faq_{$i}_q"],
@@ -171,7 +171,7 @@ require __DIR__ . '/partials/head.php';
 <header class="hero" id="home">
     <div class="hero-glow" id="heroGlow" aria-hidden="true"></div>
     <div class="container position-relative">
-        <?php /* H1 = naziv brenda (hero_badge: „VUG Digitalna agencija · Pančevo“) + slogan („Gradimo brendove koji se pamte“).
+        <?php /* H1 = naziv brenda (hero_badge: „VUG Digitalna agencija“; „· Pančevo“ uklonjeno 2026-10-28) + slogan („Gradimo brendove koji se pamte“).
                  Brend MORA da bude u H1 početne - to je jedan od signala po kojima
                  Google bira naziv sajta i rangira brend pretrage („vug pančevo“).
                  Vizuelno se ništa ne menja: .hero-h1 je samo omotač, a delovi
@@ -285,7 +285,7 @@ require __DIR__ . '/partials/head.php';
                 <p class="about-quote" style="font-size: clamp(17px, 1.6vw, 21px); color: var(--txt-soft); font-weight: 400;">
                     <?= $t['about_p4'] ?>
                 </p>
-                <div class="about-attr">VUG Agency</div>
+                <div class="about-attr">VUG Digital Agency</div>
             </div>
 
             <div class="about-features stagger">
@@ -406,14 +406,13 @@ require __DIR__ . '/partials/testimonials.php';
             $faqs = [
                 ['icon' => 'bi-briefcase',    'q' => $t['faq_1_q'],  'a' => $t['faq_1_a']],
                 ['icon' => 'bi-cash-coin',    'q' => $t['faq_2_q'],  'a' => $t['faq_2_a']],
-                ['icon' => 'bi-clock',        'q' => $t['faq_3_q'],  'a' => $t['faq_3_a']],
-                ['icon' => 'bi-arrow-repeat', 'q' => $t['faq_4_q'],  'a' => $t['faq_4_a']],
-                ['icon' => 'bi-tools',        'q' => $t['faq_5_q'],  'a' => $t['faq_5_a']],
-                ['icon' => 'bi-chat-dots',    'q' => $t['faq_6_q'],  'a' => $t['faq_6_a']],
-                ['icon' => 'bi-diagram-3',    'q' => $t['faq_7_q'],  'a' => $t['faq_7_a']],
-                ['icon' => 'bi-graph-up',     'q' => $t['faq_8_q'],  'a' => $t['faq_8_a']],
-                ['icon' => 'bi-chat-left-text','q' => $t['faq_9_q'], 'a' => $t['faq_9_a']],
-                ['icon' => 'bi-geo-alt',      'q' => $t['faq_10_q'], 'a' => $t['faq_10_a']],
+                ['icon' => 'bi-arrow-repeat', 'q' => $t['faq_3_q'],  'a' => $t['faq_3_a']],
+                ['icon' => 'bi-tools',        'q' => $t['faq_4_q'],  'a' => $t['faq_4_a']],
+                ['icon' => 'bi-chat-dots',    'q' => $t['faq_5_q'],  'a' => $t['faq_5_a']],
+                ['icon' => 'bi-diagram-3',    'q' => $t['faq_6_q'],  'a' => $t['faq_6_a']],
+                ['icon' => 'bi-graph-up',     'q' => $t['faq_7_q'],  'a' => $t['faq_7_a']],
+                ['icon' => 'bi-chat-left-text','q' => $t['faq_8_q'], 'a' => $t['faq_8_a']],
+                ['icon' => 'bi-geo-alt',      'q' => $t['faq_9_q'], 'a' => $t['faq_9_a']],
             ];
             foreach ($faqs as $idx => $f):
                 $n = str_pad((string)($idx + 1), 2, '0', STR_PAD_LEFT);

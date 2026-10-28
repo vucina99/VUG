@@ -925,7 +925,8 @@ if (!empty($X)):
     // traka sa svim recenzijama. Tamna pozadina zbog ritma (cena cream → ovde
     // tamno → FAQ cream); .t-card ima i tamnu i svetlu varijantu.
     $tst_num   = $num();
-    $tst_class = 'section';
+    $tst_class  = 'section';
+    $tst_izrada = ($svc === 'web');   // „izradio/izradila sajt“ samo na izradi web sajta
     require __DIR__ . '/partials/testimonials.php';
 endif; ?>
 

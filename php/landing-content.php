@@ -321,6 +321,8 @@ return [
 ],
 'price_note' => 'Nakon uvodnog razgovora - uživo u Beogradu ili preko video poziva - dobijate pisanu ponudu sa fiksnom cenom, rokovima po fazama i tačnim spiskom onoga što ulazi u posao. Ponuda stiže u roku od 24 sata, besplatna je, napisana tako da možete da je uporedite sa bilo kojom drugom, i ne stvara nikakve obaveze prema nama.',
 
+'rev' => true,   // sekcija „Šta kažu klijenti“ (partials/testimonials.php) - zahtev korisnika 2026-10-28
+
 'faq_h2'   => 'Česta pitanja o izradi sajta u Beogradu <em>-</em>',
 'faq_lead' => 'Pitanja koja najčešće čujemo od beogradskih klijenata pre potpisivanja. Ako Vaše nije ovde, javite se - odgovaramo istog dana.',
 'faq' => [
@@ -396,6 +398,8 @@ return [
     ['What comes after launch', 'The cost of hosting, the domain and the advertising budget is not part of our fee and is paid directly to the providers you choose. You receive all the approximate costs in advance, together with the quote.'],
 ],
 'price_note' => 'After an introductory conversation - in person in Belgrade or over a video call - you receive a written quote with a fixed price, deadlines per phase and an exact list of what the job includes. The quote arrives within 24 hours, is free of charge, written so you can compare it with any other, and creates no obligation towards us.',
+
+'rev' => true,
 
 'faq_h2'   => 'Frequently asked questions about websites in Belgrade <em>-</em>',
 'faq_lead' => 'The questions we hear most often from Belgrade clients before signing. If yours isn’t here, get in touch - we reply the same day.',

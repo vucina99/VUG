@@ -11,6 +11,10 @@
  *   $tst_num    — broj sekcije ('04' na početnoj, $num() na landing stranici)
  *   $tst_class  — klase sekcije (pozadina se bira prema ritmu stranice;
  *                 .t-card ima i tamnu i svetlu varijantu)
+ *   $tst_izrada — opciono (true): „napravio/napravila sajt“ → „izradio/izradila“.
+ *                 Postavlja ga landing.php za svc=web (izrada web sajta Pančevo/
+ *                 Beograd). Početna namerno ima „napravio“, da ne ponavlja upit
+ *                 „izrada sajta“ koji pripada landing stranicama (2026-10-28).
  *
  * Recenzije NAMERNO nisu u JSON-LD-u (self-serving - vidi index.php).
  */
@@ -36,6 +40,19 @@
                     ['quote' => $t['testimonial_4_quote'], 'name' => $t['testimonial_4_name'], 'role' => $t['testimonial_4_role']],
                     ['quote' => $t['testimonial_8_quote'], 'name' => $t['testimonial_8_name'], 'role' => $t['testimonial_8_role']],
                 ];
+                // Zamene su TAČNE fraze iz lang/sr.php (ne samo glagol), pa se ne
+                // menja ništa drugo; EN tekst ih nema i ostaje isti.
+                if (!empty($tst_izrada)) {
+                    $izrada = [
+                        'kancelariju napravio websajt'           => 'kancelariju izradio websajt',
+                        'za nas napravila moderan i funkcionalan' => 'za nas izradila moderan i funkcionalan',
+                        'VUG nam je napravio websajt'            => 'VUG nam je izradio websajt',
+                        'Padel Pančevo napravila moderan'        => 'Padel Pančevo izradila moderan',
+                        'Vuk napravio naš sajt'                  => 'Vuk izradio naš sajt',
+                    ];
+                    foreach ($testimonials as &$tst) { $tst['quote'] = strtr($tst['quote'], $izrada); }
+                    unset($tst);
+                }
                 // Kartice su u HTML-u samo JEDNOM (2026-10-22). Drugi primerak za
                 // beskonačnu petlju pravi js/main.js (aria-hidden klon) - ranije je
                 // PHP ispisivao sve dvaput, pa je ~500 reči stajalo duplo u izvoru.
