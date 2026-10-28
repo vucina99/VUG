@@ -49,6 +49,7 @@ if (!$is_sr) {
 $og_image_alt  = $og_image_alt  ?? ('VUG - ' . ($is_sr ? 'Digitalna agencija' : 'Digital Agency'));
 $css_v         = @filemtime(dirname(__DIR__) . '/css/style.css');
 $GA_ID         = 'G-W07YT5991W';
+$CLARITY_ID    = 'z4sinp8pww';
 
 /* Critical CSS (nav + hero) se ubacuje INLINE, pa prvi ekran nema ni jedan
    blokirajući zahtev; ostatak (css/style.css) se učitava non-blocking.
@@ -142,23 +143,29 @@ $critical_css = str_replace('../fonts/', $base . '/fonts/', $critical_css);
          zahteva. Izvor je css/critical.css; ne pisati stilove direktno ovde. -->
     <style><?= $critical_css ?></style>
 
-    <!-- Google Analytics — gtag.js se učitava LENJO (posle load-a ili na prvu
-         interakciju), pa ne troši propusni opseg na putu do prvog iscrtavanja.
-         dataLayer je queue: gtag() pozivi ispod se izvrše kad biblioteka stigne. -->
+    <!-- Google Analytics + Microsoft Clarity — gtag.js i clarity.js se učitavaju
+         LENJO (posle load-a ili na prvu interakciju), pa ne troše propusni opseg
+         na putu do prvog iscrtavanja. dataLayer i clarity.q su queue: pozivi pre
+         dolaska biblioteke se izvrše kad ona stigne. -->
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', '<?= $GA_ID ?>');
+        window.clarity = window.clarity || function () { (window.clarity.q = window.clarity.q || []).push(arguments); };
         (function () {
             var done = false;
+            function add(src) {
+                var s = document.createElement('script');
+                s.async = true;
+                s.src = src;
+                document.head.appendChild(s);
+            }
             function load() {
                 if (done) return;
                 done = true;
-                var s = document.createElement('script');
-                s.async = true;
-                s.src = 'https://www.googletagmanager.com/gtag/js?id=<?= $GA_ID ?>';
-                document.head.appendChild(s);
+                add('https://www.googletagmanager.com/gtag/js?id=<?= $GA_ID ?>');
+                add('https://www.clarity.ms/tag/<?= $CLARITY_ID ?>');
             }
             function afterLoad() { setTimeout(load, 1000); }
             if (document.readyState === 'complete') afterLoad();
