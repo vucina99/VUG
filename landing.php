@@ -760,7 +760,7 @@ require __DIR__ . '/partials/header.php';
                              Tekstovi su KRATKI namerno: na telefonu dugmad stoje jedno pored drugog
                              (~150px), pa duži tekst („Zatražite besplatnu ponudu“) ne bi stao. */ ?>
                     <a href="#contact" class="btn btn--violet is-magnetic"><?= vug_icon('chat-left-text') ?> <?= htmlspecialchars($t['nav_cta']) ?></a>
-                    <a href="tel:<?= $phone_clean ?>" class="btn btn--blue is-magnetic"><?= vug_icon('telephone') ?> <?= htmlspecialchars($U['cta_phone']) ?></a>
+                    <a href="tel:+381659377030" class="btn btn--blue is-magnetic"><?= vug_icon('telephone') ?> <?= htmlspecialchars($U['cta_phone']) ?></a>
                 </div>
             </div>
             <div class="lp-figure">
@@ -912,7 +912,7 @@ if (!empty($X)):
                 <p><?= $X['price_note'] ?></p>
                 <div class="lp-btns">
                     <a href="#contact" class="btn btn--violet is-magnetic"><?= vug_icon('send-fill') ?> <?= htmlspecialchars($U['cta_primary']) ?></a>
-                    <a href="tel:<?= $phone_clean ?>" class="btn btn--ghost"><?= vug_icon('telephone') ?> <?= htmlspecialchars($U['cta_phone']) ?></a>
+                    <a href="tel:+381659377030" class="btn btn--ghost"><?= vug_icon('telephone') ?> <?= htmlspecialchars($U['cta_phone']) ?></a>
                 </div>
             </aside>
         </div>

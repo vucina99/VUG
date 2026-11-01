@@ -243,7 +243,7 @@ require __DIR__ . '/partials/header.php';
                     <?= htmlspecialchars($t['cta_primary']) ?>
                     <?= vug_icon('arrow-up-right') ?>
                 </a>
-                <a href="tel:<?= $phone_clean ?>" class="btn btn--ghost">
+                <a href="tel:+381659377030" class="btn btn--ghost">
                     <?= vug_icon('telephone-fill') ?>
                     <?= htmlspecialchars($t['contact_info_phone']) ?>
                 </a>

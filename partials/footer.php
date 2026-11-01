@@ -59,7 +59,7 @@ $root         = dirname(__DIR__);
                 <div class="footer-h"><?= $t['footer_contact'] ?></div>
                 <ul class="footer-list">
                     <li><?= vug_icon('envelope') ?><a href="<?= vug_email_obf('mailto:' . $t['contact_info_email']) ?>"><?= vug_email_obf($t['contact_info_email']) ?></a></li>
-                    <li><?= vug_icon('telephone') ?><a href="tel:<?= $phone_clean ?>"><?= $t['contact_info_phone'] ?></a></li>
+                    <li><?= vug_icon('telephone') ?><a href="tel:+381659377030"><?= $t['contact_info_phone'] ?></a></li>
                     <li><?= vug_icon('geo-alt') ?><a href="<?= htmlspecialchars($t['contact_info_maps_url']) ?>" target="_blank" rel="noopener" aria-label="<?= htmlspecialchars($t['contact_info_maps_aria']) ?>"><?= $t['contact_info_location'] ?></a></li>
                 </ul>
             </div>
