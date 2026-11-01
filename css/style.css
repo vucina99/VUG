@@ -1258,6 +1258,7 @@ textarea.form-control { resize: vertical; min-height: 110px; padding-top: 14px; 
     gap: 14px;
 }
 .info-cards li {
+    position: relative;
     display: flex;
     align-items: center;
     gap: 18px;
@@ -1321,9 +1322,27 @@ textarea.form-control { resize: vertical; min-height: 110px; padding-top: 14px; 
 .section--cream .info-cards li > div > span:not(.info-label) {
     color: var(--deep);
 }
-.info-cards a:hover { color: var(--mint); }
-.section--light .info-cards a:hover,
-.section--cream .info-cards a:hover { color: var(--violet); }
+/* Cela kartica je klikabilna: ::after linka se rasteže preko celog <li>
+   („stretched link“), pa klik bilo gde na kartici otvara email/telefon/mapu.
+   Link ostaje jedan <a> sa svojim tekstom — bez duplih linkova i bez JS-a.
+   Kartica bez linka (radno vreme) ostaje neklikabilna. */
+.info-cards a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+}
+.info-cards a:focus-visible { outline: none; }
+.info-cards a:focus-visible::after {
+    outline: 2px solid var(--mint);
+    outline-offset: 3px;
+}
+.section--light .info-cards a:focus-visible::after,
+.section--cream .info-cards a:focus-visible::after { outline-color: var(--violet); }
+
+.info-cards li:hover a { color: var(--mint); }
+.section--light .info-cards li:hover a,
+.section--cream .info-cards li:hover a { color: var(--violet); }
 
 .contact-info-block .socials { margin-top: 28px; }
 
