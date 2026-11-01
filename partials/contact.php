@@ -42,7 +42,7 @@ $is_sr              = (($lang ?? 'sr') === 'sr');
                         <div class="info-ic"><?= vug_icon('telephone-fill') ?></div>
                         <div>
                             <span class="info-label"><?= $is_sr ? 'Telefon' : 'Phone' ?></span>
-                            <a href="tel:<?= $phone_intl ?>"><?= $t['contact_info_phone'] ?></a>
+                            <a href="tel:+381659377030"><?= $t['contact_info_phone'] ?></a>
                         </div>
                     </li>
                     <li>
