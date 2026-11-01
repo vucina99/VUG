@@ -1258,7 +1258,6 @@ textarea.form-control { resize: vertical; min-height: 110px; padding-top: 14px; 
     gap: 14px;
 }
 .info-cards li {
-    position: relative;
     display: flex;
     align-items: center;
     gap: 18px;
@@ -1268,27 +1267,21 @@ textarea.form-control { resize: vertical; min-height: 110px; padding-top: 14px; 
     border-radius: 16px;
     transition: border-color .3s, transform .3s, box-shadow .3s, background .3s;
 }
+.info-cards li:hover {
+    transform: translateY(-3px);
+    border-color: var(--line-strong);
+    background: rgba(255, 255, 255, 0.07);
+}
 .section--light .info-cards li,
 .section--cream .info-cards li {
     background: #ffffff;
     box-shadow: 0 1px 2px rgba(42, 28, 74, 0.04);
 }
-/* Hover SAMO na uređajima sa mišem. Na iPhone-u dodir prvo „pusti“ hover; ako
-   on menja izgled (pomeranje kartice, boja linka), Safari odloži klik da vidi
-   šta se desilo, a odloženi klik na tel: više ne računa kao dodir korisnika —
-   iskače „This website has been blocked from automatically starting a call“. */
-@media (hover: hover) {
-    .info-cards li:hover {
-        transform: translateY(-3px);
-        border-color: var(--line-strong);
-        background: rgba(255, 255, 255, 0.07);
-    }
-    .section--light .info-cards li:hover,
-    .section--cream .info-cards li:hover {
-        background: #ffffff;
-        border-color: var(--violet);
-        box-shadow: 0 14px 36px rgba(79, 70, 152, 0.12);
-    }
+.section--light .info-cards li:hover,
+.section--cream .info-cards li:hover {
+    background: #ffffff;
+    border-color: var(--violet);
+    box-shadow: 0 14px 36px rgba(79, 70, 152, 0.12);
 }
 
 .info-ic {
@@ -1328,29 +1321,9 @@ textarea.form-control { resize: vertical; min-height: 110px; padding-top: 14px; 
 .section--cream .info-cards li > div > span:not(.info-label) {
     color: var(--deep);
 }
-/* Cela kartica je klikabilna: ::after linka se rasteže preko celog <li>
-   („stretched link“), pa klik bilo gde na kartici otvara email/telefon/mapu.
-   Link ostaje jedan <a> sa svojim tekstom — bez duplih linkova i bez JS-a.
-   Kartica bez linka (radno vreme) ostaje neklikabilna. */
-.info-cards a::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-}
-.info-cards a:focus-visible { outline: none; }
-.info-cards a:focus-visible::after {
-    outline: 2px solid var(--mint);
-    outline-offset: 3px;
-}
-.section--light .info-cards a:focus-visible::after,
-.section--cream .info-cards a:focus-visible::after { outline-color: var(--violet); }
-
-@media (hover: hover) {
-    .info-cards li:hover a { color: var(--mint); }
-    .section--light .info-cards li:hover a,
-    .section--cream .info-cards li:hover a { color: var(--violet); }
-}
+.info-cards a:hover { color: var(--mint); }
+.section--light .info-cards a:hover,
+.section--cream .info-cards a:hover { color: var(--violet); }
 
 .contact-info-block .socials { margin-top: 28px; }
 
