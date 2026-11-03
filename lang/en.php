@@ -116,7 +116,7 @@ return [
     // References
     'references_eyebrow' => 'References',
     'references_title' => 'Brands that trust us',
-    'references_subtitle' => 'A selection of companies we\'ve had the pleasure of working with.',
+    'references_subtitle' => 'Some of the brands that have placed their trust in us and become part of our story.',
 
     // ── Portfolio (home section + /en/projects + /en/projects/<slug>) ──
     // The project copy itself lives in php/projects.php (bilingual, like legal.php).

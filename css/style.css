@@ -380,6 +380,12 @@
     z-index: 1;
     transition: filter .4s, opacity .4s, transform .4s cubic-bezier(.2, .8, .2, 1);
 }
+/* Skoro kvadratni logoi (npr. ThermiQ) — u kartici 5:3 ograničava ih visina, pa bi
+   ostali sitni uz mnogo praznog prostora sa strane. Dobijaju skoro punu visinu kartice. */
+.ref.ref--tall img {
+    width: 90%;
+    height: 94%;
+}
 .ref:hover img {
     filter: none;
     opacity: 1;

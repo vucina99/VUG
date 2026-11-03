@@ -121,7 +121,7 @@ return [
     // References
     'references_eyebrow' => 'Reference',
     'references_title' => 'Brendovi koji nam veruju',
-    'references_subtitle' => 'Mali izbor kompanija sa kojima smo imali zadovoljstvo da sarađujemo.',
+    'references_subtitle' => 'Neki od brendova koji su nam ukazali poverenje i postali deo naše poslovne priče.',
 
     // ── Portfolio (sekcija na početnoj + /projekti + /projekti/<slug>) ──
     // Tekstovi samih projekata su u php/projects.php (bilingvalno, kao legal.php).

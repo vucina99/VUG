@@ -489,16 +489,16 @@ TEAM ("Ko stoji iza VUG-a") — samo ako postoje stvarni podaci (ime, uloga, fot
                 ['file' => 'padel.PNG',        'name' => 'Padel Pančevo' , 'href' => 'https://padelpancevo.com/', 'w' => 500, 'h' => 500],
                 ['file' => 'tara.png',         'name' => 'Tara' , 'href' => 'https://taraorg.com/', 'w' => 550, 'h' => 416],
                 ['file' => 'vastrener.webp',   'name' => 'Vaš Trener' , 'href' => 'http://vastrener.com/', 'w' => 350, 'h' => 309],
-                ['file' => 'rakija.png',       'name' => 'Rakia Connect' , 'href' => 'https://rakia-connect.com/', 'w' => 600, 'h' => 326],
+                ['file' => 'thermiq.png',      'name' => 'ThermiQ' , 'href' => 'https://www.thermiq.rs/', 'w' => 468, 'h' => 380, 'class' => 'ref--tall'],
                 ['file' => 'kalupizza.PNG',    'name' => 'KaluPizza' , 'href' => 'https://kalupizza.rs/', 'w' => 500, 'h' => 374],
                 ['file' => 'moravka.png',      'name' => 'Pro Moravka' , 'href' => 'https://promoravka.rs/', 'w' => 500, 'h' => 500],
                 ['file' => 'kosta.png',        'name' => 'Kosta' , 'href' => 'https://advokati-rs.com/beograd/yuristy/kosta-panovski/', 'w' => 428, 'h' => 573],
-                ['file' => 'pro-tim.png',      'name' => 'PRO-TIM Auto Plac' , 'href' => 'https://www.polovniautomobili.com/pro-tim-auto-plac-kragujevac', 'w' => 640, 'h' => 640],
+                ['file' => 'rakija.png',       'name' => 'Rakia Connect' , 'href' => 'https://rakia-connect.com/', 'w' => 600, 'h' => 326],
             ];
             foreach ($partners as $p):
                 $webp = pathinfo($p['file'], PATHINFO_FILENAME) . '.webp';
             ?>
-            <a class="ref" href="<?= htmlspecialchars($p['href']) ?>" target="_blank" rel="noopener noreferrer"
+            <a class="ref<?= !empty($p['class']) ? ' ' . $p['class'] : '' ?>" href="<?= htmlspecialchars($p['href']) ?>" target="_blank" rel="noopener noreferrer"
                aria-label="<?= htmlspecialchars($p['name']) ?>">
                 <picture>
                     <source type="image/webp" srcset="img/partners/<?= rawurlencode($webp) ?>">
