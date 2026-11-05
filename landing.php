@@ -69,7 +69,7 @@ $CITY = [
             'p2' => '<strong>We are a local agency based in Pančevo.</strong> Arranging a meeting is as easy as a short walk or a call, and we can handle everything online too. Building websites and web applications is one of our core activities: we treat every project with care and tailor it to your business, never using cookie-cutter templates that don’t stand out from the rest.',
             'p3' => 'For a local business it’s crucial to show up the very moment someone nearby searches for a service. That’s why we build your site to be <span class="lp-mark">fast</span>, clear and optimised for all mobile phones, and connected to your Google profile and maps - so clients from Pančevo, across Serbia and around the world can find you with equal ease.',
             'p4' => 'We work with clients from every industry. Before we take the first step towards your project, we get to know your business properly: what your business is about, who your clients are and what you want to achieve. Only then do we build a tailored site - through direct conversation, clear deadlines and pricing with no hidden costs - so the result isn’t just another website on the internet, but a website that will bring you <strong>real calls and enquiries</strong>.',
-            'meta_title' => 'Website development Pančevo | VUG Digital Agency',
+            'meta_title' => 'Web design and development Pančevo | VUG Digital Agency',
             'meta_desc'  => 'Website development in Pančevo focused on quality, functionality and results. Present your business the right way. Free consultation and a quote within 24h.',
             'checks' => [
                 ['palette2', 'Design tailored to your brand', 'A unique design we build just for you'],
@@ -110,7 +110,7 @@ $CITY = [
             'p2' => '<strong>This is where VUG makes the difference.</strong> Building websites and web applications is one of our core activities, and we approach every project strategically. We analyse who you’re addressing, how your competitors present themselves and what it takes for your offer to come across more clearly, faster and more convincingly. The result is a site tailored to your business, designed to set you apart in the market.',
             'p3' => 'We build every website to be <span class="lp-mark">fast</span>, clear and fully responsive on all devices. A clear structure guides visitors from their first contact with your brand to a call, a message or an enquiry. Before the project begins we get to know your business, goals and competitors in detail, so the final solution isn’t just visually appealing but geared towards real results.',
             'p4' => 'We work with companies of different sizes and industries across Belgrade. We communicate quickly and professionally, in person or online, with clearly defined deadlines and transparent pricing with no hidden costs. Our goal isn’t to build just another site that gets lost among the competition, but a <strong>digital solution that brings you real enquiries and new clients</strong>.',
-            'meta_title' => 'Website development Belgrade | VUG Digital Agency',
+            'meta_title' => 'Web design and development Belgrade | VUG Digital Agency',
             'meta_desc'  => 'Professional website development in Belgrade, tailored to your business. Modern design, speed and SEO optimisation. Free consultation and a quote within 24h.',
             'badge'      => 'Digital agency for Belgrade',
             'checks' => [
@@ -243,7 +243,7 @@ $CITY_MARKETING = [
             'p2' => '<strong>Digital marketing and advertising are among our core activities.</strong> We direct campaigns at potential clients in Pančevo and the surrounding area, with continuous tracking of the calls, messages and enquiries they generate.',
             'p3' => 'We combine Google Ads campaigns for users actively searching for your services, Meta advertising to increase brand awareness, and Google Business Profile optimisation for better local visibility. Every activity is directed towards achieving concrete business results.',
             'p4' => 'Before launching campaigns we analyse your business, target audience and competitors, and then define the strategy and budget. Through regular monthly reports we give you transparent insight into results and recommendations for further improvement, so that digital marketing becomes <strong>a measurable and profitable investment</strong> in the growth of your business.',
-            'meta_title' => 'Marketing agency Pančevo | VUG Digital Agency',
+            'meta_title' => 'Digital marketing agency Pančevo | VUG Digital Agency',
             'meta_desc'  => 'Marketing agency in Pančevo - Google Ads, Meta advertising, SEO and Google profile optimisation for more enquiries. Free consultation, quote in 24h.',
             'checks' => [
                 ['search', 'Google Ads campaigns', 'Visibility with users actively searching for your services'],
@@ -284,7 +284,7 @@ $CITY_MARKETING = [
             'p2' => '<strong>That is why every campaign begins with data analysis rather than a creative idea.</strong> First we set up measurement: we establish what a conversion means for your business, what one enquiry is worth and which channels your clients currently come from. Based on that data, we define the most effective communication channels, target audience and messages tailored to the needs and goals of your business.',
             'p3' => 'We run Google Ads, Meta and TikTok campaigns, remarketing aimed at users who have already visited your website, and SEO for the searches where you want stable, long-term visibility. All channels operate as part of a single strategy, so insights from one campaign are immediately applied to the others.',
             'p4' => 'We work with companies of all sizes in Belgrade, in person or online, with direct communication with the person responsible for your project. Through monthly reports we provide clear insight into budget, number of enquiries and cost per contact, along with concrete recommendations for optimising campaigns and increasing the return on your investment.',
-            'meta_title' => 'Marketing agency Belgrade | VUG Digital Agency',
+            'meta_title' => 'Digital marketing agency Belgrade | VUG Digital Agency',
             'meta_desc'  => 'Digital marketing for Belgrade businesses - Google Ads, social media advertising, SEO and monthly performance reports. Free consultation, quote in 24h.',
             'badge'      => 'Digital agency for Belgrade',
             'checks' => [
@@ -441,7 +441,8 @@ if (preg_match('#/landing\.php$#i', parse_url($req, PHP_URL_PATH) ?? '')) {
 $home       = $lang === 'en' ? $base . '/en' : ($base === '' ? '/' : $base . '/');
 $og_image   = $SITE_URL . '/img/og-image.png';
 
-// Bez hreflang-a: indeksira se samo srpska verzija, EN je noindex (partials/head.php).
+// Jezički par za hreflang (obe verzije se indeksiraju, pravilo je u partials/head.php).
+$hreflang = ['sr' => $abs_sr, 'en' => $abs_en];
 
 /* ── SEO varijable za deljeni head ── */
 $meta_title       = $c['meta_title'];

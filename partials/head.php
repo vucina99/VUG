@@ -14,7 +14,8 @@
  * Opciono:
  *   $SITE_URL          [default 'https://vugagency.com']
  *   $robots            [default 'index, follow, max-image-preview:large, max-snippet:-1']
- *                      — na engleskoj verziji se UVEK pregazi u 'noindex, follow' (vidi ispod)
+ *   $hreflang          — ['sr' => apsolutni URL, 'en' => apsolutni URL] jezičkog para
+ *                        (izostaviti na stranicama koje nemaju par ili su noindex)
  *   $og_image        [default $SITE_URL/img/og-image.png]
  *   $og_type           [default 'website']
  *   $og_image_alt      [default 'VUG - Digitalna agencija' / 'Digital Agency']
@@ -31,21 +32,16 @@ $json_ld       = $json_ld       ?? null;
 $extra_head    = $extra_head    ?? '';
 $is_sr         = (($lang ?? 'sr') === 'sr');
 
-/* SAMO SRPSKA VERZIJA SE INDEKSIRA (odluka 2026-10-01, potvrđena 2026-10-06).
-   Engleska verzija ostaje dostupna posetiocima (prekidač jezika), ali je
-   noindex na SVAKOJ stranici, uključujući /en - pravilo je ovde, u deljenom
-   head-u, pa važi i za stranice koje se tek dodaju. Namerno:
-   - BEZ Disallow u robots.txt: Google mora da puzi /en stranice da bi uopšte
-     video noindex; blokirana stranica bi ostala u indeksu.
-   - BEZ hreflang veza (ni na srpskoj verziji): hreflang je signal „indeksiraj
-     obe verzije“ i u sukobu je sa noindex-om - Google (Gary Illyes, 2022) kaže
-     da jedan noindex u hreflang klasteru može da povuče ceo klaster.
-   - BEZ meta keywords: Google ga ne koristi, a Bing natrpan tag tretira kao spam signal.
-   - Canonical na engleskoj stranici ostaje samoreferentan: canonical ka srpskoj
-     + noindex bi bili kontradiktorni signali. */
-if (!$is_sr) {
-    $robots = 'noindex, follow';
-}
+/* OBE JEZIČKE VERZIJE SE INDEKSIRAJU (od 2026-11-05; od 2026-10-01 do tada
+   je EN bila noindex). Pravila:
+   - Canonical je UVEK samoreferentan (EN stranica -> EN URL), nikad ka drugom
+     jeziku - prevod nije duplikat.
+   - hreflang par (sr + en + x-default -> srpska) mora biti RECIPROČAN: obe
+     verzije ispisuju isti skup. Isti parovi stoje i u sitemap.xml.
+   - Stranica koja je noindex (404, pravne stranice u nacrtu) NE sme da ima
+     hreflang - noindex u hreflang klasteru može da povuče ceo klaster.
+   - BEZ meta keywords: Google ga ne koristi, a Bing natrpan tag tretira kao spam signal. */
+$hreflang = (!empty($hreflang) && stripos($robots, 'noindex') === false) ? $hreflang : null;
 $og_image_alt  = $og_image_alt  ?? ('VUG - ' . ($is_sr ? 'Digitalna agencija' : 'Digital Agency'));
 $css_v         = @filemtime(dirname(__DIR__) . '/css/style.css');
 $GA_ID         = 'G-W07YT5991W';
@@ -85,13 +81,21 @@ $critical_css = str_replace('../fonts/', $base . '/fonts/', $critical_css);
 <?php endif; ?>
 
 <?php if (!empty($canonical)): ?>
-    <!-- Canonical (bez hreflang - indeksira se samo srpska verzija, vidi gore) -->
     <link rel="canonical" href="<?= htmlspecialchars($canonical) ?>">
+<?php endif; ?>
+<?php if ($hreflang): ?>
+    <!-- Jezički par (recipročan; x-default = srpska verzija) -->
+    <link rel="alternate" hreflang="sr" href="<?= htmlspecialchars($hreflang['sr']) ?>">
+    <link rel="alternate" hreflang="en" href="<?= htmlspecialchars($hreflang['en']) ?>">
+    <link rel="alternate" hreflang="x-default" href="<?= htmlspecialchars($hreflang['sr']) ?>">
 <?php endif; ?>
 
     <!-- Open Graph -->
     <meta property="og:type" content="<?= htmlspecialchars($og_type) ?>">
     <meta property="og:locale" content="<?= $is_sr ? 'sr_RS' : 'en_GB' ?>">
+<?php if ($hreflang): ?>
+    <meta property="og:locale:alternate" content="<?= $is_sr ? 'en_GB' : 'sr_RS' ?>">
+<?php endif; ?>
     <!-- og:site_name = isti naziv kao WebSite.name u JSON-LD-u početne (Google
          ih poredi kad bira naziv sajta u rezultatima). -->
     <meta property="og:site_name" content="VUG Digital Agency">

@@ -1,56 +1,147 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Samo SRPSKE stranice: engleska verzija je noindex (partials/head.php), pa je
-     namerno nema ni ovde - sitemap sme da sadrži samo URL-ove koji treba da se
-     indeksiraju. Bez hreflang veza (postoji samo jedna jezička verzija koja se indeksira).
+<!-- Obe jezičke verzije se indeksiraju (od 2026-11-05). Svaki <url> nosi pun,
+     RECIPROČAN hreflang skup (sr + en + x-default -> srpska) - isti kao <link rel="alternate">
+     u <head>-u (partials/head.php). EN URL-ovi koriste isti srpski slug pod /en/.
      <lastmod> menjati SAMO za stranice čiji se sadržaj stvarno promenio.
      Namerno BEZ <changefreq>/<priority> (Google ih ignoriše) i BEZ <image:title>
-     (Google ga je ukinuo 2022) - ostaju samo <loc>, <lastmod> i <image:loc>. -->
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+     (Google ga je ukinuo 2022). -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://vugagency.com/</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-11-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="sr" href="https://vugagency.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vugagency.com/en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vugagency.com/"/>
     <image:image>
       <image:loc>https://vugagency.com/img/og-image.png</image:loc>
     </image:image>
   </url>
   <url>
     <loc>https://vugagency.com/izrada-web-sajta-pancevo</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-11-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="sr" href="https://vugagency.com/izrada-web-sajta-pancevo"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vugagency.com/en/izrada-web-sajta-pancevo"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vugagency.com/izrada-web-sajta-pancevo"/>
     <image:image>
       <image:loc>https://vugagency.com/img/web-mockup.svg</image:loc>
     </image:image>
   </url>
   <url>
     <loc>https://vugagency.com/izrada-web-sajta-beograd</loc>
-    <lastmod>2026-10-28</lastmod>
+    <lastmod>2026-11-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="sr" href="https://vugagency.com/izrada-web-sajta-beograd"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vugagency.com/en/izrada-web-sajta-beograd"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vugagency.com/izrada-web-sajta-beograd"/>
     <image:image>
       <image:loc>https://vugagency.com/img/web-mockup.svg</image:loc>
     </image:image>
   </url>
   <url>
     <loc>https://vugagency.com/vodjenje-drustvenih-mreza-pancevo</loc>
-    <lastmod>2026-10-28</lastmod>
+    <lastmod>2026-11-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="sr" href="https://vugagency.com/vodjenje-drustvenih-mreza-pancevo"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vugagency.com/en/vodjenje-drustvenih-mreza-pancevo"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vugagency.com/vodjenje-drustvenih-mreza-pancevo"/>
     <image:image>
       <image:loc>https://vugagency.com/img/social-mockup.svg</image:loc>
     </image:image>
   </url>
   <url>
     <loc>https://vugagency.com/vodjenje-drustvenih-mreza-beograd</loc>
-    <lastmod>2026-10-22</lastmod>
+    <lastmod>2026-11-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="sr" href="https://vugagency.com/vodjenje-drustvenih-mreza-beograd"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vugagency.com/en/vodjenje-drustvenih-mreza-beograd"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vugagency.com/vodjenje-drustvenih-mreza-beograd"/>
     <image:image>
       <image:loc>https://vugagency.com/img/social-mockup.svg</image:loc>
     </image:image>
   </url>
   <url>
     <loc>https://vugagency.com/marketing-agencija-pancevo</loc>
-    <lastmod>2026-10-28</lastmod>
+    <lastmod>2026-11-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="sr" href="https://vugagency.com/marketing-agencija-pancevo"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vugagency.com/en/marketing-agencija-pancevo"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vugagency.com/marketing-agencija-pancevo"/>
     <image:image>
       <image:loc>https://vugagency.com/img/marketing-mockup.svg</image:loc>
     </image:image>
   </url>
   <url>
     <loc>https://vugagency.com/marketing-agencija-beograd</loc>
-    <lastmod>2026-10-28</lastmod>
+    <lastmod>2026-11-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="sr" href="https://vugagency.com/marketing-agencija-beograd"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vugagency.com/en/marketing-agencija-beograd"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vugagency.com/marketing-agencija-beograd"/>
+    <image:image>
+      <image:loc>https://vugagency.com/img/marketing-mockup.svg</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://vugagency.com/en</loc>
+    <lastmod>2026-11-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="sr" href="https://vugagency.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vugagency.com/en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vugagency.com/"/>
+    <image:image>
+      <image:loc>https://vugagency.com/img/og-image.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://vugagency.com/en/izrada-web-sajta-pancevo</loc>
+    <lastmod>2026-11-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="sr" href="https://vugagency.com/izrada-web-sajta-pancevo"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vugagency.com/en/izrada-web-sajta-pancevo"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vugagency.com/izrada-web-sajta-pancevo"/>
+    <image:image>
+      <image:loc>https://vugagency.com/img/web-mockup.svg</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://vugagency.com/en/izrada-web-sajta-beograd</loc>
+    <lastmod>2026-11-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="sr" href="https://vugagency.com/izrada-web-sajta-beograd"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vugagency.com/en/izrada-web-sajta-beograd"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vugagency.com/izrada-web-sajta-beograd"/>
+    <image:image>
+      <image:loc>https://vugagency.com/img/web-mockup.svg</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://vugagency.com/en/vodjenje-drustvenih-mreza-pancevo</loc>
+    <lastmod>2026-11-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="sr" href="https://vugagency.com/vodjenje-drustvenih-mreza-pancevo"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vugagency.com/en/vodjenje-drustvenih-mreza-pancevo"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vugagency.com/vodjenje-drustvenih-mreza-pancevo"/>
+    <image:image>
+      <image:loc>https://vugagency.com/img/social-mockup.svg</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://vugagency.com/en/vodjenje-drustvenih-mreza-beograd</loc>
+    <lastmod>2026-11-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="sr" href="https://vugagency.com/vodjenje-drustvenih-mreza-beograd"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vugagency.com/en/vodjenje-drustvenih-mreza-beograd"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vugagency.com/vodjenje-drustvenih-mreza-beograd"/>
+    <image:image>
+      <image:loc>https://vugagency.com/img/social-mockup.svg</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://vugagency.com/en/marketing-agencija-pancevo</loc>
+    <lastmod>2026-11-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="sr" href="https://vugagency.com/marketing-agencija-pancevo"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vugagency.com/en/marketing-agencija-pancevo"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vugagency.com/marketing-agencija-pancevo"/>
+    <image:image>
+      <image:loc>https://vugagency.com/img/marketing-mockup.svg</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://vugagency.com/en/marketing-agencija-beograd</loc>
+    <lastmod>2026-11-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="sr" href="https://vugagency.com/marketing-agencija-beograd"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vugagency.com/en/marketing-agencija-beograd"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vugagency.com/marketing-agencija-beograd"/>
     <image:image>
       <image:loc>https://vugagency.com/img/marketing-mockup.svg</image:loc>
     </image:image>

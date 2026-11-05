@@ -6,7 +6,7 @@ return [
     'lang_current_label' => 'EN',
 
     // Meta
-    'meta_title' => 'VUG Digital Agency | Digital agency for your business',
+    'meta_title' => 'VUG Digital Agency | Digital agency in Serbia',
     'meta_description' => 'VUG Digital Agency - your strategic partner in brand development, a stronger digital presence and measurable results. Book a free consultation.',
 
     // Nav

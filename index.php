@@ -158,7 +158,8 @@ $schema = [
 /* ── SEO varijable za deljeni head (partials/head.php) ── */
 $meta_title       = $t['meta_title'];
 $meta_description = $t['meta_description'];
-// Bez hreflang-a: indeksira se samo srpska verzija (pravilo je u partials/head.php).
+// Jezički par za hreflang (obe verzije se indeksiraju, pravilo je u partials/head.php).
+$hreflang      = ['sr' => $url_sr, 'en' => $url_en];
 $geo_region    = 'RS-14';
 $geo_placename = 'Pančevo';
 $json_ld       = $schema;
